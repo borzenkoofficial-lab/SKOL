@@ -71,13 +71,26 @@
     <section class="pf-feed" id="portfolio-feed">
       <div class="pf-section-kicker reveal"><span>02</span><span>ЛЕНТА ОБЪЕКТОВ</span><span>CASE INDEX / SKOL</span></div>
       <div class="pf-feed-heading"><div><p class="pf-eyebrow pf-eyebrow-dark reveal"><span></span> КЕЙСЫ ПО НАПРАВЛЕНИЯМ</p><h2 class="reveal">От первого кадра<br><em>до результата.</em></h2></div><p class="reveal">Отберите интересующее направление. В каждой карточке предусмотрены слоты для фото, видео и описания — публикация реального объекта заполняется фактическими материалами, без стоковых изображений и вымышленных цифр.</p></div>
+      <div class="pf-feed-controls reveal">
+        <div class="pf-search-wrap">
+          <label class="pf-sr-only" for="pf-search">Поиск по портфолио</label>
+          <span class="pf-search-icon" aria-hidden="true">⌕</span>
+          <input id="pf-search" type="search" autocomplete="off" placeholder="Найти по работе или детали…" aria-describedby="pf-search-hint">
+          <button type="button" class="pf-search-clear" aria-label="Очистить поиск" hidden>×</button>
+          <span id="pf-search-hint" class="pf-sr-only">Поиск по названию кейса, направлению и описанию.</span>
+        </div>
+        <div class="pf-view-switch" role="group" aria-label="Формат отображения">
+          <button type="button" data-view="editorial" aria-pressed="true"><span aria-hidden="true">▤</span> Лента</button>
+          <button type="button" data-view="grid" aria-pressed="false"><span aria-hidden="true">▦</span> Сетка</button>
+        </div>
+      </div>
       <div class="pf-filters reveal" role="group" aria-label="Фильтр портфолио">
-        <button type="button" class="pf-filter" data-filter="all" aria-pressed="true">Все направления <span>06</span></button>
-        <button type="button" class="pf-filter" data-filter="demolition" aria-pressed="false">Демонтаж</button>
-        <button type="button" class="pf-filter" data-filter="preparation" aria-pressed="false">Подготовка</button>
-        <button type="button" class="pf-filter" data-filter="finishing" aria-pressed="false">Отделка</button>
-        <button type="button" class="pf-filter" data-filter="floors" aria-pressed="false">Технические полы</button>
-        <span class="pf-filter-result" aria-live="polite">6 форматов кейса</span>
+        <button type="button" class="pf-filter" data-filter="all" aria-pressed="true">Все направления <span data-count-for="all">06</span></button>
+        <button type="button" class="pf-filter" data-filter="demolition" aria-pressed="false">Демонтаж <span data-count-for="demolition">02</span></button>
+        <button type="button" class="pf-filter" data-filter="preparation" aria-pressed="false">Подготовка <span data-count-for="preparation">02</span></button>
+        <button type="button" class="pf-filter" data-filter="finishing" aria-pressed="false">Отделка <span data-count-for="finishing">02</span></button>
+        <button type="button" class="pf-filter" data-filter="floors" aria-pressed="false">Технические полы <span data-count-for="floors">02</span></button>
+        <span class="pf-filter-result" aria-live="polite">Показано 6 из 6</span>
       </div>
 
       <!-- MEDIA SLOT GUIDE: inside any .pf-case-media, replace the decorative child art with
@@ -130,6 +143,12 @@
         </article>
       </div>
 
+      <div class="pf-empty-state" hidden>
+        <span class="pf-empty-code">ПОИСК / 00</span>
+        <h3>Совпадений пока нет.</h3>
+        <p>Попробуйте другое слово или сбросьте фильтр направления.</p>
+        <button class="pf-empty-reset" type="button">Сбросить поиск и фильтры <span aria-hidden="true">↺</span></button>
+      </div>
       <div class="pf-integrity reveal"><span class="pf-integrity-symbol">i</span><div><strong>Принцип публикации СКОЛ</strong><p>Графические изображения на этой странице — макеты будущих медиа-блоков, а не фотографии выполненных объектов. Когда будут добавлены реальные материалы, здесь появятся фактические кадры, подписи и подтверждённый состав работ.</p></div></div>
     </section>
 
@@ -149,5 +168,11 @@
   </main>
 
   <footer class="footer"><a class="wordmark" href="index.html">СКОЛ<span class="dot">.</span></a><span>ДЕМОНТАЖ · ОТДЕЛКА · ПОДГОТОВКА ОБЪЕКТОВ</span><a href="https://t.me/Sergeevitch_sm" target="_blank" rel="noopener noreferrer" class="footer-email">TELEGRAM ↗</a><a href="mailto:borzenko.official@yandex.ru" class="footer-email">EMAIL ↗</a><a href="#top" class="back-top">НАВЕРХ ↑</a><span class="copyright">© <span id="year"></span> СКОЛ</span></footer>
+  <button class="pf-back-top" type="button" aria-label="Вернуться наверх" title="Наверх">↑</button>
+  <dialog class="pf-lightbox" aria-label="Просмотр изображения">
+    <form method="dialog" class="pf-lightbox-chrome"><span>СКОЛ / MEDIA VIEWER</span><button class="pf-lightbox-close" type="submit" aria-label="Закрыть просмотр">×</button></form>
+    <div class="pf-lightbox-stage"></div>
+    <p class="pf-lightbox-caption"></p>
+  </dialog>
 </body>
 </html>
