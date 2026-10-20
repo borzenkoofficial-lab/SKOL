@@ -68,9 +68,17 @@
 
   // Header state: the fixed navigation becomes a compact, frosted bar after scrolling.
   const header = document.querySelector('.header');
+  const progressBar = document.querySelector('.scroll-progress span');
+  const navLinks = [...document.querySelectorAll('.nav a[href^="#"]')];
+  const trackedSections = navLinks
+    .map(link => ({ link, section: document.querySelector(link.getAttribute('href')) }))
+    .filter(item => item.section);
   let scrollTicking = false;
   const updateHeader = () => {
     header?.classList.toggle('is-scrolled', window.scrollY > 24);
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+    if (progressBar) progressBar.style.transform = 'scaleX(' + progress.toFixed(4) + ')';
     scrollTicking = false;
   };
   window.addEventListener('scroll', () => {
@@ -80,6 +88,23 @@
     }
   }, { passive: true });
   updateHeader();
+
+  // Keep the desktop navigation in sync with the section currently in view.
+  if ('IntersectionObserver' in window && trackedSections.length) {
+    const activeSections = new Set();
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) activeSections.add(entry.target.id);
+        else activeSections.delete(entry.target.id);
+      });
+      const current = trackedSections.find(item => activeSections.has(item.section.id));
+      navLinks.forEach(link => {
+        if (current && link === current.link) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }, { rootMargin: '-22% 0px -58% 0px', threshold: 0 });
+    trackedSections.forEach(item => sectionObserver.observe(item.section));
+  }
 
   // Subtle pointer parallax for the abstract hero geometry; never runs on touch devices.
   const hero = document.querySelector('.hero-premium');
