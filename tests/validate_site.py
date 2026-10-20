@@ -12,14 +12,12 @@ class SiteParser(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.ids = []
         self.anchor_targets = []
-        self.labels = []
-        self.label_depth = 0
-        self.label_text = []
-        self.label_has_control = False
-        self.controls = []
         self.html_lang = None
         self.main_count = 0
         self.form_ids = []
+        self.controls = []
+        self.label_stack = []
+        self.labelled_names = set()
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
@@ -35,22 +33,19 @@ class SiteParser(HTMLParser):
             self.main_count += 1
         if tag == "form":
             self.form_ids.append(a.get("id", ""))
-        if tag in {"input", "textarea", "select", "button"}:
-            self.controls.append((tag, a))
         if tag == "label":
-            self.label_depth += 1
-            self.label_text.append(a.get("for"))
-            self.label_has_control = False
-        if self.label_depth and tag in {"input", "textarea", "select"}:
-            self.label_has_control = True
+            self.label_stack.append(False)
+        if tag in {"input", "textarea", "select"}:
+            self.controls.append((tag, a))
+            if self.label_stack:
+                self.label_stack[-1] = True
+                if a.get("name"):
+                    self.labelled_names.add(a["name"])
 
     def handle_endtag(self, tag):
-        if tag == "label" and self.label_depth:
-            if not self.label_text[-1] and not self.label_has_control:
-                errors.append("A label does not contain a form control or use for=.")
-            self.label_text.pop()
-            self.label_depth -= 1
-            self.label_has_control = False
+        if tag == "label" and self.label_stack:
+            if not self.label_stack.pop():
+                errors.append("A label does not contain a form control.")
 
 parser = SiteParser()
 parser.feed(html)
@@ -68,20 +63,17 @@ if parser.main_count != 1:
     errors.append(f"Expected exactly one main landmark, found {parser.main_count}.")
 if "contact-form" not in parser.form_ids:
     errors.append("Contact form #contact-form is missing.")
-if not re.search(r'<meta\s+name=["\']description["\']', html, re.I):
+if not re.search(r'<meta\\s+name=["\\']description["\\']', html, re.I):
     errors.append("SEO description meta tag is missing.")
-if not (ROOT / "styles.css").is_file() or not (ROOT / "script.js").is_file():
-    errors.append("A referenced CSS or JS file is missing.")
+for path in ("styles.css", "script.js", "favicon.svg"):
+    if not (ROOT / path).is_file():
+        errors.append(f"Required asset is missing: {path}")
 
 for tag, attrs in parser.controls:
-    if tag in {"input", "textarea", "select"} and attrs.get("type") == "hidden":
+    if attrs.get("type") == "hidden":
         continue
-    if tag == "input" and attrs.get("type") in {"submit", "button", "reset"}:
-        continue
-    if tag == "button" or tag in {"input", "textarea", "select"}:
-        # Controls inside a label are already named; otherwise require a label or accessible name.
-        if attrs.get("id") and any(for_value == attrs["id"] for for_value in parser.label_text):
-            continue
+    if not (attrs.get("name") in parser.labelled_names or attrs.get("aria-label") or attrs.get("aria-labelledby")):
+        errors.append(f"Form control <{tag}> is missing an accessible label (name={attrs.get('name', '')}).")
 
 if errors:
     print("Site validation FAILED:")
