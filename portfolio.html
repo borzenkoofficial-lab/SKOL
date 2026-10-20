@@ -80,8 +80,10 @@
         <span class="pf-filter-result" aria-live="polite">6 форматов кейса</span>
       </div>
 
-      <!-- MEDIA SLOT GUIDE: replace .pf-media-art contents with an actual <img> or <video controls>.
-           Suggested path: assets/portfolio/<case-slug>-01.webp. Never label a mockup as a completed job. -->
+      <!-- MEDIA SLOT GUIDE: inside any .pf-case-media, replace the decorative child art with
+           <img class="pf-real-media" src="assets/portfolio/<case-slug>-01.webp" alt="Краткое описание объекта" loading="lazy">
+           or <video class="pf-real-media" controls preload="metadata" poster="assets/portfolio/<case-slug>-poster.webp"><source src="assets/portfolio/<case-slug>.mp4" type="video/mp4"></video>.
+           Keep .pf-media-topline / .pf-media-bottom for captions. Use only factual object media; never label a mockup as completed work. -->
       <div class="pf-case-feed">
         <article class="pf-case pf-case-featured reveal" data-category="demolition">
           <div class="pf-case-media pf-media-demolition" data-media-slot="demolition-overview">
