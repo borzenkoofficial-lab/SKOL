@@ -80,3 +80,46 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
  .audience-card{padding:27px;min-height:440px}
 }
 @media(prefers-reduced-motion:reduce){.hero-image{animation:none;transform:none}}
+
+
+/* SKOL: premium contractor identity — restrained, practical, material-led. */
+.hero h1{font-size:clamp(64px,10.5vw,156px);line-height:.88;letter-spacing:-.095em}
+.hero h1 em{color:#e6a184}
+.hero-topline{font-weight:700}
+.hero-bottom p{max-width:440px}
+.intro h2,.services h2,.projects h2,.contact h2{letter-spacing:-.09em}
+.services{background:#eeece6}
+.services-heading{padding-bottom:clamp(38px,5vw,65px)}
+.services-heading>p{max-width:330px}
+.service-list{border-top:1px solid rgba(37,40,43,.22)}
+.service-row{grid-template-columns:48px minmax(0,1fr) 38px;gap:18px;padding:27px 0}
+.service-no{font-size:10px;letter-spacing:.08em}
+.service-row h3{font-size:clamp(23px,3vw,36px);letter-spacing:-.055em}
+.service-row p{max-width:650px;font-size:12px;line-height:1.8}
+.service-arrow{width:30px;height:30px;font-size:15px}
+.statement{min-height:600px}
+.statement h2{font-size:clamp(54px,8.2vw,116px)}
+.audience-grid{gap:12px}
+.audience-card{min-height:440px}
+.audience-card h2{margin-top:55px}
+.projects-heading{padding-top:clamp(55px,7vw,90px)}
+.project-photo-one{height:clamp(330px,48vw,590px)}
+.project-photo-two{height:clamp(270px,34vw,420px);margin-top:80px}
+.photo-tag{font-size:8px}
+.contact-grid{gap:clamp(45px,8vw,120px)}
+.contact-form{gap:27px}
+.contact-form label{font-size:9px;letter-spacing:.13em}
+.form-note{max-width:420px}
+@media(max-width:760px){
+ .hero h1{font-size:clamp(60px,13.5vw,96px)}
+ .hero-topline{letter-spacing:.11em}
+ .hero-bottom{gap:20px}
+ .hero-bottom p{max-width:290px}
+ .service-row{grid-template-columns:26px minmax(0,1fr) 30px;gap:9px;padding:24px 0}
+ .service-row h3{font-size:clamp(22px,6vw,30px)}
+ .service-row p{font-size:11px}
+ .statement{min-height:540px}
+ .audience-card{min-height:410px}
+ .project-photo-one{height:390px}
+ .project-photo-two{height:300px;margin-top:0}
+}
