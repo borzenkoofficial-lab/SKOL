@@ -1,0 +1,14 @@
+.git
+.github
+node_modules
+tests
+var
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.env
+.env.*
+server.js
+start-demo.ps1
+stop-demo.ps1
+README.md
