@@ -1,6 +1,5 @@
 from html.parser import HTMLParser
 from pathlib import Path
-import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -63,7 +62,7 @@ if parser.main_count != 1:
     errors.append(f"Expected exactly one main landmark, found {parser.main_count}.")
 if "contact-form" not in parser.form_ids:
     errors.append("Contact form #contact-form is missing.")
-if not re.search(r'<meta\\s+name=["\\']description["\\']', html, re.I):
+if 'name="description"' not in html:
     errors.append("SEO description meta tag is missing.")
 for path in ("styles.css", "script.js", "favicon.svg"):
     if not (ROOT / path).is_file():
