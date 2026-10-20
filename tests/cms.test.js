@@ -178,3 +178,70 @@ test("SKOL CMS protects admin routes and stores public leads/content", { timeout
     fs.rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test("SKOL demo mode seeds only explicitly marked sample records", { timeout: 45000 }, async () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "skol-demo-test-"));
+  const port = await getFreePort();
+  const base = "http://127.0.0.1:" + port;
+  const username = "skol-demo-test-admin";
+  const password = "skol-demo-test-password-long";
+  const sessionSecret = "skol-demo-test-session-secret-long-enough-123456789";
+  let stderr = "";
+  const child = spawn(process.execPath, ["server.js"], {
+    cwd: process.cwd(),
+    env: {
+      ...process.env,
+      PORT: String(port),
+      HOST: "127.0.0.1",
+      NODE_ENV: "test",
+      SKOL_DEMO_MODE: "1",
+      ADMIN_USERNAME: username,
+      ADMIN_PASSWORD: password,
+      SESSION_SECRET: sessionSecret,
+      DATA_DIR: directory
+    },
+    stdio: ["ignore", "ignore", "pipe"]
+  });
+  child.stderr.on("data", chunk => { stderr += chunk.toString(); });
+  try {
+    let ready = false;
+    for (let attempt = 0; attempt < 120; attempt += 1) {
+      if (child.exitCode !== null) throw new Error("Demo server exited before ready. " + stderr);
+      try {
+        const response = await fetch(base + "/api/health");
+        if (response.ok && (await response.json()).ok) { ready = true; break; }
+      } catch {}
+      await pause(100);
+    }
+    assert.equal(ready, true, "Demo server did not start. " + stderr);
+
+    const services = await (await fetch(base + "/api/public/content?type=service")).json();
+    const articles = await (await fetch(base + "/api/public/content?type=article")).json();
+    const projects = await (await fetch(base + "/api/public/content?type=project")).json();
+    assert.equal(services.items.length, 4, "Core services should be present in demo mode");
+    assert.equal(articles.items.length, 2, "Two demo articles should be seeded");
+    assert.equal(projects.items.length, 2, "Two demo projects should be seeded");
+    assert.ok(articles.items.every(item => item.title.startsWith("ДЕМО:") && item.body.includes("ДЕМОНСТРАЦИОННЫЙ МАТЕРИАЛ")));
+    assert.ok(projects.items.every(item => item.title.startsWith("ДЕМО-КЕЙС:") && item.body.includes("ДЕМОНСТРАЦИОННЫЙ КЕЙС")));
+
+    const login = await fetch(base + "/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Origin: base },
+      body: JSON.stringify({ username, password })
+    });
+    assert.equal(login.status, 200);
+    const cookie = (login.headers.get("set-cookie") || "").split(";")[0];
+    const leadsResponse = await fetch(base + "/api/admin/leads", { headers: { Cookie: cookie } });
+    assert.equal(leadsResponse.status, 200);
+    const leads = await leadsResponse.json();
+    assert.equal(leads.items.length, 3, "Three demo leads should be seeded");
+    assert.ok(leads.items.every(item => item.source === "demo" && item.name.startsWith("ДЕМО")));
+  } finally {
+    child.kill("SIGTERM");
+    await Promise.race([
+      new Promise(resolve => child.once("exit", resolve)),
+      pause(3000)
+    ]);
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
+});
