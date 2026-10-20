@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="theme-color" content="#25282b">
+  <title>Панель управления — СКОЛ</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="admin.css">
+  <script src="admin.js" defer></script>
+</head>
+<body class="admin-page">
+  <div class="admin-gate" id="login-screen">
+    <div class="gate-art" aria-hidden="true">
+      <div class="gate-grid"></div><div class="gate-orbit"><i></i><b></b></div>
+      <div class="gate-wordmark">СКОЛ<span>.</span></div>
+      <div class="gate-art-foot"><span>SKOL / CONTENT CONTROL</span><span>01—04 / SYSTEM</span></div>
+    </div>
+    <section class="gate-panel">
+      <a class="admin-brand" href="index.html" aria-label="СКОЛ — на сайт">СКОЛ<span>.</span></a>
+      <p class="eyebrow">ЗАКРЫТАЯ ЗОНА / ADMIN</p>
+      <h1>Управление<br><em>сайтом.</em></h1>
+      <p class="gate-description">Публикации, портфолио, услуги, заявки и формы — в одном рабочем пространстве.</p>
+      <form id="login-form" class="admin-form">
+        <label for="login-username">Логин администратора<input id="login-username" name="username" autocomplete="username" required maxlength="120" placeholder="Введите логин"></label>
+        <label for="login-password">Пароль<input id="login-password" name="password" type="password" autocomplete="current-password" required maxlength="500" placeholder="Введите пароль"></label>
+        <button class="admin-button admin-button-primary" type="submit"><span>Войти в систему</span><b>↗</b></button>
+      </form>
+      <p class="gate-status" id="gate-status" role="status" aria-live="polite">Проверяем соединение с сервером…</p>
+      <a class="gate-back" href="index.html">← Вернуться на сайт</a>
+      <p class="gate-security">Доступ проверяется сервером. Пароль не хранится в браузере.</p>
+    </section>
+  </div>
+
+  <div class="admin-shell" id="admin-app" hidden>
+    <aside class="admin-sidebar">
+      <a class="admin-brand" href="index.html" aria-label="СКОЛ — на сайт">СКОЛ<span>.</span></a>
+      <div class="sidebar-caption">РАБОЧЕЕ ПРОСТРАНСТВО</div>
+      <nav class="admin-nav" aria-label="Разделы управления">
+        <button type="button" data-view="dashboard" class="active"><span class="nav-symbol">⌂</span> Обзор</button>
+        <button type="button" data-view="leads"><span class="nav-symbol">↙</span> Заявки <span class="nav-count" id="nav-new-leads">0</span></button>
+        <button type="button" data-view="content"><span class="nav-symbol">▤</span> Публикации</button>
+        <button type="button" data-view="projects"><span class="nav-symbol">▧</span> Портфолио</button>
+        <button type="button" data-view="services"><span class="nav-symbol">◇</span> Услуги</button>
+        <button type="button" data-view="forms"><span class="nav-symbol">☷</span> Формы</button>
+        <button type="button" data-view="settings"><span class="nav-symbol">⚙</span> Настройки</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-live"><span class="live-dot"></span><div><strong>Сервер подключён</strong><small>SQLite / Session auth</small></div></div>
+        <a href="index.html" target="_blank" rel="noopener noreferrer" class="sidebar-site-link">Открыть сайт <span>↗</span></a>
+        <button type="button" id="logout-button" class="logout-button">Выйти из панели <span>↗</span></button>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <header class="admin-topbar">
+        <div><p class="topbar-overline">СКОЛ / УПРАВЛЕНИЕ</p><h2 id="screen-title">Обзор</h2></div>
+        <div class="topbar-actions"><span class="topbar-server"><i></i> API ONLINE</span><span class="topbar-avatar" id="admin-avatar">A</span><span id="admin-username" class="topbar-username">Администратор</span></div>
+      </header>
+      <main id="admin-screen" class="admin-screen" tabindex="-1">
+        <div class="loading-state"><span class="spinner"></span> Загружаем данные панели…</div>
+      </main>
+      <footer class="admin-footer"><span>СКОЛ CMS / ADMIN WORKSPACE</span><span>Изменения сохраняются на сервере</span></footer>
+    </div>
+  </div>
+
+  <div class="admin-toast" id="admin-toast" role="status" aria-live="polite"></div>
+
+  <dialog class="admin-dialog" id="content-dialog" aria-labelledby="content-dialog-title">
+    <form id="content-form" class="dialog-form">
+      <div class="dialog-heading"><div><p class="eyebrow">CONTENT STUDIO / РЕДАКТОР</p><h2 id="content-dialog-title">Новый материал</h2></div><button type="button" class="icon-button" id="close-content-dialog" aria-label="Закрыть редактор">×</button></div>
+      <input type="hidden" id="content-id" name="id">
+      <div class="editor-grid">
+        <label>Тип материала<select id="content-type" name="type" required><option value="article">Публикация</option><option value="project">Кейс портфолио</option><option value="service">Услуга</option></select></label>
+        <label>Статус<select id="content-status" name="status"><option value="draft">Черновик</option><option value="published">Опубликовано</option><option value="archived">В архиве</option></select></label>
+      </div>
+      <label>Заголовок<input id="content-title" name="title" required maxlength="180" placeholder="Название материала"></label>
+      <label>Адрес / slug<input id="content-slug" name="slug" maxlength="100" placeholder="Заполнится из заголовка"></label>
+      <label>Краткое описание<textarea id="content-excerpt" name="excerpt" rows="2" maxlength="800" placeholder="Текст для карточки и анонса"></textarea></label>
+      <label>Основной текст<textarea id="content-body" name="body" rows="6" maxlength="30000" placeholder="Полный текст. Абзацы разделяйте пустой строкой."></textarea></label>
+      <div class="editor-grid">
+        <label>Категория<input id="content-category" name="category" maxlength="100" placeholder="Например: демонтаж"></label>
+        <label class="editor-checkbox"><input id="content-featured" name="featured" type="checkbox"><span>Выделить материал</span></label>
+      </div>
+      <label>URL обложки (HTTPS или локальный путь)<input id="content-cover" name="coverImage" maxlength="1000" placeholder="/media/project-cover.webp"></label>
+      <label>Описание изображения<input id="content-cover-alt" name="coverAlt" maxlength="300" placeholder="Что изображено на фото"></label>
+      <label>URL видео (необязательно)<input id="content-video" name="videoUrl" maxlength="1000" placeholder="https://…"></label>
+      <p class="editor-note">Публикация становится доступна на публичных страницах только после смены статуса на «Опубликовано». Добавление файлов в хранилище пока настраивается отдельно; можно указать URL уже загруженного медиа.</p>
+      <div class="dialog-actions"><button type="button" class="admin-button admin-button-quiet" id="cancel-content">Отмена</button><button type="submit" class="admin-button admin-button-primary"><span>Сохранить материал</span><b>↗</b></button></div>
+      <p class="dialog-error" id="content-form-error" role="alert"></p>
+    </form>
+  </dialog>
+</body>
+</html>
