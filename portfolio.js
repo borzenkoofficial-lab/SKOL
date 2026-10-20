@@ -26,7 +26,7 @@
 
   const searchableText = new Map(cards.map(card => [
     card,
-    normalize(card.textContent + ' ' + (card.dataset.category || '').replace(/\s+/g, ' '))
+    normalize(card.textContent + ' ' + (card.dataset.category || '').replace(/\s+/g, ' ') + ' ' + (card.dataset.keywords || ''))
   ]));
 
   const categoryCounts = () => {
