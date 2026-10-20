@@ -48,12 +48,18 @@
     const name = String(data.get('name') || '').trim();
     const contact = String(data.get('contact') || '').trim();
     const message = String(data.get('message') || '').trim();
+    const service = String(data.get('service') || '').trim();
+    const area = String(data.get('area') || '').trim();
+    const timeline = String(data.get('timeline') || '').trim();
     const subject = encodeURIComponent('Обсуждение объекта — СКОЛ');
     const body = encodeURIComponent(
       'Здравствуйте! Хочу обсудить объект с командой СКОЛ.\n\n' +
       'Имя: ' + name + '\n' +
       'Контакт: ' + contact + '\n' +
-      'Задача: ' + (message || 'Не указана') + '\n'
+      'Направление работ: ' + (service || 'Не выбрано') + '\n' +
+      'Площадь: ' + (area ? area + ' м²' : 'Не указана') + '\n' +
+      'Желаемый старт: ' + (timeline || 'Не определён') + '\n' +
+      'Описание объекта: ' + (message || 'Не указано') + '\n'
     );
     status.textContent = 'Откроется почтовая программа. Для реального приёма заявок нужно подключить серверную отправку.';
     window.location.href = 'mailto:borzenko.official@yandex.ru?subject=' + subject + '&body=' + body;
