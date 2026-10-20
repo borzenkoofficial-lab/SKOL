@@ -81,3 +81,8 @@
 @media(max-width:760px){.pf-feed-controls{align-items:stretch;flex-direction:column;gap:9px}.pf-search-wrap{width:100%}.pf-view-switch{align-self:flex-end}.pf-case-feed.pf-view-grid{grid-template-columns:1fr}.pf-case-feed.pf-view-grid .pf-case-media,.pf-case-feed.pf-view-grid .pf-case-featured .pf-case-media,.pf-case-feed.pf-view-grid .pf-case-wide .pf-case-media{aspect-ratio:1.14}.pf-case-feed.pf-view-grid .pf-case-spec,.pf-case-feed.pf-view-grid .pf-case-featured .pf-case-spec,.pf-case-feed.pf-view-grid .pf-case-wide .pf-case-spec{grid-template-columns:repeat(2,minmax(0,1fr))}.pf-lightbox{width:calc(100vw - 20px);max-height:94svh;padding:11px}.pf-lightbox-stage{padding:12px 0 4px}.pf-lightbox-image{max-height:76svh}.pf-back-top{right:14px;bottom:14px;width:41px;height:41px}}
 @media(max-width:420px){.pf-view-switch{width:100%}.pf-view-switch button{flex:1}.pf-search-wrap input{font-size:10px}.pf-filter-result{font-size:8px}.pf-lightbox-chrome{font-size:7px}.pf-lightbox-close{width:34px;height:34px}}
 @media(prefers-reduced-motion:reduce){.pf-search-wrap,.pf-search-clear,.pf-view-switch button,.pf-back-top{transition:none!important}}
+
+/* Native media controls should remain unobstructed when a real video replaces a mockup. */
+.pf-real-media:is(video){object-fit:contain;background:#111}
+.pf-case-media:has(video.pf-real-media) .pf-media-bottom{display:none}
+.pf-search-wrap input[type="search"]::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none;display:none}
