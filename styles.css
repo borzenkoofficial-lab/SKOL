@@ -73,3 +73,91 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
  .hero-brand::after{bottom:-.18em}
 }
 @media(prefers-reduced-motion:reduce){.hero-geometry{animation:none!important}.hero-brand::after{animation:none!important;transform:scaleX(1)}}
+
+
+/* SITE-WIDE ART DIRECTION — a consistent premium identity beyond the hero */
+:root{--ease:cubic-bezier(.22,.8,.25,1)}
+.section-pad{overflow:hidden}
+.section-label{align-items:center;letter-spacing:.19em;font-size:8px;color:#77746d}
+.section-label>span:first-child{color:var(--clay)}
+.intro{background:linear-gradient(180deg,#f5f3ee 0%,#efede7 100%)}
+.intro-grid{align-items:start}
+.intro h2,.services h2,.projects h2,.contact h2{font-weight:600}
+.intro h2 em,.services h2 em,.projects h2 em,.contact h2 em{color:var(--wine)}
+.intro-copy{border-left:1px solid rgba(201,107,69,.55);padding:3px 0 0 26px}
+.intro-copy .lead{max-width:430px}
+.manifesto{position:relative;padding-top:19px;color:#4e4b46}
+.manifesto span{transition:color .25s}
+.manifesto span:hover{color:var(--clay)}
+.services{background:linear-gradient(135deg,#e9e6de 0%,#f1efe9 52%,#e4e0d7 100%)}
+.services-heading{align-items:end}
+.services-heading>p{border-left:1px solid var(--clay);padding-left:20px}
+.service-list{border-top:1px solid rgba(37,40,43,.28)}
+.service-row{grid-template-columns:52px minmax(0,1fr) 42px;padding:31px 0;transition:padding .35s var(--ease),background .35s,border-color .35s}
+.service-row:hover{padding-left:16px;padding-right:16px;background:rgba(245,243,238,.62);border-color:rgba(201,107,69,.4)}
+.service-no{font-size:9px;letter-spacing:.12em}
+.service-row h3{font-size:clamp(25px,3.15vw,40px);letter-spacing:-.065em}
+.service-row p{max-width:690px;line-height:1.9}
+.service-arrow{width:34px;height:34px;border-color:rgba(37,40,43,.22);transition:transform .35s var(--ease),background .25s,color .25s}
+.process{background:radial-gradient(ellipse at 100% 0%,rgba(201,107,69,.13),transparent 36%),linear-gradient(125deg,#1b1d1e,#25282b 60%,#2b2827)}
+.process-heading{grid-template-columns:1fr .5fr}
+.process-step{position:relative;overflow:hidden;transition:background .3s,padding .3s}
+.process-step::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;background:var(--clay);transition:right .45s var(--ease)}
+.process-step:hover{background:rgba(245,243,238,.035)}
+.process-step:hover::after{right:0}
+.process-step h3{max-width:220px}
+.process-link{display:inline-flex;margin-top:30px}
+.statement{background:radial-gradient(ellipse at 76% 35%,rgba(217,137,103,.2),transparent 30%),linear-gradient(115deg,#351923,#6b2737 58%,#431e29)}
+.statement::after{content:"";position:absolute;right:9%;top:13%;width:clamp(180px,30vw,430px);aspect-ratio:1;border:1px solid rgba(245,243,238,.18);border-radius:50%;box-shadow:0 0 0 28px rgba(245,243,238,.018),0 0 0 56px rgba(245,243,238,.018),inset 0 0 90px rgba(201,107,69,.06);pointer-events:none}
+.statement-content{max-width:850px}
+.statement .eyebrow{font-size:9px;letter-spacing:.19em;color:#e6a184}
+.statement h2{font-weight:600}
+.statement-mark{font-size:clamp(260px,40vw,640px);letter-spacing:-.16em;color:rgba(245,243,238,.045);right:calc(var(--pad) - .1em)}
+.audience{background:#f5f3ee}
+.audience-grid{gap:14px}
+.audience-card{min-height:470px;padding:clamp(28px,4vw,54px);transition:transform .5s var(--ease)}
+.audience-card:hover{transform:translateY(-4px)}
+.b2b{background:linear-gradient(140deg,#e3ddd2,#d5ccbe)}
+.private{background:radial-gradient(ellipse at 85% 10%,rgba(201,107,69,.15),transparent 40%),linear-gradient(140deg,#303233,#222425)}
+.audience-card .eyebrow{font-size:8px;letter-spacing:.17em}
+.audience-card h2{font-size:clamp(42px,5vw,70px);font-weight:600;letter-spacing:-.09em}
+.audience-card p{max-width:360px;line-height:1.95}
+.card-art{width:clamp(190px,22vw,290px);height:clamp(190px,22vw,290px);right:-35px;bottom:-40px}
+.art-grid{border-color:rgba(107,39,55,.48);background:repeating-linear-gradient(0deg,transparent 0 23px,rgba(107,39,55,.38) 24px 25px),repeating-linear-gradient(90deg,transparent 0 23px,rgba(107,39,55,.38) 24px 25px)}
+.projects{background:linear-gradient(180deg,#e8e5de,#f5f3ee)}
+.projects-heading>p{border-left:1px solid var(--clay);padding-left:20px}
+.project-editorial{gap:14px}
+.project-graphic{min-height:510px;padding:26px 30px 32px;transition:transform .5s var(--ease)}
+.project-graphic:hover{transform:translateY(-4px)}
+.graphic-demolition{background:linear-gradient(145deg,#ded7cb,#cec5b7)}
+.graphic-finish{background:radial-gradient(ellipse at 85% 20%,rgba(201,107,69,.13),transparent 40%),linear-gradient(145deg,#303233,#202223)}
+.graphic-meta{font-size:8px;letter-spacing:.16em}
+.project-graphic h3{font-size:clamp(39px,4.6vw,64px);letter-spacing:-.09em}
+.graphic-shape{transition:transform .8s var(--ease)}
+.project-graphic:hover .graphic-shape{transform:rotate(-5deg) translate(-5px,4px)}
+.finish-lines{transition:transform .8s var(--ease)}
+.project-graphic:hover .finish-lines{transform:skewY(-25deg) translateY(-5px)}
+.note{border-left:1px solid var(--clay);padding-left:15px}
+.contact{background:radial-gradient(ellipse at 0% 100%,rgba(107,39,55,.055),transparent 36%),#f7f5f0}
+.contact-copy>p{max-width:390px}
+.contact-meta{border-top:1px solid var(--line);padding-top:17px;align-items:flex-start}
+.contact-form{padding:clamp(24px,3vw,42px);background:#efede7;border:1px solid rgba(37,40,43,.08)}
+.contact-form label{display:block}
+.contact-form input,.contact-form textarea{background:transparent}
+.contact-form .button{margin-top:3px}
+.footer{grid-template-columns:auto 1fr auto auto auto;background:#1d1f20;border-top:1px solid rgba(201,107,69,.5)}
+.footer .wordmark{letter-spacing:-.11em}
+.footer-email:hover,.back-top:hover{color:#e6a184}
+@media(max-width:760px){
+ .intro-copy{padding-left:17px}
+ .services-heading>p,.projects-heading>p{padding-left:15px}
+ .service-row{grid-template-columns:27px minmax(0,1fr) 28px;padding:24px 0}
+ .service-row:hover{padding-left:7px;padding-right:7px}
+ .process-heading{grid-template-columns:1fr}
+ .statement::after{right:-25%;top:20%;width:85vw}
+ .audience-card{min-height:430px}
+ .project-graphic{min-height:440px;padding:22px}
+ .contact-form{padding:22px 18px}
+ .footer{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){.service-row,.service-arrow,.process-step,.audience-card,.project-graphic,.graphic-shape,.finish-lines{transition:none!important}}
