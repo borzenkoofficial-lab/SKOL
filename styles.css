@@ -180,3 +180,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
  .footer .back-top{grid-column:1;grid-row:4;text-align:left}
  .footer .copyright{grid-column:2;grid-row:4;text-align:right}
 }
+
+
+/* PROJECT INTAKE — structured details for a useful first estimate */
+.form-row{display:grid;grid-template-columns:.7fr 1.3fr;gap:22px}
+.contact-form .form-select{display:block;width:100%;appearance:none;border:0;border-bottom:1px solid rgba(37,40,43,.3);border-radius:0;background-color:transparent;background-image:linear-gradient(45deg,transparent 50%,#77766f 50%),linear-gradient(135deg,#77766f 50%,transparent 50%);background-position:calc(100% - 5px) 21px,calc(100% - 1px) 21px;background-size:4px 4px,4px 4px;background-repeat:no-repeat;padding:14px 20px 14px 0;color:var(--ink);outline:none;font-size:12px;letter-spacing:0;transition:border-color .25s}
+.contact-form .form-select:focus{border-color:var(--clay)}
+.contact-form .form-select:invalid{color:#a09d95}
+@media(max-width:760px){.form-row{grid-template-columns:1fr;gap:27px}}
