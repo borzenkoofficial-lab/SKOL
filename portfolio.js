@@ -247,6 +247,8 @@
         card,
         normalize(card.textContent + " " + (card.dataset.category || "") + " " + (card.dataset.keywords || ""))
       ]));
+      const feedIntro = document.querySelector(".pf-feed-heading > p");
+      if (feedIntro) feedIntro.textContent = "Показаны опубликованные кейсы из CMS. Фильтры помогают отобрать записи по направлению; обложка и видео загружаются из материала, если они добавлены.";
       const demoNotice = document.querySelector(".pf-demo-notice");
       if (demoNotice) demoNotice.hidden = true;
       const integrityNote = document.querySelector(".pf-integrity p");
