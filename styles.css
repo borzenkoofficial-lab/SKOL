@@ -904,3 +904,34 @@ main>section:not(.hero)>.ambient-art .ambient-ring{
     right:5%!important;
   }
 }
+
+
+/* HERO -> INTRO GLYPH CONTINUITY — share the same orbital axis as the intro seam */
+.hero-ambient-art{
+  position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  color:rgba(208,161,124,.13);
+}
+.hero-seam-ring{
+  position:absolute;display:block;
+  width:clamp(180px,29vw,440px);aspect-ratio:1;
+  right:7%;bottom:calc(clamp(180px,29vw,440px) / -2);
+  border:1px solid rgba(208,161,124,.12);border-radius:50%;
+  box-shadow:0 0 0 22px rgba(208,161,124,.018),0 0 0 58px rgba(208,161,124,.012),inset 0 0 60px rgba(208,161,124,.018);
+}
+.hero-seam-ring::before,.hero-seam-ring::after{
+  content:"";position:absolute;inset:13%;border:1px solid rgba(208,161,124,.10);border-radius:50%;
+}
+.hero-seam-ring::after{inset:30%;border-style:dashed;opacity:.65}
+.hero-seam-letter{
+  position:absolute;right:8%;bottom:clamp(70px,10vw,150px);
+  font:400 clamp(130px,22vw,330px)/.8 Georgia,"Times New Roman",serif;
+  letter-spacing:-.09em;color:rgba(208,161,124,.035);user-select:none;
+}
+.hero-premium .hero-content,.hero-premium .hero-topline,.hero-premium .hero-side-note,
+.hero-premium .hero-index,.hero-premium .hero-bottom-rule{position:absolute;z-index:3}
+.hero-premium .hero-index,.hero-premium .hero-bottom-rule{z-index:4}
+@media(max-width:760px){
+  .hero-seam-ring{width:clamp(150px,42vw,260px);right:5%;bottom:calc(clamp(150px,42vw,260px) / -2)}
+  .hero-seam-letter{right:4%;bottom:90px;font-size:clamp(110px,30vw,190px)}
+}
+@media(prefers-reduced-motion:reduce){.hero-seam-ring,.hero-seam-letter{will-change:auto}}
