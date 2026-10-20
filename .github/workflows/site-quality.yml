@@ -1,0 +1,76 @@
+name: Site quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check JavaScript syntax
+        run: node --check script.js
+
+      - name: Check HTML anchors, local assets and design guardrails
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const html = fs.readFileSync('index.html', 'utf8');
+          const css = fs.readFileSync('styles.css', 'utf8');
+          const js = fs.readFileSync('script.js', 'utf8');
+
+          const fail = message => {
+            console.error('FAIL:', message);
+            process.exitCode = 1;
+          };
+          const ids = [...html.matchAll(/\\bid=["']([^"']+)["']/g)].map(match => match[1]);
+          const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
+          if (duplicates.length) fail('Duplicate HTML ids: ' + [...new Set(duplicates)].join(', '));
+
+          const idSet = new Set(ids);
+          const anchors = [...html.matchAll(/\\bhref=["']#([^"']+)["']/g)].map(match => match[1]);
+          const broken = [...new Set(anchors.filter(id => !idSet.has(id)))];
+          if (broken.length) fail('Broken local anchors: ' + broken.join(', '));
+
+          for (const asset of ['favicon.svg', 'styles.css', 'script.js']) {
+            if (!fs.existsSync(asset)) fail('Missing local asset: ' + asset);
+          }
+
+          const openBraces = (css.match(/\\{/g) || []).length;
+          const closeBraces = (css.match(/\\}/g) || []).length;
+          if (openBraces !== closeBraces) fail('CSS brace count differs: ' + openBraces + ' opening vs ' + closeBraces + ' closing');
+
+          const requiredCss = [
+            ['mobile breakpoint', /@media\\s*\\(max-width:\\s*760px\\)/],
+            ['reduced-motion support', /prefers-reduced-motion\\s*:\\s*reduce/],
+            ['coarse-pointer guard', /pointer:\\s*coarse/],
+            ['horizontal overflow guard', /overflow-x:\\s*clip/],
+            ['blueprint grid', /Blueprint texture/],
+            ['shared abstract transition', /HERO -> INTRO GLYPH CONTINUITY/],
+          ];
+          for (const [name, pattern] of requiredCss) {
+            if (!pattern.test(css)) fail('Missing CSS guardrail: ' + name);
+          }
+
+          if (!/Restrained pointer response for cards/.test(js)) fail('Card microinteraction handler is missing');
+          if (!/prefers-reduced-motion/.test(js)) fail('JavaScript reduced-motion check is missing');
+          if (!/hero-premium \\.hero-image/.test(css) || !/display:none!important/.test(css)) {
+            fail('Hero photography suppression rule may be missing');
+          }
+
+          if (!process.exitCode) console.log('PASS: JavaScript syntax, anchors, assets, CSS structure and design guardrails.');
+          NODE
