@@ -419,7 +419,9 @@ app.put("/api/admin/settings", checkOrigin, requireAdmin, (req, res) => {
 app.get("/admin", (_req, res) => res.redirect(302, "/admin.html"));
 app.use((req, res, next) => {
   const normalized = path.posix.normalize(req.path);
-  if (normalized === "/var" || normalized.startsWith("/var/") || normalized === "/data" || normalized.startsWith("/data/")) return res.status(404).end();
+  const privatePrefixes = ["/var", "/data", "/node_modules", "/.git"];
+  const privateFiles = new Set(["/server.js", "/package.json", "/package-lock.json", "/README.md", "/.env", "/.gitignore"]);
+  if (privateFiles.has(normalized) || privatePrefixes.some(prefix => normalized === prefix || normalized.startsWith(prefix + "/"))) return res.status(404).end();
   next();
 });
 app.use(express.static(__dirname, { dotfiles: "deny", index: "index.html", etag: true, maxAge: isProduction ? "1h" : 0 }));
