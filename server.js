@@ -11,7 +11,10 @@ import helmet from "helmet";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const isProduction = process.env.NODE_ENV === "production";
+const demoMode = process.env.SKOL_DEMO_MODE === "1";
 const port = Number(process.env.PORT || 3000);
+const host = process.env.HOST || (isProduction ? "0.0.0.0" : "127.0.0.1");
+if (demoMode && isProduction) throw new Error("SKOL_DEMO_MODE cannot run with NODE_ENV=production.");
 const dataDir = path.resolve(process.env.DATA_DIR || path.join(__dirname, "var"));
 const databasePath = path.resolve(process.env.DATABASE_PATH || path.join(dataDir, "skol.sqlite"));
 const adminUsername = String(process.env.ADMIN_USERNAME || "").trim();
@@ -67,6 +70,57 @@ if (!serviceSeed) {
     }
     db.prepare("INSERT INTO system_meta(key,value) VALUES('core_services_seeded','true')").run();
   })();
+}
+
+if (demoMode) {
+  const demoSeeded = db.prepare("SELECT value FROM system_meta WHERE key='demo_content_seeded'").get();
+  if (!demoSeeded) {
+    const timestamp = now();
+    const sampleContent = [
+      {
+        type: "article", slug: "demo-smeta-demontazh", title: "ДЕМО: Из чего складывается смета на демонтаж",
+        category: "Демо / Практика",
+        excerpt: "Учебный пример материала о факторах расчёта. Текст и сценарий условные, не являются коммерческим предложением.",
+        body: "ДЕМОНСТРАЦИОННЫЙ МАТЕРИАЛ — НЕ ФАКТИЧЕСКИЙ КЕЙС СКОЛ.\n\nСмета начинается с перечня конструкций и покрытий, которые действительно нужно удалить. Для каждой позиции важно определить единицу измерения, материал, толщину и объём.\n\n## Что требуется уточнить\n\n- Фактический состав конструкций и покрытий.\n- Доступ к рабочей зоне, этажность, наличие лифта и маршрут выноса.\n- Условия сбора, временного хранения и вывоза отходов.\n- Работы, которые должны сохраниться и не должны быть затронуты.\n\n## Вывод\n\nЭтот текст — макет публикации. При реальном расчёте объёмы, расценки и условия подтверждаются по конкретному объекту.",
+        featured: 1
+      },
+      {
+        type: "article", slug: "demo-podgotovka-osnovaniya", title: "ДЕМО: Что проверить до подготовки основания",
+        category: "Демо / Контроль качества",
+        excerpt: "Пример редакционного материала о первичном осмотре. Не подтверждает выполнение конкретного объекта.",
+        body: "ДЕМОНСТРАЦИОННЫЙ МАТЕРИАЛ — НЕ ФАКТИЧЕСКИЙ КЕЙС СКОЛ.\n\nДо начала подготовки основания нужно зафиксировать его состояние и согласовать, какой результат требуется получить.\n\n## Контрольные вопросы\n\n- Есть ли непрочные, отслаивающиеся или загрязнённые слои?\n- Есть ли ограничения по пыли, шуму и времени работ?\n- Какое состояние основания принимает следующий исполнитель?\n- Какие участки требуют отдельного согласования?\n\nПосле осмотра перечень операций фиксируется в задании. Это учебный текст без сведений о реальном объекте.",
+        featured: 0
+      },
+      {
+        type: "project", slug: "demo-commercial-demolition", title: "ДЕМО-КЕЙС: Демонтаж коммерческого помещения",
+        category: "demolition",
+        excerpt: "Учебная карточка для проверки портфолио. Вымышленный сценарий, не реальный объект и не подтверждённый результат.",
+        body: "ДЕМОНСТРАЦИОННЫЙ КЕЙС — НЕ РЕАЛЬНЫЙ ОБЪЕКТ.\n\n## Условная задача\n\nОсвободить согласованную зону от ненесущих перегородок и старых покрытий перед следующим этапом работ.\n\n## Пример состава описания\n\nВ кейсе следует показать исходное состояние, утверждённый перечень демонтажа, организацию доступа и выноса, а затем фактический результат.\n\n## Что заменить перед реальной публикацией\n\nВнести подтверждённую информацию об объекте, фактических работах и сроках, а также загрузить фото до, во время и после работ. Этот пример не описывает реально завершённый проект.",
+        featured: 1
+      },
+      {
+        type: "project", slug: "demo-surface-preparation", title: "ДЕМО-КЕЙС: Подготовка поверхности",
+        category: "preparation",
+        excerpt: "Учебная карточка с примером структуры кейса «до / процесс / после». Не реальный проект СКОЛ.",
+        body: "ДЕМОНСТРАЦИОННЫЙ КЕЙС — НЕ РЕАЛЬНЫЙ ОБЪЕКТ.\n\n## Условная задача\n\nПодготовить поверхность к дальнейшему согласованному этапу. Точный список операций определяется фактическим состоянием основания.\n\n## Как оформлять реальный кейс\n\nПоказать исходную поверхность без ретуши, перечислить только выполненные операции, добавить фото деталей и зафиксировать критерии готовности к передаче следующему исполнителю.\n\nЭтот текст нужен для тестирования CMS и должен быть заменён фактическими данными перед использованием в публичном портфолио.",
+        featured: 0
+      }
+    ];
+    const insert = db.prepare("INSERT OR IGNORE INTO content(type,title,slug,excerpt,body,category,cover_image,cover_alt,video_url,status,featured,created_at,updated_at,published_at) VALUES(?,?,?,?,?,?, '','','','published',?,?,?,?)");
+    const insertLead = db.prepare("INSERT INTO leads(name,contact,service,area,timeline,message,source,status,created_at,updated_at) VALUES(?,?,?,?,?,?,'demo',?,?,?)");
+    db.transaction(() => {
+      for (const item of sampleContent) {
+        insert.run(item.type, item.title, item.slug, item.excerpt, item.body, item.category, item.featured ? 1 : 0, timestamp, timestamp, timestamp);
+      }
+      const samples = [
+        { name: "ДЕМО — Алексей", contact: "+7 900 000-00-01", service: "Демонтаж", area: "120", timeline: "В течение месяца", message: "ТЕСТОВАЯ ЗАЯВКА. Условный объект, использовать только для проверки админ-панели.", status: "new" },
+        { name: "ДЕМО — Мария", contact: "demo@example.com", service: "Подготовка помещений", area: "85", timeline: "Пока не определено", message: "ТЕСТОВАЯ ЗАЯВКА. Пример обращения по подготовке основания.", status: "in_progress" },
+        { name: "ДЕМО — ООО «Пример»", contact: "@demo_company", service: "Технические полы", area: "240", timeline: "Как можно скорее", message: "ТЕСТОВАЯ B2B-ЗАЯВКА. Демонстрационные данные, не реальный клиент.", status: "qualified" }
+      ];
+      for (const lead of samples) insertLead.run(lead.name, lead.contact, lead.service, lead.area, lead.timeline, lead.message, lead.status, timestamp, timestamp);
+      db.prepare("INSERT INTO system_meta(key,value) VALUES('demo_content_seeded','true')").run();
+    })();
+  }
 }
 
 class SQLiteSessionStore extends session.Store {
@@ -458,8 +512,8 @@ app.use((error, _req, res, _next) => {
 const cleanupExpiredSessions = () => db.prepare("DELETE FROM sessions WHERE expires <= ?").run(Date.now());
 const cleanupTimer = setInterval(cleanupExpiredSessions, 60 * 60 * 1000);
 cleanupTimer.unref();
-const server = app.listen(port, () => {
-  console.log("СКОЛ site/API listening on port " + port);
+const server = app.listen(port, host, () => {
+  console.log("СКОЛ site/API listening at http://" + host + ":" + port);
   console.log("SQLite database: " + databasePath);
   console.log("Admin login is configured from environment variables; secrets are not printed.");
 });
