@@ -1276,3 +1276,7 @@ img,svg,video,canvas{max-width:100%}
  .intro>.skol-quote-left,.process>.skol-quote-left,.audience>.skol-quote-left,.contact>.skol-quote-left{display:none!important}
  .statement>.skol-quote-right{display:block!important;max-width:75vw;top:4%;right:5%;font-size:25px;opacity:.10}
 }
+
+
+/* Link treatment for the detailed service entry on the home page. */
+.service-row-cta{display:inline-block;margin-top:14px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:#8d4934;border-bottom:1px solid rgba(182,138,98,.55);padding-bottom:5px}.service-row:focus-visible{outline:2px solid var(--clay);outline-offset:5px}.service-row-cta:hover{color:var(--wine)}
