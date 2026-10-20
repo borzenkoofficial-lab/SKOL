@@ -935,3 +935,132 @@ main>section:not(.hero)>.ambient-art .ambient-ring{
   .hero-seam-letter{right:4%;bottom:90px;font-size:clamp(110px,30vw,190px)}
 }
 @media(prefers-reduced-motion:reduce){.hero-seam-ring,.hero-seam-letter{will-change:auto}}
+
+
+/* SKOL DESIGN SYSTEM FINISH — blueprint grid, shared monogram language, refined interactions, mobile guardrails */
+:root{
+  --skol-bronze:#d0a17c;
+  --skol-bronze-soft:rgba(208,161,124,.2);
+  --skol-grid:rgba(208,161,124,.055);
+  --skol-line:rgba(208,161,124,.24);
+  --skol-focus:#e7b894;
+}
+/* Blueprint texture: one consistent drafting grid, deliberately behind content. */
+.hero-premium::before{
+  background:
+    linear-gradient(90deg,transparent calc(50% - .5px),rgba(245,243,238,.07) 50%,transparent calc(50% + .5px)),
+    repeating-linear-gradient(0deg,var(--skol-grid) 0 1px,transparent 1px 44px),
+    repeating-linear-gradient(90deg,var(--skol-grid) 0 1px,transparent 1px 44px);
+  background-size:100% 100%,44px 44px,44px 44px;
+  opacity:.52;
+}
+main>section:not(.hero)>.ambient-art{
+  background-image:
+    repeating-linear-gradient(0deg,transparent 0 43px,rgba(208,161,124,.025) 43px 44px),
+    repeating-linear-gradient(90deg,transparent 0 43px,rgba(208,161,124,.025) 43px 44px);
+  background-position:50% 50%;
+  -webkit-mask-image:linear-gradient(115deg,transparent 0%,#000 24%,#000 76%,transparent 100%);
+  mask-image:linear-gradient(115deg,transparent 0%,#000 24%,#000 76%,transparent 100%);
+}
+/* Unified technical index, labels and separators. */
+.section-label{position:relative;align-items:center;gap:16px}
+.section-label span:first-child{
+  display:inline-grid;place-items:center;min-width:30px;height:26px;padding:0 6px;
+  border:1px solid var(--skol-line);color:var(--clay);font-variant-numeric:tabular-nums;
+}
+.section-label::after{
+  content:"";position:absolute;left:0;top:-1px;width:clamp(64px,9vw,130px);height:1px;
+  background:linear-gradient(90deg,var(--clay),transparent);transform-origin:left;
+  transition:width .45s var(--ease);
+}
+.section-pad:hover>.section-label::after{width:clamp(100px,16vw,220px)}
+.process-step{position:relative;overflow:hidden}
+.process-step::before{
+  content:"";position:absolute;right:18px;top:22px;width:18px;height:18px;
+  background:linear-gradient(90deg,transparent 48%,rgba(208,161,124,.38) 49%,rgba(208,161,124,.38) 51%,transparent 52%),
+             linear-gradient(0deg,transparent 48%,rgba(208,161,124,.38) 49%,rgba(208,161,124,.38) 51%,transparent 52%);
+  opacity:.7;transition:transform .45s var(--ease),opacity .45s;
+}
+.process-step:hover::before{transform:rotate(45deg) scale(1.18);opacity:1}
+.service-row,.audience-card,.project-graphic{--art-x:0px;--art-y:0px}
+.card-art,.graphic-shape,.finish-lines{
+  translate:var(--art-x,0px) var(--art-y,0px);
+  transition:translate .5s var(--ease),transform .8s var(--ease),opacity .5s;
+}
+.button,.header-cta,.hero-secondary,.text-link,.contact-direct a,.footer a{
+  transition:color .25s var(--ease),background-color .25s var(--ease),border-color .25s var(--ease);
+}
+.button{position:relative;overflow:hidden}
+.button span,.hero-secondary span,.text-link span,.contact-direct a span,.header-cta span{
+  display:inline-block;transition:transform .3s var(--ease),color .25s var(--ease);
+}
+.button:hover span,.hero-secondary:hover span,.text-link:hover span,.contact-direct a:hover span,.header-cta:hover span{
+  transform:translate(3px,-2px);
+}
+.button::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+  background:rgba(255,255,255,.38);transform:scaleX(0);transform-origin:left;
+  transition:transform .35s var(--ease);
+}
+.button:hover::after{transform:scaleX(1)}
+.text-link{position:relative}
+.text-link::after{
+  content:"";position:absolute;left:0;bottom:-1px;width:100%;height:1px;
+  background:var(--clay);transform:scaleX(0);transform-origin:left;
+  transition:transform .35s var(--ease);
+}
+.text-link:hover::after{transform:scaleX(1)}
+.nav a{position:relative}
+.nav a::after{
+  content:"";position:absolute;left:0;right:0;bottom:-8px;height:1px;
+  background:var(--skol-bronze);transform:scaleX(0);transform-origin:left;
+  transition:transform .3s var(--ease);
+}
+.nav a:hover::after,.nav a[aria-current="location"]::after{transform:scaleX(1)}
+.audience-card,.project-graphic{transform-style:preserve-3d}
+.audience-card::before,.project-graphic::before{
+  content:"";position:absolute;inset:12px;border:1px solid rgba(208,161,124,.0);
+  pointer-events:none;transition:border-color .4s var(--ease),inset .4s var(--ease);
+}
+.audience-card:hover::before,.project-graphic:hover::before{inset:8px;border-color:rgba(208,161,124,.28)}
+.graphic-meta{font-variant-numeric:tabular-nums}
+.service-no,.process-index,.graphic-meta,.hero-topline,.hero-index{font-variant-numeric:tabular-nums}
+/* Monogram language: repeat the same measured rings, line weight and bronze tone. */
+.statement-mark{font-family:Manrope,Arial,sans-serif;letter-spacing:-.14em;color:rgba(208,161,124,.075)}
+.ambient-letter{color:rgba(208,161,124,.047)}
+.ambient-ring{border-color:rgba(208,161,124,.16);box-shadow:0 0 0 22px rgba(208,161,124,.022),0 0 0 58px rgba(208,161,124,.014),inset 0 0 60px rgba(208,161,124,.02)}
+.ambient-ring::before,.ambient-ring::after{border-color:rgba(208,161,124,.12)}
+.hero-seam-ring{border-color:rgba(208,161,124,.15)}
+/* Mobile is art-directed separately: less clutter, comfortable reading, no sideways drift. */
+html,body{max-width:100%;overflow-x:clip}
+img,svg,video,canvas{max-width:100%}
+@media(max-width:760px){
+  .hero-premium::before{background-size:100% 100%,30px 30px,30px 30px;opacity:.36}
+  main>section:not(.hero)>.ambient-art{
+    background-size:30px 30px,30px 30px;
+    -webkit-mask-image:linear-gradient(180deg,transparent,#000 18%,#000 82%,transparent);
+    mask-image:linear-gradient(180deg,transparent,#000 18%,#000 82%,transparent);
+  }
+  .section-label{gap:10px;font-size:8px;letter-spacing:.12em}
+  .section-label span:first-child{min-width:27px;height:23px}
+  .section-label::after{width:58px}
+  .hero-premium .hero-content{top:clamp(190px,25vh,245px)}
+  .hero-brand{font-size:clamp(94px,23.5vw,168px);max-width:100%;letter-spacing:-.12em}
+  .hero-pitch{margin-top:clamp(30px,8vw,42px)}
+  .hero-pitch h2{max-width:15ch}
+  .hero-pitch>p{max-width:34ch;line-height:1.85}
+  .hero-actions{align-items:flex-start}
+  .button{min-height:50px}
+  .process-step::before{right:10px;top:16px;width:13px;height:13px}
+  .project-graphic,.audience-card{isolation:isolate}
+  .audience-card::before,.project-graphic::before{inset:8px}
+  .ambient-letter{opacity:.75}
+}
+@media(hover:none),(pointer:coarse){
+  .section-pad:hover>.section-label::after{width:clamp(64px,9vw,130px)}
+  .audience-card:hover::before,.project-graphic:hover::before{inset:12px;border-color:rgba(208,161,124,0)}
+  .button:hover span,.hero-secondary:hover span,.text-link:hover span,.contact-direct a:hover span,.header-cta:hover span{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .section-label::after,.process-step::before,.card-art,.graphic-shape,.finish-lines,.button span,.hero-secondary span,.text-link span,.contact-direct a span,.header-cta span,.button::after,.text-link::after,.nav a::after{transition:none!important}
+}
