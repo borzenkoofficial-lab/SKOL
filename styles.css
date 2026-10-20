@@ -767,3 +767,63 @@ main>section:not(.hero)+section:not(.hero)::before{
 @media(prefers-reduced-motion:reduce){
   main::before{scroll-behavior:auto}
 }
+
+
+
+/* LIVING ABSTRACT FIELD — restrained brand glyphs throughout the page */
+main>section:not(.hero){overflow:hidden}
+main>section:not(.hero)>.ambient-art{
+  position:absolute;z-index:0;inset:0;overflow:hidden;pointer-events:none;contain:paint;color:rgba(208,161,124,.13);
+}
+main>section:not(.hero)>.ambient-art~*{position:relative;z-index:1}
+.ambient-art span{position:absolute;display:block;will-change:transform}
+.ambient-letter{
+  font-family:Georgia,"Times New Roman",serif;font-weight:400;line-height:.8;letter-spacing:-.09em;
+  color:rgba(208,161,124,.055);font-size:clamp(180px,28vw,430px);user-select:none;
+  animation:glyph-drift 24s ease-in-out infinite alternate;
+}
+.ambient-ring{
+  width:clamp(180px,29vw,440px);aspect-ratio:1;border:1px solid rgba(208,161,124,.17);border-radius:50%;
+  box-shadow:0 0 0 22px rgba(208,161,124,.025),0 0 0 58px rgba(208,161,124,.018),inset 0 0 60px rgba(208,161,124,.025);
+  animation:ring-drift 32s linear infinite;
+}
+.ambient-ring::before,.ambient-ring::after{content:"";position:absolute;inset:13%;border:1px solid rgba(208,161,124,.13);border-radius:50%}
+.ambient-ring::after{inset:30%;border-style:dashed;opacity:.7}
+.ambient-cross{
+  width:clamp(100px,17vw,240px);aspect-ratio:1;
+  background:linear-gradient(90deg,transparent 49.7%,rgba(208,161,124,.22) 49.9%,rgba(208,161,124,.22) 50.1%,transparent 50.3%),linear-gradient(0deg,transparent 49.7%,rgba(208,161,124,.22) 49.9%,rgba(208,161,124,.22) 50.1%,transparent 50.3%);
+  opacity:.8;transform:rotate(17deg);
+}
+.ambient-orbit{width:clamp(220px,36vw,520px);height:clamp(90px,14vw,190px);border:1px solid rgba(208,161,124,.15);border-radius:50%;transform:rotate(-28deg);animation:orbit-breathe 13s ease-in-out infinite alternate}
+.ambient-orbit::before,.ambient-orbit::after{content:"";position:absolute;border:1px solid rgba(208,161,124,.12);border-radius:50%;inset:-14px 18px}
+.ambient-orbit::after{inset:-29px 45px;border-style:dashed;opacity:.65}
+.ambient-intro .ambient-ring{right:-5%;top:10%}
+.ambient-intro .ambient-letter{right:4%;top:19%;transform:rotate(-10deg)}
+.ambient-intro .ambient-cross{left:8%;bottom:12%}
+.ambient-services .ambient-ring{left:-10%;top:15%}
+.ambient-services .ambient-letter{right:-1%;bottom:5%;transform:rotate(9deg)}
+.ambient-services .ambient-orbit{right:8%;top:23%}
+.ambient-process .ambient-ring{right:-7%;bottom:-22%}
+.ambient-process .ambient-letter{left:3%;top:7%;transform:rotate(-8deg)}
+.ambient-process .ambient-cross{right:15%;top:20%}
+.ambient-statement .ambient-ring{left:-7%;top:-20%}
+.ambient-statement .ambient-letter{right:0;top:0;font-size:clamp(160px,24vw,360px)}
+.ambient-statement .ambient-orbit{left:16%;bottom:10%}
+.ambient-audience .ambient-ring{right:-10%;top:-14%}
+.ambient-audience .ambient-letter{left:0;bottom:0}
+.ambient-audience .ambient-cross{right:12%;bottom:14%}
+.ambient-projects .ambient-ring{left:34%;top:7%}
+.ambient-projects .ambient-letter{right:-4%;top:12%}
+.ambient-projects .ambient-orbit{left:-4%;bottom:8%}
+.ambient-contact .ambient-ring{right:-4%;top:-25%;border-color:rgba(232,195,164,.19)}
+.ambient-contact .ambient-letter{left:0;bottom:0;font-size:clamp(130px,20vw,300px);letter-spacing:-.1em}
+.ambient-contact .ambient-cross{right:16%;bottom:14%}
+@keyframes glyph-drift{0%{translate:0 0;rotate:-4deg}100%{translate:0 -18px;rotate:2deg}}
+@keyframes ring-drift{0%{transform:rotate(0deg) scale(.98)}50%{transform:rotate(180deg) scale(1.015)}100%{transform:rotate(360deg) scale(.98)}}
+@keyframes orbit-breathe{0%{transform:rotate(-28deg) scale(.96);opacity:.45}100%{transform:rotate(-19deg) scale(1.04);opacity:1}}
+@media(max-width:760px){
+  .ambient-letter{font-size:clamp(150px,42vw,260px)}.ambient-ring{width:clamp(150px,42vw,260px)}.ambient-cross{width:100px}
+  .ambient-intro .ambient-letter{right:-10%;top:28%}.ambient-services .ambient-letter{right:-12%}
+  .ambient-process .ambient-letter{left:-12%;top:5%}.ambient-statement .ambient-letter{right:-12%}.ambient-contact .ambient-letter{left:-8%}
+}
+@media(prefers-reduced-motion:reduce){.ambient-letter,.ambient-ring,.ambient-orbit{animation:none!important;will-change:auto}}
