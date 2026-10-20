@@ -1198,3 +1198,81 @@ img,svg,video,canvas{max-width:100%}
   /* On narrow screens there is no dependable negative space beside the content. */
   .skol-quote{display:none!important}
 }
+
+
+/* SKOL quote legibility refinement: visible at a glance, still clearly background typography */
+.skol-quote{
+  font-size:clamp(26px,2.6vw,38px);
+  font-weight:750;
+  line-height:1.02;
+  letter-spacing:-.055em;
+  opacity:.09;
+  text-shadow:0 1px 0 rgba(0,0,0,.035);
+}
+.skol-quote::before{font-size:1.05em;opacity:.75}
+.hero-premium>.skol-quote-hero{
+  width:clamp(170px,17vw,235px);
+  max-width:235px;
+  font-size:clamp(24px,2.2vw,32px);
+  font-weight:750;
+  opacity:.13;
+}
+.system-bridge>.skol-quote-right{
+  max-width:220px;
+  font-size:clamp(24px,2.2vw,31px);
+  font-weight:750;
+  opacity:.075;
+}
+.intro>.skol-quote-left{
+  max-width:205px;
+  font-size:clamp(24px,2.1vw,30px);
+  font-weight:750;
+  opacity:.09;
+}
+.services>.skol-quote-right{
+  max-width:225px;
+  font-size:clamp(25px,2.25vw,32px);
+  font-weight:750;
+  opacity:.085;
+}
+.process>.skol-quote-left{
+  max-width:210px;
+  font-size:clamp(24px,2.15vw,31px);
+  font-weight:750;
+  opacity:.085;
+}
+.statement>.skol-quote-right{
+  max-width:230px;
+  font-size:clamp(26px,2.35vw,34px);
+  font-weight:750;
+  opacity:.12;
+}
+.audience>.skol-quote-left{
+  max-width:210px;
+  font-size:clamp(24px,2.15vw,31px);
+  font-weight:750;
+  opacity:.09;
+}
+.projects>.skol-quote-right{
+  max-width:225px;
+  font-size:clamp(24px,2.2vw,32px);
+  font-weight:750;
+  opacity:.09;
+}
+.contact>.skol-quote-left{
+  max-width:230px;
+  font-size:clamp(24px,2.2vw,32px);
+  font-weight:750;
+  opacity:.085;
+}
+@media(max-width:1100px){
+ .system-bridge>.skol-quote-right{font-size:23px;opacity:.07}
+ .services>.skol-quote-right,.projects>.skol-quote-right{font-size:23px;opacity:.07}
+}
+@media(max-width:760px){
+ .skol-quote{display:block!important;font-size:clamp(24px,6.4vw,31px);font-weight:750;opacity:.075;max-width:72vw}
+ .hero-premium>.skol-quote-hero{display:none}
+ .system-bridge>.skol-quote-right,.services>.skol-quote-right,.projects>.skol-quote-right{display:none!important}
+ .intro>.skol-quote-left,.process>.skol-quote-left,.audience>.skol-quote-left,.contact>.skol-quote-left{display:none!important}
+ .statement>.skol-quote-right{display:block!important;max-width:75vw;top:4%;right:5%;font-size:25px;opacity:.10}
+}
