@@ -21,11 +21,20 @@ jobs:
           test -f index.html
           test -f styles.css
           test -f script.js
+          test -f favicon.svg
       - name: Check JavaScript syntax
         run: node --check script.js
-      - name: Check key site content and brand colors
+      - name: Check HTML structure and key content
         run: |
+          grep -qi '<html lang="ru">' index.html
+          grep -q 'id="main"' index.html
+          grep -q 'id="contact-form"' index.html
+          grep -q 'name="description"' index.html
+          grep -q 'favicon.svg' index.html
           grep -q 'СКОЛ' index.html
+      - name: Check brand colors and reduced-motion support
+        run: |
           grep -q '#25282b' styles.css
           grep -q '#f5f3ee' styles.css
           grep -q '#c96b45' styles.css
+          grep -q 'prefers-reduced-motion' styles.css
