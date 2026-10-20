@@ -682,133 +682,57 @@ main>section:not(.hero) .button-light:hover{background:var(--section-brass);colo
 }
 
 
-/* SOFT SECTION HANDOFFS — eliminate hard color breaks between page blocks */
-:root{
-  --handoff-charcoal:#202122;
-  --handoff-charcoal-warm:#292426;
-  --handoff-wine:#48202d;
-  --handoff-burgundy:#572233;
-  --handoff-brass:rgba(208,161,124,.22);
-}
-/* Each adjacent section overlaps visually through broad, low-contrast gradients.
-   The gradients stay inside their sections so layout and scroll behavior remain unchanged. */
-main>section:not(.hero){
+/* CONTINUOUS PAGE CANVAS — one uninterrupted color field while scrolling */
+main{
   position:relative;
   isolation:isolate;
-  overflow:clip;
+  background:transparent;
 }
-main>section:not(.hero)::after{
+main::before{
   content:"";
   position:absolute;
-  z-index:3;
+  z-index:-1;
+  inset:0;
   pointer-events:none;
-  left:0;right:0;bottom:-1px;height:clamp(72px,10vw,148px);
-  opacity:.82;
-  background:linear-gradient(180deg,transparent 0%,rgba(32,33,34,.12) 35%,rgba(32,33,34,.34) 72%,rgba(32,33,34,.5) 100%);
+  background:
+    radial-gradient(ellipse at 84% 18%,rgba(208,161,124,.045),transparent 28%),
+    radial-gradient(ellipse at 12% 63%,rgba(107,39,55,.075),transparent 34%),
+    linear-gradient(180deg,
+      #202122 0%,
+      #222324 22%,
+      #262426 39%,
+      #302427 54%,
+      #3b222b 68%,
+      #48202d 84%,
+      #572233 94%,
+      #48202d 100%);
+}
+/* Sections share the same canvas. No per-section background plates = no horizontal seams. */
+main>section:not(.hero){
+  background:transparent!important;
+  position:relative;
+  isolation:isolate;
+}
+/* Remove only the transition overlays that were creating competing color bands.
+   Section-specific decorative pseudo-elements remain available. */
+main>section:not(.hero)::after{
+  background:none!important;
+  opacity:0!important;
+  pointer-events:none;
 }
 main>section:not(.hero)+section:not(.hero)::before{
-  content:"";
-  position:absolute;
-  z-index:2;
+  background:none!important;
+  opacity:0!important;
   pointer-events:none;
-  top:-1px;left:0;right:0;height:clamp(90px,12vw,180px);
-  background:linear-gradient(180deg,rgba(32,33,34,.28) 0%,rgba(32,33,34,.12) 30%,transparent 100%);
-  opacity:.75;
 }
-/* Intro -> services: charcoal carries through, with no visible horizontal seam */
-.intro{
-  background:
-    radial-gradient(ellipse at 84% 14%,rgba(182,138,98,.075),transparent 32%),
-    linear-gradient(180deg,#1f2021 0%,#222324 54%,#252526 100%);
-}
-.intro::after{
-  height:clamp(100px,13vw,190px);
-  background:linear-gradient(180deg,transparent 0%,rgba(35,35,36,.35) 46%,#252526 100%);
-}
-/* Services -> process: dark surfaces dissolve into one another */
-.services{
-  background:
-    radial-gradient(ellipse at 88% 6%,rgba(107,39,55,.12),transparent 36%),
-    linear-gradient(180deg,#252526 0%,#242425 54%,#222324 100%);
-}
-.services::before{
-  background:linear-gradient(180deg,#252526 0%,rgba(37,37,38,.45) 50%,transparent 100%)!important;
-}
-.services::after{
-  background:linear-gradient(180deg,transparent 0%,rgba(32,33,34,.25) 45%,#202122 100%);
-}
-/* Process remains the visual anchor; soften its top and bottom edges */
-.process{
-  background:
-    radial-gradient(ellipse at 10% 100%,rgba(182,138,98,.09),transparent 36%),
-    radial-gradient(ellipse at 100% 0%,rgba(107,39,55,.12),transparent 38%),
-    linear-gradient(180deg,#222324 0%,#242526 48%,#2c2528 100%);
-}
-.process::before{
-  background:linear-gradient(180deg,rgba(34,35,36,.42),transparent 22%,transparent 72%,rgba(44,37,40,.42));
-}
-/* Process -> statement: warm graphite gradually picks up wine undertones */
-.statement{
-  background:
-    radial-gradient(ellipse at 78% 44%,rgba(107,39,55,.18),transparent 36%),
-    linear-gradient(180deg,#2c2528 0%,#35242a 48%,#41212c 100%);
-}
-.statement::before{
-  background:
-    radial-gradient(ellipse at 80% 45%,rgba(208,161,124,.09),transparent 30%),
-    linear-gradient(180deg,rgba(44,37,40,.44),rgba(59,34,42,.68) 40%,rgba(72,32,45,.82));
-}
-/* Statement -> audience: retain wine tone and let the next section emerge gradually */
-.audience{
-  background:
-    radial-gradient(ellipse at 5% 100%,rgba(107,39,55,.12),transparent 42%),
-    linear-gradient(180deg,#41212c 0%,#38242a 34%,#302426 100%);
-}
-.audience::before{
-  background:linear-gradient(180deg,rgba(65,33,44,.3),rgba(56,36,42,.1) 50%,transparent 100%)!important;
-}
-.audience::after{
-  background:linear-gradient(180deg,transparent 0%,rgba(48,36,38,.38) 52%,#302426 100%);
-}
-/* Audience -> portfolio: same undertone, slightly deeper toward burgundy */
-.projects{
-  background:
-    radial-gradient(ellipse at 92% 8%,rgba(107,39,55,.13),transparent 36%),
-    linear-gradient(180deg,#302426 0%,#322329 45%,#3d222b 100%);
-}
-.projects::before{
-  background:linear-gradient(180deg,#302426 0%,rgba(48,36,38,.48) 48%,transparent 100%)!important;
-}
-.projects::after{
-  background:linear-gradient(180deg,transparent 0%,rgba(61,34,43,.35) 52%,#3d222b 100%);
-}
-/* Portfolio -> contact: gradual dark burgundy crescendo, not a sudden color jump */
+/* Keep the final contact area and footer on the same burgundy endpoint. */
 .contact{
-  background:
-    radial-gradient(ellipse at 8% 100%,rgba(208,161,124,.065),transparent 34%),
-    radial-gradient(ellipse at 100% 0%,rgba(25,18,21,.2),transparent 40%),
-    linear-gradient(180deg,#3d222b 0%,#48202d 40%,#572233 78%,#48202d 100%);
+  background:transparent!important;
 }
-.contact::before{
-  background:linear-gradient(180deg,rgba(61,34,43,.28),rgba(72,32,45,.12) 35%,transparent 100%)!important;
-}
-.contact::after{
-  height:clamp(60px,8vw,110px);
-  background:linear-gradient(180deg,transparent 0%,rgba(57,28,39,.55) 100%);
-}
-/* Footer is a continuation of the burgundy ending */
 .footer{
   background:linear-gradient(180deg,#48202d 0%,#321a23 100%);
   border-top:1px solid rgba(208,161,124,.16);
 }
-/* Remove any inherited decorative edge that could read as a hard divider */
-.intro,.services,.process,.statement,.audience,.projects,.contact{border-top:0}
-.intro .section-label,.services .section-label,.process .section-label,.statement .section-label,
-.audience .section-label,.projects .section-label,.contact .section-label{position:relative;z-index:4}
-@media(max-width:600px){
-  main>section:not(.hero)::after{height:80px}
-  main>section:not(.hero)+section:not(.hero)::before{height:90px}
-}
 @media(prefers-reduced-motion:reduce){
-  main>section:not(.hero)::before,main>section:not(.hero)::after{scroll-behavior:auto}
+  main::before{scroll-behavior:auto}
 }
