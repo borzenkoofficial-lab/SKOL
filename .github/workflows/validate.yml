@@ -32,6 +32,8 @@ jobs:
           grep -q 'name="description"' index.html
           grep -q 'favicon.svg' index.html
           grep -q 'СКОЛ' index.html
+      - name: Validate HTML landmarks, IDs, and internal links
+        run: python3 tests/validate_site.py
       - name: Check brand colors and reduced-motion support
         run: |
           grep -q '#25282b' styles.css
