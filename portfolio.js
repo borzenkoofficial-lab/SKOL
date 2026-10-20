@@ -185,6 +185,5 @@
   });
 
   // Ctrl/Cmd + K focuses search, mirroring a familiar quick-search interaction.
-  updateCountLabels({ all: cards.length, demolition: 2, preparation: 2, finishing: 2, floors: 2 });
   render();
 })();
