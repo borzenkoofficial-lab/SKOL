@@ -36,6 +36,7 @@ db.exec([
   "CREATE TABLE IF NOT EXISTS leads (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, contact TEXT NOT NULL, service TEXT NOT NULL DEFAULT '', area TEXT NOT NULL DEFAULT '', timeline TEXT NOT NULL DEFAULT '', message TEXT NOT NULL DEFAULT '', source TEXT NOT NULL DEFAULT 'website', status TEXT NOT NULL DEFAULT 'new' CHECK(status IN ('new','in_progress','qualified','won','lost','archived')), created_at TEXT NOT NULL, updated_at TEXT NOT NULL);",
   "CREATE INDEX IF NOT EXISTS idx_leads_status ON leads(status,created_at);",
   "CREATE TABLE IF NOT EXISTS site_settings (key TEXT PRIMARY KEY, value TEXT NOT NULL, updated_at TEXT NOT NULL);",
+  "CREATE TABLE IF NOT EXISTS system_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);",
   "CREATE TABLE IF NOT EXISTS form_configs (form_id TEXT PRIMARY KEY, title TEXT NOT NULL, enabled INTEGER NOT NULL DEFAULT 1, submit_label TEXT NOT NULL, success_message TEXT NOT NULL, updated_at TEXT NOT NULL);"
 ].join("\n"));
 
@@ -49,6 +50,24 @@ const defaultSettings = {
 const insertSetting = db.prepare("INSERT OR IGNORE INTO site_settings(key,value,updated_at) VALUES(?,?,?)");
 for (const [key, value] of Object.entries(defaultSettings)) insertSetting.run(key, value, now());
 db.prepare("INSERT OR IGNORE INTO form_configs(form_id,title,enabled,submit_label,success_message,updated_at) VALUES('main-contact','Заявка с главной страницы',1,'Отправить заявку','Заявка принята. Мы свяжемся с вами по указанному контакту.',?)").run(now());
+
+const serviceSeed = db.prepare("SELECT value FROM system_meta WHERE key='core_services_seeded'").get();
+if (!serviceSeed) {
+  const timestamp = now();
+  const initialServices = [
+    { slug: "demolition", title: "Демонтаж", category: "demolition", excerpt: "Стены и перегородки, стяжка пола, покрытия, потолки, старая отделка и комплексный демонтаж.", body: "Демонтажные работы для коммерческих и частных объектов.\n\nУточняем состав конструкций, материалы, доступ, ограничения площадки и логистику отходов до начала работ. Несущие конструкции требуют отдельной технической оценки и необходимых разрешений.", featured: 1 },
+    { slug: "preparation", title: "Подготовка помещений", category: "preparation", excerpt: "Очистка и подготовка поверхностей, оснований и помещений к следующему этапу работ.", body: "Подготовительные операции определяются фактическим состоянием объекта.\n\nСогласуем требуемое состояние поверхности, последовательность операций и условия передачи следующему исполнителю. Дополнительные операции фиксируются отдельно.", featured: 0 },
+    { slug: "finishing", title: "Отделочные работы", category: "finishing", excerpt: "Штукатурные, шпаклёвочные и малярные операции по согласованному объёму.", body: "Отделочные работы начинаются с оценки основания и согласования требований к результату.\n\nСостав, материалы и границы ответственности фиксируются в техническом задании. Конкретный результат оценивается по заранее согласованным критериям.", featured: 0 },
+    { slug: "technical-floors", title: "Фальшполы и технические полы", category: "floors", excerpt: "Обследование системы, демонтаж, подготовка основания и монтаж в рамках проекта.", body: "Работы с фальшполами и техническими полами требуют понимания состава системы, нагрузки, высоты конструкции и доступа к коммуникациям.\n\nПараметры монтажа и комплектность определяются по проекту и спецификации объекта.", featured: 0 }
+  ];
+  const insertService = db.prepare("INSERT OR IGNORE INTO content(type,title,slug,excerpt,body,category,cover_image,cover_alt,video_url,status,featured,created_at,updated_at,published_at) VALUES('service',?,?,?,?,?,'','','','published',?,?,?,?)");
+  db.transaction(() => {
+    for (const item of initialServices) {
+      insertService.run(item.title, item.slug, item.excerpt, item.body, item.category, item.featured, timestamp, timestamp, timestamp);
+    }
+    db.prepare("INSERT INTO system_meta(key,value) VALUES('core_services_seeded','true')").run();
+  })();
+}
 
 class SQLiteSessionStore extends session.Store {
   get(sid, callback) {
