@@ -9,15 +9,20 @@
   const closeMenu = () => {
     nav?.classList.remove('open');
     menuButton?.setAttribute('aria-expanded', 'false');
+    menuButton?.setAttribute('aria-label', 'Открыть меню');
     document.body.classList.remove('menu-open');
   };
   menuButton?.addEventListener('click', () => {
     const expanded = menuButton.getAttribute('aria-expanded') === 'true';
     menuButton.setAttribute('aria-expanded', String(!expanded));
+    menuButton.setAttribute('aria-label', expanded ? 'Открыть меню' : 'Закрыть меню');
     nav?.classList.toggle('open', !expanded);
     document.body.classList.toggle('menu-open', !expanded);
   });
   nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeMenu();
+  });
   window.addEventListener('resize', () => { if (window.innerWidth > 760) closeMenu(); });
 
   const revealItems = document.querySelectorAll('.reveal');
