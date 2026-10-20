@@ -1364,3 +1364,122 @@ img,svg,video,canvas{max-width:100%}
 @media(prefers-reduced-motion:reduce){
   .wordmark .skol-symbol{transition:none!important}
 }
+
+
+/* SKOL premium motion system v1 — restrained, accessible, performance-conscious */
+:root { --skol-copper-light:#e6a184; --skol-copper:#c96b45; --skol-wine:#6b2737; }
+html { scroll-behavior:smooth; scroll-padding-top:88px; }
+::selection { background:rgba(201,107,69,.25); color:inherit; }
+
+/* Cinematic ambient light and blueprint geometry in the hero. */
+.hero-premium { isolation:isolate; }
+.hero-premium::after {
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(ellipse at calc(72% + var(--hero-pointer-x,0px)) calc(34% + var(--hero-pointer-y,0px)),rgba(201,107,69,.13),transparent 37%),
+             linear-gradient(115deg,transparent 25%,rgba(245,243,238,.018) 50%,transparent 72%);
+  background-size:auto,220% 100%;
+  animation:skol-light-sweep 18s ease-in-out infinite alternate;
+}
+.hero-premium > * { position:relative; }
+.hero-premium > .hero-grain,.hero-premium > .hero-ambient-art,.hero-premium > .hero-orbit,
+.hero-premium > .hero-geometry,.hero-premium > .skol-quote-hero { position:absolute; }
+.hero-premium > .hero-content,.hero-premium > .hero-topline,.hero-premium > .hero-side-note,
+.hero-premium > .hero-index,.hero-premium > .hero-bottom-rule { z-index:2; }
+.hero-ambient-art,.hero-orbit,.hero-geometry { will-change:transform; }
+.hero-seam-ring { animation:skol-ring-breathe 12s ease-in-out infinite alternate; }
+.hero-seam-letter { text-shadow:0 0 70px rgba(201,107,69,.12); }
+.hero-geometry { transform:translate3d(var(--hero-pointer-x,0px),var(--hero-pointer-y,0px),0); transition:transform .35s ease-out; }
+.hero-orbit-one { animation:skol-orbit-drift 24s linear infinite; }
+.hero-orbit-two { animation:skol-orbit-drift 32s linear infinite reverse; }
+
+/* One visual language across sections: soft ambient edge transitions, never hard bands. */
+.system-bridge,.intro,.services,.process,.statement,.audience,.projects,.contact {
+  background-blend-mode:normal;
+}
+.system-bridge,.intro,.services,.process,.statement,.audience,.projects,.contact {
+  transition:background-color .5s ease;
+}
+.intro,.services,.audience,.projects {
+  background-image:radial-gradient(ellipse at 88% 0%,rgba(201,107,69,.055),transparent 42%);
+}
+.process,.contact {
+  background-image:radial-gradient(ellipse at 82% 0%,rgba(201,107,69,.09),transparent 40%);
+}
+.statement { background-size:200% 200%; animation:skol-wine-breath 22s ease-in-out infinite alternate; }
+
+/* Scroll reveals keep the editorial cadence, while reducing layout movement. */
+.reveal { backface-visibility:hidden; }
+.reveal.visible { animation:skol-reveal-settle .65s cubic-bezier(.2,.75,.25,1) both; }
+.section-label span:first-child { transition:color .35s ease; }
+.section-label:hover span:first-child { color:var(--clay); }
+
+/* Cards react with light and depth, not exaggerated 3D tilt. */
+.audience-card,.project-graphic,.service-row,.process-step {
+  transition:transform .45s cubic-bezier(.2,.75,.25,1),box-shadow .45s ease,border-color .35s ease,background-color .35s ease;
+}
+.audience-card:hover,.project-graphic:hover {
+  box-shadow:0 24px 55px rgba(18,14,14,.12);
+}
+.audience-card .card-art { transform:translate3d(var(--art-x,0px),var(--art-y,0px),0) rotate(35deg); }
+.audience-card .art-arch { transform:translate3d(var(--art-x,0px),var(--art-y,0px),0); }
+.project-graphic::after {
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at var(--art-light-x,50%) var(--art-light-y,50%),rgba(230,161,132,.13),transparent 42%);
+  opacity:0;transition:opacity .35s ease;
+}
+.project-graphic:hover::after { opacity:1; }
+.service-row:focus-visible,.button:focus-visible,.header-cta:focus-visible,.text-link:focus-visible {
+  outline:2px solid var(--skol-copper-light);outline-offset:5px;
+}
+
+/* Copper glint on key calls to action; the button itself remains stable and readable. */
+.button-accent,.header-cta {
+  position:relative;isolation:isolate;overflow:hidden;
+}
+.button-accent::after,.header-cta::after {
+  content:"";position:absolute;inset:-1px;pointer-events:none;z-index:0;
+  background:linear-gradient(112deg,transparent 25%,rgba(255,236,220,.24) 48%,transparent 68%);
+  transform:translateX(-125%);transition:transform .8s cubic-bezier(.2,.75,.25,1);
+}
+.button-accent:hover::after,.header-cta:hover::after { transform:translateX(125%); }
+.button-accent > *,.header-cta > * { position:relative;z-index:1; }
+.button-accent span,.header-cta span { display:inline-block;transition:transform .25s ease; }
+.button-accent:hover span,.header-cta:hover span { transform:translate(3px,-2px); }
+
+/* Refined focus and form micro-interactions. */
+.contact-form input,.contact-form textarea,.contact-form select {
+  transition:border-color .25s ease,box-shadow .25s ease,background-color .25s ease;
+}
+.contact-form input:focus,.contact-form textarea:focus,.contact-form select:focus {
+  border-color:rgba(230,161,132,.88);
+  box-shadow:0 0 0 3px rgba(201,107,69,.13),0 0 28px rgba(201,107,69,.07);
+}
+.contact-form .button { transition:transform .25s ease,filter .25s ease,opacity .25s ease; }
+.contact-form .button:hover:not(:disabled) { transform:translateY(-2px);filter:brightness(1.06); }
+.contact-form .button:disabled { cursor:not-allowed;opacity:.58; }
+
+/* Animate the custom geometric mark subtly without affecting wordmark dimensions. */
+.wordmark .skol-symbol { transform-origin:center; }
+.wordmark:hover .skol-symbol { transform:translateY(-2px) rotate(-1deg); }
+
+/* Keep motion optional and avoid animations on small/low-motion devices. */
+@keyframes skol-light-sweep { from { background-position:center,0% 50%; } to { background-position:center,100% 50%; } }
+@keyframes skol-ring-breathe { from { transform:scale(.985) rotate(-1deg);opacity:.72; } to { transform:scale(1.025) rotate(1deg);opacity:1; } }
+@keyframes skol-orbit-drift { from { rotate:0deg; } to { rotate:360deg; } }
+@keyframes skol-wine-breath { from { background-position:0% 50%; } to { background-position:100% 50%; } }
+@keyframes skol-reveal-settle { from { filter:blur(2px); } to { filter:blur(0); } }
+@media (hover:none) {
+  .button-accent::after,.header-cta::after { display:none; }
+  .audience-card:hover,.project-graphic:hover { box-shadow:none; }
+}
+@media (max-width:760px) {
+  html { scroll-padding-top:72px; }
+  .hero-premium::after { animation:none;background:radial-gradient(ellipse at 72% 28%,rgba(201,107,69,.1),transparent 42%); }
+  .statement { animation:none;background-size:auto; }
+  .reveal.visible { animation:none; }
+}
+@media (prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto; }
+  *,*::before,*::after { animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important; }
+  .hero-geometry,.hero-orbit,.hero-seam-ring { transform:none!important; }
+}
