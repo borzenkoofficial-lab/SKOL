@@ -1,6 +1,6 @@
 (() => {
   const filters = [...document.querySelectorAll('.pf-filter[data-filter]')];
-  const cards = [...document.querySelectorAll('.pf-case[data-category]')];
+  let cards = [...document.querySelectorAll('.pf-case[data-category]')];
   const result = document.querySelector('.pf-filter-result');
   const searchInput = document.querySelector('#pf-search');
   const clearSearch = document.querySelector('.pf-search-clear');
@@ -24,7 +24,7 @@
     .replace(/\s+/g, ' ')
     .trim();
 
-  const searchableText = new Map(cards.map(card => [
+  let searchableText = new Map(cards.map(card => [
     card,
     normalize(card.textContent + ' ' + (card.dataset.category || '').replace(/\s+/g, ' ') + ' ' + (card.dataset.keywords || ''))
   ]));
@@ -110,12 +110,17 @@
   });
 
   // Keep the disclosure indicator in sync for mouse, touch and keyboard interaction.
-  document.querySelectorAll('.pf-case-details').forEach(details => {
-    details.addEventListener('toggle', () => {
-      const marker = details.querySelector('summary span');
-      if (marker) marker.textContent = details.open ? '−' : '+';
+  const bindDetails = root => {
+    root.querySelectorAll('.pf-case-details').forEach(details => {
+      if (details.dataset.markerBound) return;
+      details.dataset.markerBound = 'true';
+      details.addEventListener('toggle', () => {
+        const marker = details.querySelector('summary span');
+        if (marker) marker.textContent = details.open ? '−' : '+';
+      });
     });
-  });
+  };
+  bindDetails(document);
 
   // Real images become keyboard-accessible and can be opened in a native modal viewer.
   // Placeholder artwork is intentionally not clickable and never pretends to be a completed job.
@@ -184,6 +189,77 @@
     window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   });
 
+  // If published projects exist in the CMS, replace the demo layout with those records.
+  // With no server or no published projects, the clearly labelled demo cards stay in place.
+  const projectCategory = item => {
+    const value = normalize((item.category || "") + " " + (item.slug || ""));
+    if (value.includes("demol") || value.includes("демонтаж")) return "demolition";
+    if (value.includes("preparation") || value.includes("подготов")) return "preparation";
+    if (value.includes("finish") || value.includes("отдел")) return "finishing";
+    if (value.includes("floor") || value.includes("фальш") || value.includes("техническ")) return "floors";
+    return "other";
+  };
+  const projectCategoryLabel = key => ({
+    demolition: "ДЕМОНТАЖ", preparation: "ПОДГОТОВКА", finishing: "ОТДЕЛКА",
+    floors: "ТЕХНИЧЕСКИЕ ПОЛЫ", other: "ОБЪЕКТ"
+  })[key] || "ОБЪЕКТ";
+  const projectParagraphs = value => {
+    const parts = String(value || "").trim().split(/\n\s*\n/).map(part => part.trim()).filter(Boolean);
+    return (parts.length ? parts : ["Описание объекта пока не добавлено."])
+      .map(part => "<p>" + escapeHtml(part).replace(/\n/g, "<br>") + "</p>").join("");
+  };
+  const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[char]);
+  const renderProjectCard = (item, index) => {
+    const category = projectCategory(item);
+    const number = String(index + 1).padStart(2, "0");
+    const isWide = Boolean(item.featured) && index === 0;
+    const cover = item.coverImage
+      ? '<img class="pf-real-media" src="' + escapeHtml(item.coverImage) + '" alt="' + escapeHtml(item.coverAlt || item.title) + '" loading="lazy">'
+      : '<div class="pf-project-art pf-project-art-' + category + '" aria-hidden="true"><i></i><i></i><b></b><span>' + number + '</span></div>';
+    const mediaCaption = item.coverImage ? "ФОТО ОБЪЕКТА" : "МЕДИА НЕ ДОБАВЛЕНО";
+    const video = item.videoUrl
+      ? '<p><a class="pf-project-video" href="' + escapeHtml(item.videoUrl) + '" target="_blank" rel="noopener noreferrer">Открыть видео процесса ↗</a></p>'
+      : "";
+    return '<article class="pf-case reveal visible' + (isWide ? ' pf-case-featured' : '') + '" data-category="' + category + '" data-keywords="' + escapeHtml(item.title + " " + item.category + " " + item.excerpt) + '">' +
+      '<div class="pf-case-media pf-media-' + category + '" data-media-slot="published-project-' + item.id + '">' +
+      '<div class="pf-media-topline"><span>ОБЪЕКТ / ' + number + '</span><span>' + projectCategoryLabel(category) + '</span></div>' + cover +
+      '<div class="pf-media-bottom"><span class="pf-slot-stamp">' + mediaCaption + '</span><span>' + (item.coverImage ? "ОБЛОЖКА" : "ЗАГЛУШКА") + '</span></div></div>' +
+      '<div class="pf-case-content"><div class="pf-case-meta"><span>' + number + ' / ' + projectCategoryLabel(category) + '</span><span class="pf-case-state">ОПУБЛИКОВАНО</span></div>' +
+      '<h3>' + escapeHtml(item.title) + '</h3><p class="pf-case-summary">' + escapeHtml(item.excerpt || "") + '</p>' +
+      '<div class="pf-case-spec"><div><span>КАТЕГОРИЯ</span><strong>' + projectCategoryLabel(category) + '</strong></div><div><span>МЕДИА</span><strong>' + (item.coverImage ? "Обложка добавлена" : "Фото нужно добавить") + '</strong></div></div>' +
+      '<details class="pf-case-details"><summary>Описание кейса <span>+</span></summary><div>' + projectParagraphs(item.body) + video + '<p class="pf-demo-footnote">Проверяйте фактический состав работ и разрешение на публикацию медиа.</p></div></details></div></article>';
+  };
+  const loadPublishedProjects = async () => {
+    try {
+      const response = await fetch("/api/public/content?type=project&limit=60", {
+        headers: { Accept: "application/json" }, credentials: "same-origin", cache: "no-store"
+      });
+      if (!(response.headers.get("content-type") || "").includes("application/json")) return;
+      if (!response.ok) return;
+      const data = await response.json();
+      const items = data.items || [];
+      if (!items.length || !feed) return;
+      feed.innerHTML = items.map(renderProjectCard).join("");
+      cards = [...feed.querySelectorAll(".pf-case[data-category]")];
+      searchableText = new Map(cards.map(card => [
+        card,
+        normalize(card.textContent + " " + (card.dataset.category || "") + " " + (card.dataset.keywords || ""))
+      ]));
+      const demoNotice = document.querySelector(".pf-demo-notice");
+      if (demoNotice) demoNotice.hidden = true;
+      const integrityNote = document.querySelector(".pf-integrity p");
+      if (integrityNote) integrityNote.textContent = "Карточки загружены из опубликованных материалов CMS. Если у кейса нет обложки, показана схематичная заглушка. Указывайте только фактически выполненные работы и используйте медиа, разрешённые для публикации.";
+      bindDetails(feed);
+      feed.querySelectorAll(".pf-case-media img.pf-real-media").forEach(makeImageAccessible);
+      render();
+    } catch {
+      // API is optional on static-only previews; keep the hand-authored demo cards visible.
+    }
+  };
+
   // Ctrl/Cmd + K focuses search, mirroring a familiar quick-search interaction.
   render();
+  loadPublishedProjects();
 })();
