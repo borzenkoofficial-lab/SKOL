@@ -1094,3 +1094,107 @@ img,svg,video,canvas{max-width:100%}
  .system-bridge .skol-quote,.services .skol-quote,.process .skol-quote,.projects .skol-quote{max-width:65vw}
 }
 @media(prefers-reduced-motion:reduce){.skol-quote{transition:none!important;animation:none!important}}
+
+
+/* SKOL quote placement audit: keep editorial text behind content and away from primary actions */
+.skol-quote{
+  z-index:0;
+  max-width:clamp(150px,20vw,270px);
+  font-size:clamp(20px,2.15vw,31px);
+  line-height:1.02;
+  letter-spacing:-.065em;
+  opacity:.028;
+  transform:none;
+}
+.skol-quote::before{margin-bottom:.18em;opacity:.5}
+.hero-premium>.skol-quote-hero{
+  top:46%;
+  right:2.2%;
+  bottom:auto;
+  width:clamp(145px,15vw,210px);
+  max-width:210px;
+  font-size:clamp(19px,1.8vw,26px);
+  opacity:.045;
+  transform:rotate(-4deg);
+}
+.system-bridge>.skol-quote-right{
+  top:12%;
+  right:3%;
+  max-width:190px;
+  font-size:22px;
+  opacity:.022;
+}
+.intro>.skol-quote-left{
+  left:auto;
+  right:3%;
+  bottom:7%;
+  max-width:180px;
+  font-size:22px;
+  opacity:.026;
+  transform:rotate(-2deg);
+}
+.services>.skol-quote-right{
+  top:8%;
+  right:3%;
+  max-width:200px;
+  font-size:23px;
+  opacity:.026;
+}
+.process>.skol-quote-left{
+  left:auto;
+  right:3%;
+  bottom:7%;
+  max-width:190px;
+  font-size:22px;
+  opacity:.025;
+}
+.statement>.skol-quote-right{
+  top:5%;
+  right:4%;
+  bottom:auto;
+  max-width:210px;
+  font-size:24px;
+  opacity:.035;
+}
+.audience>.skol-quote-left{
+  left:auto;
+  right:3%;
+  bottom:4%;
+  max-width:190px;
+  font-size:22px;
+  opacity:.026;
+}
+.projects>.skol-quote-right{
+  top:6%;
+  right:3%;
+  max-width:205px;
+  font-size:22px;
+  opacity:.026;
+}
+.contact>.skol-quote-left{
+  left:auto;
+  right:3%;
+  bottom:2.5%;
+  max-width:210px;
+  font-size:22px;
+  opacity:.024;
+}
+/* Keep all real content above the decorative layer, including buttons and form controls. */
+.system-bridge-inner,.intro>.section-label,.intro>.intro-grid,.intro>.manifesto,
+.services>.section-label,.services>.services-heading,.services>.service-list,
+.process>.section-label,.process>.process-heading,.process>.process-grid,.process>.process-link,
+.statement>.statement-content,.audience>.section-label,.audience>.audience-grid,
+.projects>.section-label,.projects>.projects-heading,.projects>.project-grid,.projects>.note,
+.contact>.section-label,.contact>.contact-grid{
+  position:relative;
+  z-index:1;
+}
+@media(max-width:1100px){
+  .hero-premium>.skol-quote-hero{display:none}
+  .system-bridge>.skol-quote-right{right:2%;max-width:145px;font-size:18px;opacity:.018}
+  .services>.skol-quote-right,.projects>.skol-quote-right{max-width:145px;font-size:18px;opacity:.018}
+}
+@media(max-width:760px){
+  /* On narrow screens there is no dependable negative space beside the content. */
+  .skol-quote{display:none!important}
+}
