@@ -42,28 +42,108 @@
 
   const form = document.querySelector('#contact-form');
   const status = document.querySelector('.form-status');
-  form?.addEventListener('submit', event => {
-    event.preventDefault();
-    const data = new FormData(form);
-    const name = String(data.get('name') || '').trim();
-    const contact = String(data.get('contact') || '').trim();
-    const message = String(data.get('message') || '').trim();
-    const service = String(data.get('service') || '').trim();
-    const area = String(data.get('area') || '').trim();
-    const timeline = String(data.get('timeline') || '').trim();
-    const subject = encodeURIComponent('Обсуждение объекта — СКОЛ');
-    const body = encodeURIComponent(
-      'Здравствуйте! Хочу обсудить объект с командой СКОЛ.\n\n' +
-      'Имя: ' + name + '\n' +
-      'Контакт: ' + contact + '\n' +
-      'Направление работ: ' + (service || 'Не выбрано') + '\n' +
-      'Площадь: ' + (area ? area + ' м²' : 'Не указана') + '\n' +
-      'Желаемый старт: ' + (timeline || 'Не определён') + '\n' +
-      'Описание объекта: ' + (message || 'Не указано') + '\n'
-    );
-    status.textContent = 'Откроется почтовая программа. Для реального приёма заявок нужно подключить серверную отправку.';
-    window.location.href = 'mailto:borzenko.official@yandex.ru?subject=' + subject + '&body=' + body;
-  });
+  let contactFormEnabled = true;
+  const getJsonResponse = async response => {
+    const contentType = response.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      const error = new Error('Серверная форма не подключена');
+      error.code = 'SKOL_API_UNAVAILABLE';
+      throw error;
+    }
+    return response.json();
+  };
+
+  // Public contact details and form configuration are read from the server when available.
+  fetch('/api/public/settings', { headers: { Accept: 'application/json' }, credentials: 'same-origin', cache: 'no-store' })
+    .then(getJsonResponse)
+    .then(settings => {
+      const email = String(settings.contact_email || '').trim();
+      const telegram = String(settings.telegram_url || '').trim();
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+          const previous = link.getAttribute('href') || '';
+          const query = previous.includes('?') ? previous.slice(previous.indexOf('?')) : '';
+          link.setAttribute('href', 'mailto:' + email + query);
+        });
+      }
+      if (/^https:\/\/t\.me\/[A-Za-z0-9_]+\/?$/.test(telegram)) {
+        document.querySelectorAll('a[href^="https://t.me/"]').forEach(link => link.setAttribute('href', telegram));
+      }
+    })
+    .catch(() => { /* Static fallback retains the contact data authored in the HTML. */ });
+
+  if (form) {
+    const submitButton = form.querySelector('button[type="submit"]');
+    const submitLabel = submitButton?.querySelector('span');
+    const formNote = form.querySelector('.form-note');
+    fetch('/api/public/forms/main-contact', { headers: { Accept: 'application/json' }, credentials: 'same-origin', cache: 'no-store' })
+      .then(getJsonResponse)
+      .then(config => {
+        contactFormEnabled = config.enabled !== false;
+        if (submitButton) submitButton.disabled = !contactFormEnabled;
+        if (submitLabel && config.submitLabel) submitLabel.textContent = config.submitLabel;
+        if (formNote) formNote.textContent = contactFormEnabled
+          ? 'После отправки заявка сохранится в системе СКОЛ. Не указывайте лишние персональные данные.'
+          : 'Приём заявок через эту форму временно отключён.';
+        if (!contactFormEnabled && status) status.textContent = 'Форма временно недоступна. Напишите нам в Telegram или на email.';
+      })
+      .catch(() => {
+        if (formNote) formNote.textContent = 'Серверный приём заявок пока не подключён. При отправке откроется почтовая программа.';
+      });
+
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (!contactFormEnabled) {
+        if (status) status.textContent = 'Приём заявок через эту форму временно отключён. Используйте контакты рядом с формой.';
+        return;
+      }
+      const data = new FormData(form);
+      const name = String(data.get('name') || '').trim();
+      const contact = String(data.get('contact') || '').trim();
+      const message = String(data.get('message') || '').trim();
+      const service = String(data.get('service') || '').trim();
+      const area = String(data.get('area') || '').trim();
+      const timeline = String(data.get('timeline') || '').trim();
+      const subject = encodeURIComponent('Обсуждение объекта — СКОЛ');
+      const emailBody = encodeURIComponent(
+        'Здравствуйте! Хочу обсудить объект с командой СКОЛ.\n\n' +
+        'Имя: ' + name + '\n' +
+        'Контакт: ' + contact + '\n' +
+        'Направление работ: ' + (service || 'Не выбрано') + '\n' +
+        'Площадь: ' + (area ? area + ' м²' : 'Не указана') + '\n' +
+        'Желаемый старт: ' + (timeline || 'Не определён') + '\n' +
+        'Описание объекта: ' + (message || 'Не указано') + '\n'
+      );
+      if (submitButton) submitButton.disabled = true;
+      if (status) status.textContent = 'Отправляем обращение…';
+      try {
+        const response = await fetch('/api/public/leads', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ formId: 'main-contact', name, contact, service, area, timeline, message })
+        });
+        let result;
+        try { result = await getJsonResponse(response); }
+        catch (error) { throw error; }
+        if (!response.ok) {
+          if (status) status.textContent = result.error || 'Не удалось отправить обращение. Проверьте данные и попробуйте ещё раз.';
+          return;
+        }
+        if (status) status.textContent = (result.message || 'Заявка сохранена.') + (result.reference ? ' Номер обращения: ' + result.reference + '.' : '');
+        form.reset();
+      } catch (error) {
+        if (error.code === 'SKOL_API_UNAVAILABLE' || error instanceof TypeError) {
+          if (status) status.textContent = 'Серверная форма не отвечает. Открываем почтовую программу как резервный способ отправки.';
+          window.location.href = 'mailto:borzenko.official@yandex.ru?subject=' + subject + '&body=' + emailBody;
+        } else if (status) {
+          status.textContent = error.message || 'Не удалось отправить обращение. Попробуйте ещё раз.';
+        }
+      } finally {
+        if (submitButton) submitButton.disabled = !contactFormEnabled;
+      }
+    });
+  }
 
 
   // Header state: the fixed navigation becomes a compact, frosted bar after scrolling.
