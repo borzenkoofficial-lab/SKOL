@@ -1322,3 +1322,44 @@ img,svg,video,canvas{max-width:100%}
 @media(prefers-reduced-motion:reduce){
   .contact-form{transition:none!important}
 }
+
+/* SKOL identity mark — custom geometric copper monogram */
+.wordmark{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  width:max-content;
+  letter-spacing:0;
+  text-decoration:none;
+}
+.wordmark .skol-symbol{
+  display:block;
+  width:clamp(35px,3.2vw,45px);
+  height:auto;
+  flex:0 0 auto;
+  overflow:visible;
+  filter:drop-shadow(0 3px 10px rgba(201,107,69,.14));
+  transition:transform .35s var(--ease),filter .35s var(--ease);
+}
+.wordmark .wordmark-text{
+  display:inline-block;
+  font-size:inherit;
+  font-weight:800;
+  line-height:.9;
+  letter-spacing:.09em;
+  color:var(--section-paper,#f8f4ee);
+}
+.wordmark:hover .skol-symbol{
+  transform:translateY(-2px);
+  filter:drop-shadow(0 5px 15px rgba(201,107,69,.3));
+}
+.footer .wordmark .skol-symbol{width:35px}
+.footer .wordmark .wordmark-text{font-size:25px}
+@media(max-width:760px){
+  .wordmark{gap:8px}
+  .wordmark .skol-symbol{width:34px}
+  .footer .wordmark .skol-symbol{width:30px}
+}
+@media(prefers-reduced-motion:reduce){
+  .wordmark .skol-symbol{transition:none!important}
+}
