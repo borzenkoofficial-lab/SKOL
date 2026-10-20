@@ -242,6 +242,27 @@
     });
   }
 
+
+  // Premium cursor light for portfolio panels only; content remains still and touch is unaffected.
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion.matches) {
+    document.querySelectorAll('.project-graphic').forEach(card => {
+      let lightFrame = 0;
+      card.addEventListener('pointermove', event => {
+        if (lightFrame) return;
+        lightFrame = window.requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--art-light-x', ((event.clientX - rect.left) / rect.width * 100).toFixed(1) + '%');
+          card.style.setProperty('--art-light-y', ((event.clientY - rect.top) / rect.height * 100).toFixed(1) + '%');
+          lightFrame = 0;
+        });
+      }, { passive: true });
+      card.addEventListener('pointerleave', () => {
+        card.style.setProperty('--art-light-x', '50%');
+        card.style.setProperty('--art-light-y', '50%');
+      }, { passive: true });
+    });
+  }
+
   const year = document.querySelector('#year');
   if (year) year.textContent = String(new Date().getFullYear());
 })();
