@@ -215,9 +215,26 @@ app.use(helmet({
 }));
 app.use(express.json({ limit: "64kb", strict: true }));
 
-app.get("/api/health", (_req, res) => res.json({
-  ok: Boolean(pool), app: "skol-site", storage: pool ? "postgres" : "unconfigured",
-  databaseConfigured: Boolean(pool), auth: "server-side"
+app.get("/api/health", asyncRoute(async (_req, res) => {
+  if (!pool) {
+    return res.json({
+      ok: false, app: "skol-site", storage: "unconfigured",
+      databaseConfigured: false, databaseConnected: false, auth: "server-side"
+    });
+  }
+  try {
+    await pool.query("SELECT 1");
+    return res.json({
+      ok: true, app: "skol-site", storage: "postgres",
+      databaseConfigured: true, databaseConnected: true, auth: "server-side"
+    });
+  } catch (error) {
+    console.error("[SKOL health]", error?.message || "Database health check failed");
+    return res.status(503).json({
+      ok: false, app: "skol-site", storage: "postgres",
+      databaseConfigured: true, databaseConnected: false, auth: "server-side"
+    });
+  }
 }));
 
 app.use((req, res, next) => {
