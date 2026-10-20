@@ -1,0 +1,22 @@
+name: Site checks
+
+on:
+  push:
+    branches: [main, chore/site-quality-checks]
+  pull_request:
+    branches: [main]
+
+jobs:
+  static-smoke-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate JavaScript syntax
+        run: node --check script.js
+      - name: Run static site smoke tests
+        run: node --test tests/site-smoke.mjs
