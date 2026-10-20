@@ -682,6 +682,37 @@ main>section:not(.hero) .button-light:hover{background:var(--section-brass);colo
 }
 
 
+
+/* HERO -> INTRO: dissolve the hero's own surface into the page-wide canvas */
+.hero-premium{
+  background:
+    radial-gradient(ellipse at 78% 34%,rgba(201,107,69,.16),transparent 28%),
+    radial-gradient(ellipse at 16% 90%,rgba(107,39,55,.30),transparent 42%),
+    linear-gradient(125deg,#17191a 0%,#25282b 48%,#292927 78%,#222324 100%);
+}
+.hero-premium::after{
+  content:"";
+  position:absolute;
+  z-index:1;
+  left:0;
+  right:0;
+  bottom:0;
+  height:clamp(150px,20vw,290px);
+  pointer-events:none;
+  background:linear-gradient(180deg,
+    rgba(34,35,36,0) 0%,
+    rgba(34,35,36,.20) 30%,
+    rgba(34,35,36,.62) 68%,
+    #222324 100%);
+}
+.hero-premium .hero-index,
+.hero-premium .hero-bottom-rule{
+  z-index:4;
+}
+@media(max-width:760px){
+  .hero-premium::after{height:190px}
+}
+
 /* CONTINUOUS PAGE CANVAS — one uninterrupted color field while scrolling */
 main{
   position:relative;
