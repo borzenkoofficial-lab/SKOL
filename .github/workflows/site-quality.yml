@@ -37,12 +37,12 @@ jobs:
             console.error('FAIL:', message);
             process.exitCode = 1;
           };
-          const ids = [...html.matchAll(/\\bid=["']([^"']+)["']/g)].map(match => match[1]);
+          const ids = [...html.matchAll(/\bid=["']([^"']+)["']/g)].map(match => match[1]);
           const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
           if (duplicates.length) fail('Duplicate HTML ids: ' + [...new Set(duplicates)].join(', '));
 
           const idSet = new Set(ids);
-          const anchors = [...html.matchAll(/\\bhref=["']#([^"']+)["']/g)].map(match => match[1]);
+          const anchors = [...html.matchAll(/\bhref=["']#([^"']+)["']/g)].map(match => match[1]);
           const broken = [...new Set(anchors.filter(id => !idSet.has(id)))];
           if (broken.length) fail('Broken local anchors: ' + broken.join(', '));
 
@@ -50,15 +50,15 @@ jobs:
             if (!fs.existsSync(asset)) fail('Missing local asset: ' + asset);
           }
 
-          const openBraces = (css.match(/\\{/g) || []).length;
-          const closeBraces = (css.match(/\\}/g) || []).length;
+          const openBraces = (css.match(/\{/g) || []).length;
+          const closeBraces = (css.match(/\}/g) || []).length;
           if (openBraces !== closeBraces) fail('CSS brace count differs: ' + openBraces + ' opening vs ' + closeBraces + ' closing');
 
           const requiredCss = [
-            ['mobile breakpoint', /@media\\s*\\(max-width:\\s*760px\\)/],
-            ['reduced-motion support', /prefers-reduced-motion\\s*:\\s*reduce/],
-            ['coarse-pointer guard', /pointer:\\s*coarse/],
-            ['horizontal overflow guard', /overflow-x:\\s*clip/],
+            ['mobile breakpoint', /@media\s*\(max-width:\s*760px\)/],
+            ['reduced-motion support', /prefers-reduced-motion\s*:\s*reduce/],
+            ['coarse-pointer guard', /pointer:\s*coarse/],
+            ['horizontal overflow guard', /overflow-x:\s*clip/],
             ['blueprint grid', /Blueprint texture/],
             ['shared abstract transition', /HERO -> INTRO GLYPH CONTINUITY/],
           ];
@@ -68,7 +68,7 @@ jobs:
 
           if (!/Restrained pointer response for cards/.test(js)) fail('Card microinteraction handler is missing');
           if (!/prefers-reduced-motion/.test(js)) fail('JavaScript reduced-motion check is missing');
-          if (!/hero-premium \\.hero-image/.test(css) || !/display:none!important/.test(css)) {
+          if (!/hero-premium \.hero-image/.test(css) || !/display:none!important/.test(css)) {
             fail('Hero photography suppression rule may be missing');
           }
 
