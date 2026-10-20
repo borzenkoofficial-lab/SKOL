@@ -519,3 +519,164 @@ main>section:not(.hero) p{ text-wrap:pretty }
  .service-row,.service-arrow,.process-step,.process-step::before,.card-art,.project-graphic,.graphic-shape,.finish-lines,.contact-direct a span{transition:none!important}
  .process-step:hover{transform:none}
 }
+
+
+/* CONTINUOUS DARK EDITORIAL SYSTEM — from process section to burgundy finale */
+:root{
+  --section-ink:#202122;
+  --section-ink-2:#292626;
+  --section-paper:#f8f4ee;
+  --section-muted:rgba(248,244,238,.66);
+  --section-line:rgba(248,244,238,.15);
+  --section-brass:#d0a17c;
+  --section-burgundy:#54202f;
+}
+main>section:not(.hero){
+  color:var(--section-paper);
+  border-color:var(--section-line);
+}
+main>section:not(.hero) .section-label{color:rgba(248,244,238,.5)}
+main>section:not(.hero) .section-label>span:first-child{color:var(--section-brass)}
+main>section:not(.hero) p{color:var(--section-muted)}
+main>section:not(.hero) .text-link{color:var(--section-paper);border-color:rgba(208,161,124,.48)}
+main>section:not(.hero) .text-link:hover{color:var(--section-brass)}
+main>section:not(.hero) .eyebrow{color:var(--section-brass)}
+main>section:not(.hero) .button-light{background:var(--section-paper);color:#292626}
+main>section:not(.hero) .button-light:hover{background:var(--section-brass);color:#201d1c}
+
+/* 01 — quiet charcoal opening, same visual language as the process section */
+.intro{
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 86% 18%,rgba(182,138,98,.10),transparent 28%),
+    linear-gradient(125deg,#1c1e1f 0%,#242526 58%,#2a2424 100%);
+}
+.intro::before{border-color:rgba(208,161,124,.16);box-shadow:0 0 0 18px rgba(208,161,124,.025),0 0 0 38px rgba(208,161,124,.018)}
+.intro::after{background:linear-gradient(90deg,transparent,rgba(208,161,124,.42),transparent)}
+.intro-grid>h2,.intro h2{color:var(--section-paper)}
+.intro-copy{border-color:rgba(208,161,124,.35)}
+.intro-copy::before{background:var(--section-brass)}
+.intro-copy .lead{color:var(--section-paper)}
+.intro-copy>p:not(.lead){color:var(--section-muted)}
+.manifesto{border-color:var(--section-line)}
+.manifesto span{color:rgba(248,244,238,.54)}
+.manifesto span+span{border-color:var(--section-line)}
+
+/* 02 — service list becomes an architectural dark catalogue */
+.services{
+  background:
+    radial-gradient(ellipse at 92% 8%,rgba(107,39,55,.18),transparent 34%),
+    linear-gradient(135deg,#252626 0%,#202122 54%,#292324 100%);
+}
+.services::after{color:rgba(208,161,124,.035)}
+.services-heading>p{color:var(--section-muted);border-left-color:var(--section-brass)}
+.service-list{border-color:rgba(248,244,238,.25)}
+.service-row{border-color:var(--section-line)}
+.service-row:hover{background:rgba(248,244,238,.035)}
+.service-no{color:var(--section-brass)}
+.service-row h3{color:var(--section-paper)}
+.service-row p{color:var(--section-muted)}
+.service-arrow{border-color:rgba(208,161,124,.4);color:var(--section-brass)}
+.service-row:hover .service-arrow{background:var(--section-burgundy);border-color:var(--section-burgundy);color:var(--section-paper)}
+
+/* 03 — preserve the reference block's charcoal, brass and precise grid */
+.process{
+  background:
+    radial-gradient(ellipse at 10% 100%,rgba(182,138,98,.13),transparent 34%),
+    radial-gradient(ellipse at 100% 0%,rgba(107,39,55,.18),transparent 36%),
+    linear-gradient(125deg,#191b1c,#252627 62%,#302426);
+}
+.process .section-label{color:rgba(248,244,238,.52)}
+.process-heading>p{color:var(--section-muted);border-left-color:var(--section-brass)}
+.process-index{color:var(--section-brass)}
+.process-step{background:linear-gradient(155deg,rgba(255,255,255,.045),rgba(255,255,255,.008))}
+.process-step p{color:var(--section-muted)}
+
+/* 04 — statement is the first deliberate turn into wine */
+.statement{
+  background:linear-gradient(112deg,#252324 0%,#3a2229 54%,#51202f 100%);
+  border-color:rgba(208,161,124,.24);
+}
+.statement::before{
+  background:
+    radial-gradient(ellipse at 80% 45%,rgba(208,161,124,.12),transparent 30%),
+    linear-gradient(112deg,rgba(30,29,30,.78),rgba(67,31,42,.82) 56%,rgba(82,30,46,.96));
+}
+.statement-image{background:linear-gradient(120deg,transparent 48%,rgba(208,161,124,.04) 49%,transparent 50%)}
+.statement-content>p{color:rgba(248,244,238,.72)}
+.statement-mark{color:rgba(248,244,238,.045)}
+
+/* 05 — audience cards remain contrasting, but both belong to the same dark system */
+.audience{
+  background:
+    radial-gradient(ellipse at 0% 100%,rgba(107,39,55,.22),transparent 38%),
+    linear-gradient(135deg,#2d2528,#242324 60%,#302326);
+}
+.audience-grid{gap:14px}
+.audience-card{border-color:rgba(208,161,124,.25);background:#2a2828;color:var(--section-paper)}
+.audience-card::before{background:linear-gradient(130deg,rgba(255,255,255,.045),transparent 48%)}
+.b2b{background:linear-gradient(145deg,#34302d,#282626 80%)}
+.private{background:radial-gradient(ellipse at 78% 20%,rgba(107,39,55,.38),transparent 38%),linear-gradient(145deg,#302327,#211f20)}
+.audience-card .eyebrow{color:var(--section-brass)}
+.audience-card p{color:var(--section-muted)}
+.audience-card .text-link{border-color:rgba(208,161,124,.45)}
+.art-grid{background:linear-gradient(90deg,transparent 49%,rgba(208,161,124,.15) 50%,transparent 51%),linear-gradient(0deg,transparent 49%,rgba(208,161,124,.15) 50%,transparent 51%);background-size:34px 34px}
+.art-arch{border-color:rgba(208,161,124,.42);box-shadow:0 0 0 18px rgba(208,161,124,.045),0 0 0 38px rgba(208,161,124,.025)}
+
+/* 06 — portfolio graphics sit on a charcoal-to-wine canvas, not a separate light theme */
+.projects{
+  background:
+    radial-gradient(ellipse at 90% 10%,rgba(107,39,55,.22),transparent 34%),
+    linear-gradient(135deg,#242526 0%,#2b2527 52%,#38232a 100%);
+}
+.projects-heading>p{color:var(--section-muted);border-left-color:var(--section-brass)}
+.project-graphic{border-color:rgba(208,161,124,.25)}
+.graphic-demolition{background:linear-gradient(140deg,#35312e,#292626)}
+.graphic-finish{background:radial-gradient(ellipse at 80% 18%,rgba(107,39,55,.4),transparent 38%),linear-gradient(145deg,#302729,#211f20)}
+.graphic-meta{color:var(--section-brass);opacity:.92}
+.graphic-demolition .graphic-shape::before{border-color:rgba(248,244,238,.25);background:linear-gradient(145deg,rgba(255,255,255,.07),transparent)}
+.graphic-demolition .graphic-shape::after{border-color:rgba(208,161,124,.42);background:linear-gradient(120deg,rgba(107,39,55,.12),transparent)}
+.graphic-shape i:nth-child(1),.graphic-shape i:nth-child(2){background:rgba(248,244,238,.28)}
+.graphic-shape i:nth-child(3){background:rgba(208,161,124,.4)}
+.graphic-shape b{border-color:var(--section-brass)}
+.finish-lines i{background:rgba(248,244,238,.32)}
+.finish-lines b{border-color:rgba(208,161,124,.5);background:linear-gradient(135deg,rgba(107,39,55,.18),transparent)}
+.project-graphic h3{color:var(--section-paper)}
+.project-graphic p{color:var(--section-muted)}
+.note{color:rgba(248,244,238,.55)}
+.note::before{background:var(--section-brass)}
+
+/* 07 — contact closes the journey in burgundy; the footer completes the landing */
+.contact{
+  background:
+    radial-gradient(ellipse at 8% 100%,rgba(208,161,124,.09),transparent 32%),
+    radial-gradient(ellipse at 100% 0%,rgba(25,18,21,.32),transparent 38%),
+    linear-gradient(130deg,#48202d 0%,#572233 54%,#3d1d28 100%);
+}
+.contact .section-label{color:rgba(248,244,238,.58)}
+.contact-copy>p{color:rgba(248,244,238,.7)}
+.contact-meta{border-color:rgba(208,161,124,.32)}
+.contact-meta span{color:rgba(248,244,238,.62)}
+.contact-direct a{color:var(--section-paper);border-color:rgba(208,161,124,.48)}
+.contact-form{border-color:rgba(232,195,164,.24);background:rgba(25,19,21,.22);box-shadow:0 24px 70px rgba(15,10,12,.16);backdrop-filter:blur(14px)}
+.contact-form label{color:rgba(248,244,238,.72)}
+.contact-form input,.contact-form textarea,.contact-form .form-select{color:var(--section-paper);border-color:rgba(248,244,238,.22)}
+.contact-form input::placeholder,.contact-form textarea::placeholder{color:rgba(248,244,238,.38)}
+.contact-form input:focus,.contact-form textarea:focus,.contact-form .form-select:focus{border-color:var(--section-brass);box-shadow:0 1px 0 var(--section-brass)}
+.contact-form .form-select option{background:#34202a;color:var(--section-paper)}
+.contact-form .button-dark{background:var(--section-paper);color:#3c1d28}
+.contact-form .button-dark:hover{background:var(--section-brass);color:#251d1d}
+.form-note,.form-status{color:rgba(248,244,238,.53)}
+.footer{background:#27181e;border-top:1px solid rgba(208,161,124,.28)}
+.footer-email,.back-top{color:rgba(248,244,238,.72)}
+.footer a:hover{color:var(--section-brass)}
+.copyright{color:rgba(248,244,238,.42)}
+
+@media(max-width:900px){
+  .process-step{background:linear-gradient(155deg,rgba(255,255,255,.045),rgba(255,255,255,.008))}
+}
+@media(max-width:600px){
+  .intro-grid>h2,.services-heading h2,.process-heading h2,.projects-heading h2,.contact-copy h2{font-size:clamp(49px,13vw,72px)}
+  .statement{background:linear-gradient(150deg,#292324,#54202f)}
+  .contact-form{background:rgba(25,19,21,.24)}
+}
