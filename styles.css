@@ -1280,3 +1280,45 @@ img,svg,video,canvas{max-width:100%}
 
 /* Link treatment for the detailed service entry on the home page. */
 .service-row-cta{display:inline-block;margin-top:14px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:#8d4934;border-bottom:1px solid rgba(182,138,98,.55);padding-bottom:5px}.service-row:focus-visible{outline:2px solid var(--clay);outline-offset:5px}.service-row-cta:hover{color:var(--wine)}
+
+
+/* CONTACT FORM — bespoke architectural frame */
+.contact-form{
+  position:relative;
+  isolation:isolate;
+  border:1px solid rgba(205,133,99,.48);
+  outline:1px solid rgba(205,133,99,.15);
+  outline-offset:7px;
+  background:
+    linear-gradient(135deg,rgba(201,107,69,.075),transparent 26%),
+    linear-gradient(315deg,rgba(201,107,69,.055),transparent 24%),
+    rgba(25,19,21,.32);
+  box-shadow:0 28px 80px rgba(15,10,12,.22),inset 0 0 0 8px rgba(205,133,99,.035);
+}
+.contact-form::before,
+.contact-form::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-12px;
+  pointer-events:none;
+  clip-path:polygon(0 5%,5% 5%,5% 0,25% 0,25% 1px,5.5% 1px,5.5% 6%,1px 6%,1px 24%,0 24%,0 5%,75% 0,95% 0,95% 5%,100% 5%,100% 25%,calc(100% - 1px) 25%,calc(100% - 1px) 6%,94.5% 6%,94.5% 1px,75% 1px);
+  opacity:.9;
+}
+.contact-form::before{
+  background:linear-gradient(120deg,#e3a17d 0%,#a8543a 23%,transparent 23.2%,transparent 76%,#a8543a 76.2%,#e3a17d 100%);
+}
+.contact-form::after{
+  inset:-12px;
+  background:linear-gradient(300deg,transparent 0 23%,rgba(224,151,111,.9) 23.2% 23.6%,transparent 23.8% 76%,rgba(224,151,111,.9) 76.2% 76.6%,transparent 76.8%);
+  clip-path:polygon(0 75%,1px 75%,1px 94%,5.5% 94%,5.5% calc(100% - 1px),25% calc(100% - 1px),25% 100%,5% 100%,5% 95%,0 95%,0 75%,75% 100%,95% 100%,95% 95%,100% 95%,100% 75%,calc(100% - 1px) 75%,calc(100% - 1px) 94%,94.5% 94%,94.5% calc(100% - 1px),75% calc(100% - 1px));
+}
+.contact-form label,.contact-form .form-row,.contact-form .button,.contact-form .form-note,.contact-form .form-status{position:relative;z-index:1}
+.contact-form::selection{background:rgba(205,133,99,.25)}
+@media(max-width:760px){
+  .contact-form{outline-offset:4px}
+  .contact-form::before,.contact-form::after{inset:-8px}
+}
+@media(prefers-reduced-motion:reduce){
+  .contact-form{transition:none!important}
+}
