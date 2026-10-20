@@ -48,7 +48,7 @@ if (Test-Path $ManifestPath) {
     try {
         $Previous = Get-Content $ManifestPath -Raw | ConvertFrom-Json
         $PreviousProcess = Get-CimInstance Win32_Process -Filter "ProcessId = $($Previous.pid)" -ErrorAction SilentlyContinue
-        if ($PreviousProcess -and $PreviousProcess.CommandLine -like "*server.js*") {
+        if ($PreviousProcess -and $PreviousProcess.CommandLine -like "*$ProjectRoot*server.js*") {
             Write-Host "Останавливаю предыдущий экземпляр тестового сервера..." -ForegroundColor Yellow
             Stop-Process -Id ([int]$Previous.pid) -Force -ErrorAction SilentlyContinue
             Start-Sleep -Milliseconds 500
@@ -76,6 +76,9 @@ if ($Port -eq 0) { throw "Не удалось найти свободный ло
 $AdminUsername = "skol-demo-admin"
 $AdminPassword = New-RandomToken 24
 $SessionSecret = New-RandomToken 48
+$EnvironmentNames = @("NODE_ENV", "HOST", "PORT", "SKOL_DEMO_MODE", "DATA_DIR", "ADMIN_USERNAME", "ADMIN_PASSWORD", "SESSION_SECRET")
+$PreviousEnvironment = @{}
+foreach ($Name in $EnvironmentNames) { $PreviousEnvironment[$Name] = [Environment]::GetEnvironmentVariable($Name, "Process") }
 $env:NODE_ENV = "development"
 $env:HOST = "127.0.0.1"
 $env:PORT = [string]$Port
@@ -90,6 +93,12 @@ $StderrLog = Join-Path $LogsDirectory "server-error.log"
 Remove-Item $StdoutLog, $StderrLog -Force -ErrorAction SilentlyContinue
 $ServerFile = Join-Path $ProjectRoot "server.js"
 $ServerProcess = Start-Process -FilePath $NodeCommand.Source -ArgumentList ('"' + $ServerFile + '"') -WorkingDirectory $ProjectRoot -RedirectStandardOutput $StdoutLog -RedirectStandardError $StderrLog -PassThru
+
+# The child process inherited the demo environment. Restore this PowerShell session immediately.
+foreach ($Name in $EnvironmentNames) {
+    if ($null -eq $PreviousEnvironment[$Name]) { Remove-Item ("Env:" + $Name) -ErrorAction SilentlyContinue }
+    else { [Environment]::SetEnvironmentVariable($Name, [string]$PreviousEnvironment[$Name], "Process") }
+}
 
 @{ pid = $ServerProcess.Id; port = $Port; root = $ProjectRoot; startedAt = (Get-Date).ToString("o") } |
     ConvertTo-Json | Set-Content -Path $ManifestPath -Encoding UTF8
