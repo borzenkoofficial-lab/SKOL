@@ -137,6 +137,29 @@
     });
   }
 
+  // Restrained pointer response for cards: decorative geometry moves, content stays stable.
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion.matches) {
+    const interactiveCards = document.querySelectorAll('.audience-card, .project-graphic');
+    interactiveCards.forEach(card => {
+      let frame = 0;
+      card.addEventListener('pointermove', event => {
+        if (frame) return;
+        frame = window.requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const x = (event.clientX - rect.left) / rect.width - .5;
+          const y = (event.clientY - rect.top) / rect.height - .5;
+          card.style.setProperty('--art-x', (x * 10).toFixed(2) + 'px');
+          card.style.setProperty('--art-y', (y * 10).toFixed(2) + 'px');
+          frame = 0;
+        });
+      }, { passive: true });
+      card.addEventListener('pointerleave', () => {
+        card.style.setProperty('--art-x', '0px');
+        card.style.setProperty('--art-y', '0px');
+      }, { passive: true });
+    });
+  }
+
   const year = document.querySelector('#year');
   if (year) year.textContent = String(new Date().getFullYear());
 })();
