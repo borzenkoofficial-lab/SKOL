@@ -123,7 +123,28 @@
         <form class="contact-form reveal" id="contact-form">
           <label>Как к вам обращаться<input name="name" autocomplete="name" placeholder="Имя" required></label>
           <label>Контакт для связи<input name="contact" placeholder="Телефон, email или Telegram" required></label>
-          <label>Коротко об объекте<textarea name="message" rows="3" placeholder="Тип объекта, адрес или район, задача"></textarea></label>
+          <label>Тип работ
+            <select name="service" class="form-select">
+              <option value="">Выберите направление</option>
+              <option>Демонтаж</option>
+              <option>Черновая отделка</option>
+              <option>Чистовая отделка</option>
+              <option>Комплекс работ</option>
+              <option>Нужна консультация</option>
+            </select>
+          </label>
+          <div class="form-row">
+            <label>Площадь, м²<input name="area" inputmode="numeric" placeholder="Например, 450"></label>
+            <label>Когда нужен старт
+              <select name="timeline" class="form-select">
+                <option value="">Пока не определено</option>
+                <option>Как можно скорее</option>
+                <option>В течение месяца</option>
+                <option>Позже месяца</option>
+              </select>
+            </label>
+          </div>
+          <label>Коротко об объекте<textarea name="message" rows="3" placeholder="Тип объекта, район, состав работ, ограничения на площадке"></textarea></label>
           <button class="button button-dark" type="submit">Подготовить обращение <span>↗</span></button>
           <p class="form-note">Кнопка откроет почтовую программу с подготовленным письмом. Серверная отправка пока не подключена.</p>
           <p class="form-status" role="status" aria-live="polite"></p>
