@@ -67,8 +67,8 @@
     }
     if (!response.ok) {
       if (response.status === 401) {
-        showGate("Сессия завершилась. Войдите снова.");
-        throw new Error("Сессия завершилась. Войдите снова.");
+        if (!appShell.hidden) showGate("Сессия завершилась. Войдите снова.");
+        throw new Error(data.error || "Требуется вход администратора.");
       }
       throw new Error(data.error || "Не удалось выполнить запрос.");
     }
@@ -383,7 +383,7 @@
       screen.innerHTML =
         '<div class="screen-heading"><div><p class="eyebrow">FORM CONTROL / 06</p><h3>Активные формы.</h3><p>Включайте и отключайте приём обращений, редактируйте текст кнопки и подтверждение. Сервер проверяет статус формы при каждой отправке.</p></div></div>' +
         '<div class="management-grid">' + forms.map(form =>
-          '<section class="section-card"><div class="form-section-title"><div><h4>' + esc(form.title) + '</h4><p>ID: ' + esc(form.id) + '</p></div>' + statusBadge(form.enabled ? "published" : "archived") + '</div>' +
+          '<section class="section-card"><div class="form-section-title"><div><h4>' + esc(form.title) + '</h4><p>ID: ' + esc(form.id) + '</p></div>' + '<span class="form-state ' + (form.enabled ? "is-enabled" : "is-disabled") + '">' + (form.enabled ? "АКТИВНА" : "ОТКЛЮЧЕНА") + '</span></div>' +
           '<form class="management-form" data-form-id="' + esc(form.id) + '">' +
           '<label class="switch-row"><span class="switch-copy"><strong>Принимать заявки</strong><small>Если отключить, сервер не примет новые отправки этой формы.</small></span><span class="admin-switch"><input type="checkbox" name="enabled" ' + (form.enabled ? "checked" : "") + '><span class="switch-track"></span></span></label>' +
           '<label>Название формы<input name="title" maxlength="150" required value="' + esc(form.title) + '"></label>' +
