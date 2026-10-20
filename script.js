@@ -54,12 +54,14 @@
   };
 
   // Public contact details and form configuration are read from the server when available.
+  let contactEmail = 'borzenko.official@yandex.ru';
   fetch('/api/public/settings', { headers: { Accept: 'application/json' }, credentials: 'same-origin', cache: 'no-store' })
     .then(getJsonResponse)
     .then(settings => {
       const email = String(settings.contact_email || '').trim();
       const telegram = String(settings.telegram_url || '').trim();
       if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        contactEmail = email;
         document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
           const previous = link.getAttribute('href') || '';
           const query = previous.includes('?') ? previous.slice(previous.indexOf('?')) : '';
@@ -135,7 +137,7 @@
       } catch (error) {
         if (error.code === 'SKOL_API_UNAVAILABLE' || error instanceof TypeError) {
           if (status) status.textContent = 'Серверная форма не отвечает. Открываем почтовую программу как резервный способ отправки.';
-          window.location.href = 'mailto:borzenko.official@yandex.ru?subject=' + subject + '&body=' + emailBody;
+          window.location.href = 'mailto:' + encodeURIComponent(contactEmail) + '?subject=' + subject + '&body=' + emailBody;
         } else if (status) {
           status.textContent = error.message || 'Не удалось отправить обращение. Попробуйте ещё раз.';
         }
