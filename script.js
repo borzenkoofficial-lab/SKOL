@@ -65,6 +65,53 @@
     window.location.href = 'mailto:borzenko.official@yandex.ru?subject=' + subject + '&body=' + body;
   });
 
+
+  // Header state: the fixed navigation becomes a compact, frosted bar after scrolling.
+  const header = document.querySelector('.header');
+  let scrollTicking = false;
+  const updateHeader = () => {
+    header?.classList.toggle('is-scrolled', window.scrollY > 24);
+    scrollTicking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!scrollTicking) {
+      window.requestAnimationFrame(updateHeader);
+      scrollTicking = true;
+    }
+  }, { passive: true });
+  updateHeader();
+
+  // Subtle pointer parallax for the abstract hero geometry; never runs on touch devices.
+  const hero = document.querySelector('.hero-premium');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (hero && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion.matches) {
+    let pointerFrame = 0;
+    hero.addEventListener('pointermove', event => {
+      if (pointerFrame) return;
+      pointerFrame = window.requestAnimationFrame(() => {
+        const rect = hero.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width - .5) * 18;
+        const y = ((event.clientY - rect.top) / rect.height - .5) * 18;
+        hero.style.setProperty('--hero-pointer-x', x.toFixed(2) + 'px');
+        hero.style.setProperty('--hero-pointer-y', y.toFixed(2) + 'px');
+        pointerFrame = 0;
+      });
+    }, { passive: true });
+    hero.addEventListener('pointerleave', () => {
+      hero.style.setProperty('--hero-pointer-x', '0px');
+      hero.style.setProperty('--hero-pointer-y', '0px');
+    }, { passive: true });
+  }
+
+  // Stagger groups of reveal elements for a more deliberate editorial rhythm.
+  if (!reduceMotion.matches) {
+    document.querySelectorAll('.service-list, .process-grid, .audience-grid, .project-editorial').forEach(group => {
+      [...group.children].forEach((item, index) => {
+        item.style.transitionDelay = Math.min(index * 85, 340) + 'ms';
+      });
+    });
+  }
+
   const year = document.querySelector('#year');
   if (year) year.textContent = String(new Date().getFullYear());
 })();
