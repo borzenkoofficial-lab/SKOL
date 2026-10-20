@@ -827,3 +827,46 @@ main>section:not(.hero)>.ambient-art~*{position:relative;z-index:1}
   .ambient-process .ambient-letter{left:-12%;top:5%}.ambient-statement .ambient-letter{right:-12%}.ambient-contact .ambient-letter{left:-8%}
 }
 @media(prefers-reduced-motion:reduce){.ambient-letter,.ambient-ring,.ambient-orbit{animation:none!important;will-change:auto}}
+
+
+
+/* CONNECTED GLYPH TRANSITIONS — align the same orbital axis at every section seam */
+main>section:not(.hero)>.ambient-art{overflow:visible;contain:none}
+main>section:not(.hero)>.ambient-art .ambient-ring{
+  width:clamp(180px,29vw,440px);
+  right:7%;
+  left:auto;
+  top:auto;
+  bottom:auto;
+  margin:0;
+  transform:none;
+  animation:none;
+  opacity:.9;
+}
+main>section:not(.hero)>.ambient-art .ambient-ring::before{animation:none}
+main>section:not(.hero)>.ambient-art .ambient-ring::after{animation:none}
+
+/* Each neighbouring pair meets on the same X-axis and at the same boundary point. */
+.ambient-intro .ambient-ring{top:auto;bottom:calc(clamp(180px,29vw,440px) / -2)}
+.ambient-services .ambient-ring{top:calc(clamp(180px,29vw,440px) / -2);bottom:auto}
+.ambient-services .ambient-ring{right:7%}
+.ambient-process .ambient-ring{top:calc(clamp(180px,29vw,440px) / -2);bottom:auto}
+.ambient-statement .ambient-ring{top:calc(clamp(180px,29vw,440px) / -2);bottom:auto}
+.ambient-audience .ambient-ring{top:calc(clamp(180px,29vw,440px) / -2);bottom:auto}
+.ambient-projects .ambient-ring{top:calc(clamp(180px,29vw,440px) / -2);bottom:auto}
+.ambient-contact .ambient-ring{top:calc(clamp(180px,29vw,440px) / -2);bottom:auto}
+
+/* The main ring is the continuity anchor; secondary details drift slowly around it. */
+.ambient-orbit{animation-duration:19s}
+.ambient-cross{opacity:.62}
+@media(max-width:760px){
+  main>section:not(.hero)>.ambient-art .ambient-ring{
+    width:clamp(150px,42vw,260px);
+    right:5%;
+  }
+  .ambient-intro .ambient-ring{bottom:calc(clamp(150px,42vw,260px) / -2)}
+  .ambient-services .ambient-ring,.ambient-process .ambient-ring,.ambient-statement .ambient-ring,
+  .ambient-audience .ambient-ring,.ambient-projects .ambient-ring,.ambient-contact .ambient-ring{
+    top:calc(clamp(150px,42vw,260px) / -2);
+  }
+}
