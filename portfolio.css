@@ -112,3 +112,5 @@
 .pf-project-video{display:inline-flex;align-items:center;gap:9px;border-bottom:1px solid rgba(37,40,43,.26);padding-bottom:5px;font-size:8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#925c3c}
 .pf-project-video:hover{color:var(--wine)}
 .pf-media-other{background:radial-gradient(ellipse at 50% 40%,rgba(201,107,69,.17),transparent 38%),linear-gradient(145deg,#353635,#222525)}
+
+.pf-demo-notice[hidden]{display:none!important}
