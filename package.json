@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check admin.js && node --check portfolio.js && node --check script.js && node --check publications.js && node --check publication.js && node --check services.js && node --check service-entry.js",
+    "check": "node --check server.js && node --check \"api/[...path].js\" && node --check admin.js && node --check portfolio.js && node --check script.js && node --check publications.js && node --check publication.js && node --check services.js && node --check service-entry.js",
     "test": "node --test"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "express": "^4.21.2",
     "express-rate-limit": "^7.5.0",
     "express-session": "^1.18.1",
-    "helmet": "^8.1.0"
+    "helmet": "^8.1.0",
+    "pg": "^8.16.3"
   }
 }
