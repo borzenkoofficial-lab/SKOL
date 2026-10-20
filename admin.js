@@ -83,11 +83,11 @@
     try {
       const data = await api("/api/health");
       if (gateStatus) gateStatus.textContent = data.ok
-        ? "Сервер доступен. Используйте учётные данные, заданные на сервере."
-        : "Сервер отвечает, но проверка системы не пройдена.";
+        ? "Сервер и PostgreSQL доступны. Используйте учётные данные, заданные на сервере."
+        : "API доступно, но PostgreSQL не подключён. Проверьте DATABASE_URL в настройках Vercel.";
       return Boolean(data.ok);
     } catch {
-      if (gateStatus) gateStatus.textContent = "Серверная часть не подключена. Для сохранения данных нужен Node.js + SQLite; статический HTML сам по себе не принимает заявки и не публикует изменения.";
+      if (gateStatus) gateStatus.textContent = "Серверная часть не подключена. Для сохранения данных нужны API и настроенная PostgreSQL-база; статический HTML сам по себе не принимает заявки и не публикует изменения.";
       return false;
     }
   }
