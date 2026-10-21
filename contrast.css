@@ -770,3 +770,162 @@ main > section:not(.hero) > .ambient-art { opacity: .38 !important; }
 @media (prefers-reduced-motion: reduce) {
   .services .service-row { transition: none !important; }
 }
+
+
+/* FINAL DETAIL PASS 02 — resolve cascade conflicts and polish responsive rhythm. */
+
+/* Critical positioning repair: the motion layer sets direct Hero children to position:relative.
+   These four elements are designed as overlays and must remain anchored to the Hero surface. */
+.hero-premium > .hero-topline,
+.hero-premium > .hero-side-note,
+.hero-premium > .hero-index,
+.hero-premium > .hero-bottom-rule {
+  position: absolute !important;
+}
+.hero-premium > .hero-topline {
+  top: 118px;
+  left: var(--pad);
+  right: var(--pad);
+}
+.hero-premium > .hero-side-note {
+  right: var(--pad);
+  top: 42%;
+}
+.hero-premium > .hero-index {
+  left: var(--pad);
+  right: var(--pad);
+  bottom: 24px;
+}
+.hero-premium > .hero-bottom-rule { left: var(--pad); bottom: 0; }
+@media (max-width:760px) {
+  .hero-premium > .hero-topline { top: 94px; }
+  .hero-premium > .hero-side-note { display: none; }
+  .hero-premium > .hero-index { bottom: 20px; }
+}
+
+/* One clean line length and cadence for the long-form SEO copy. */
+.seo-content .seo-content-copy {
+  max-width: none;
+  font-size: clamp(1rem,1.12vw,1.08rem);
+  line-height: 1.78;
+}
+.seo-content .seo-content-copy p { margin-bottom: 20px; }
+.seo-content .seo-content-copy p:last-child { margin-bottom: 0; }
+.seo-content .seo-content-copy h3 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  letter-spacing: -.025em;
+}
+.seo-content .seo-content-copy h3:first-child { margin-top: 0; }
+
+/* Balance 5-item grids instead of leaving the final card isolated on the left edge. */
+@media (min-width:761px) {
+  .services .service-row:last-child {
+    grid-column: 1 / -1;
+    width: calc(50% - 7px);
+    justify-self: center;
+  }
+  .seo-faq .seo-faq-list details:last-child {
+    grid-column: 1 / -1;
+    width: calc(50% - 6px);
+    justify-self: center;
+  }
+}
+
+/* Contact form labels: match or exceed the specificity of the earlier global label rule.
+   This avoids graphite labels surviving inside the dark contact panel. */
+body:not(.admin-page) .contact .contact-form label {
+  color: #e7e2da !important;
+  font-size: 11px !important;
+  line-height: 1.6;
+  letter-spacing: .08em !important;
+}
+body:not(.admin-page) .contact .contact-form .form-note,
+body:not(.admin-page) .contact .contact-form .form-status {
+  color: #c9c2b8 !important;
+  font-size: 12px !important;
+  line-height: 1.7;
+}
+body:not(.admin-page) .contact .contact-form .form-row label { color: #e7e2da !important; }
+
+/* Consistent footer: seven items, seven desktop columns, intentional two-column mobile placement. */
+.footer {
+  grid-template-columns: auto minmax(150px,1fr) repeat(5,auto) !important;
+  align-items: center;
+}
+.footer > span:nth-child(2) {
+  color: #d7d3cc !important;
+  line-height: 1.7;
+}
+.footer .footer-email,
+.footer .back-top { color: #d7d3cc !important; }
+.footer .footer-email:hover,
+.footer .back-top:hover { color: #e6a184 !important; }
+.footer .copyright { color: rgba(245,243,238,.62) !important; }
+@media (max-width:1100px) and (min-width:761px) {
+  .footer {
+    grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+    grid-template-areas:
+      "brand tagline tagline tagline"
+      "about telegram email top"
+      "copyright copyright copyright copyright" !important;
+    gap: 16px 14px;
+  }
+  .footer > .wordmark { grid-area: brand !important; }
+  .footer > span:nth-child(2) { grid-area: tagline !important; }
+  .footer > a[href="about.html"] { grid-area: about !important; }
+  .footer > a[href^="https://t.me/"] { grid-area: telegram !important; }
+  .footer > a[href^="mailto:"] { grid-area: email !important; }
+  .footer > .back-top { grid-area: top !important; }
+  .footer > .copyright { grid-area: copyright !important; justify-self: end; }
+}
+@media (max-width:760px) {
+  .footer {
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr) !important;
+    grid-template-areas:
+      "brand copyright"
+      "tagline tagline"
+      "about telegram"
+      "email top" !important;
+    align-items: start;
+    column-gap: 20px;
+    row-gap: 18px;
+  }
+  .footer > .wordmark { grid-area: brand !important; }
+  .footer > span:nth-child(2) { grid-area: tagline !important; }
+  .footer > a[href="about.html"] { grid-area: about !important; }
+  .footer > a[href^="https://t.me/"] { grid-area: telegram !important; }
+  .footer > a[href^="mailto:"] { grid-area: email !important; }
+  .footer > .back-top { grid-area: top !important; text-align: right !important; }
+  .footer > .copyright { grid-area: copyright !important; text-align: right !important; align-self: center; }
+  .footer > span:nth-child(2) { max-width: 34ch; }
+}
+
+/* Touch devices must not inherit desktop hover motion as a sticky visual state. */
+@media (hover:none) {
+  .services .service-row:hover,
+  .contact .contact-channels a:hover,
+  .seo-faq .seo-faq-list details:hover { transform: none !important; }
+  .services .service-row:hover { padding: 20px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-premium > .hero-topline,
+  .hero-premium > .hero-side-note,
+  .hero-premium > .hero-index,
+  .hero-premium > .hero-bottom-rule { animation: none !important; }
+}
+
+/* Navigation focus and active location are quiet but perceptible. */
+.nav a[aria-current="location"] { color: #f5f3ee; }
+.nav a[aria-current="location"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 1px;
+  background: #e6a184;
+}
+@media (max-width:760px) {
+  .nav a[aria-current="location"]::after { bottom: -5px; }
+}
