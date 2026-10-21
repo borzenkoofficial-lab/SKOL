@@ -893,3 +893,283 @@ main > section:not(.hero) > .ambient-art { opacity:.38 !important; }
 @media (prefers-reduced-motion:reduce) {
   .services .service-row,.contact .contact-channels a,.seo-faq .seo-faq-list details { transition:none !important; }
 }
+
+
+/* SKOL BRAND FINISH — one consistent identity across the site. */
+:root {
+  --skol-ink: #25282b;
+  --skol-paper: #f5f3ee;
+  --skol-copper: #c96b45;
+  --skol-copper-light: #e6a184;
+  --skol-wine: #6b2737;
+  --skol-hairline-dark: rgba(37,40,43,.18);
+  --skol-hairline-light: rgba(245,243,238,.19);
+}
+
+/* A compact signature lockup: emblem, wordmark and a restrained positioning line. */
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  width: max-content;
+  white-space: nowrap;
+}
+.wordmark .skol-symbol {
+  display: block;
+  width: 29px;
+  height: auto;
+  flex: 0 0 auto;
+  filter: drop-shadow(0 2px 7px rgba(201,107,69,.12));
+  transition: transform .35s cubic-bezier(.2,.75,.25,1), filter .35s ease;
+}
+.wordmark-text {
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+  line-height: .88;
+  letter-spacing: -.105em;
+}
+.wordmark-text::after {
+  content: ".";
+  display: inline-block;
+  margin-left: .055em;
+  color: var(--skol-copper-light);
+  letter-spacing: -.1em;
+}
+.wordmark:hover .skol-symbol {
+  transform: translate3d(0,-2px,0) rotate(-2deg);
+  filter: drop-shadow(0 4px 10px rgba(201,107,69,.24));
+}
+.header .wordmark {
+  position: relative;
+  padding-bottom: 5px;
+}
+.header .wordmark::after {
+  content: "ПОДРЯДНЫЕ РАБОТЫ";
+  position: absolute;
+  left: 1px;
+  top: calc(100% + 2px);
+  color: rgba(245,243,238,.56);
+  font-size: 7.5px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .17em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.header .skol-symbol { width: 28px; }
+.header .wordmark-text { font-size: clamp(24px,2.1vw,30px); }
+.footer .wordmark-text { font-size: inherit; }
+
+/* Keep the architectural character; remove the glassy overlay from navigation. */
+.header {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.header .nav a {
+  position: relative;
+  padding-bottom: 8px;
+  color: rgba(245,243,238,.77);
+  transition: color .25s ease;
+}
+.header .nav a::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--skol-copper-light);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .28s cubic-bezier(.2,.75,.25,1);
+}
+.header .nav a:hover,
+.header .nav a[aria-current="page"],
+.header .nav a[aria-current="location"] {
+  color: #fffaf3;
+}
+.header .nav a:hover::after,
+.header .nav a[aria-current="page"]::after,
+.header .nav a[aria-current="location"]::after {
+  transform: scaleX(1);
+}
+.header .header-cta {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .09em;
+}
+
+/* A more deliberate typographic hierarchy: larger labels, fewer hairline-sized cues. */
+:where(.hero-kicker,.eyebrow,.section-label,.about-eyebrow,.about-section-kicker,
+       .svc-eyebrow,.svc-kicker,.system-eyebrow,.system-topline,
+       .about-hero-meta,.svc-topline,.graphic-meta,.process-index) {
+  font-size: 9.5px;
+}
+.section-label {
+  gap: 14px;
+  letter-spacing: .15em;
+}
+.section-label span:first-child {
+  color: var(--skol-copper-dark);
+  font-variant-numeric: tabular-nums;
+}
+.section-label span:first-child::after {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 1px;
+  margin: 0 0 3px 10px;
+  background: var(--skol-copper);
+}
+.hero-topline,.about-hero-meta,.svc-topline,.system-topline {
+  letter-spacing: .13em;
+}
+.hero-brand {
+  letter-spacing: -.125em;
+  text-shadow: 0 18px 70px rgba(0,0,0,.16);
+}
+.hero-pitch > p {
+  font-size: 13px;
+  line-height: 1.85;
+}
+.intro-copy > p:not(.lead),
+.services-heading > p,
+.projects-heading > p,
+.process-heading > p,
+.process-step p,
+.audience-card p,
+.project-graphic p,
+.seo-content-copy p,
+.seo-faq-list details p,
+.contact-copy > p {
+  line-height: 1.9;
+}
+.services .service-row p {
+  font-size: 12.5px;
+  line-height: 1.85;
+}
+.process-step p,
+.project-graphic p,
+.audience-card p {
+  font-size: 12px;
+}
+.contact-form label {
+  font-size: 10px;
+  letter-spacing: .11em;
+}
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+  font-size: 14px;
+}
+.form-note,.form-status {
+  font-size: 11px;
+  line-height: 1.75;
+}
+.footer-email,.footer .back-top,.footer > span {
+  font-size: 9px;
+  letter-spacing: .12em;
+}
+
+/* The SKOL copper stroke is a signature detail, not a large decorative effect. */
+.service-row {
+  border-color: rgba(37,40,43,.19);
+}
+.service-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 28px;
+  height: 2px;
+  background: var(--skol-copper);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .3s cubic-bezier(.2,.75,.25,1);
+}
+.service-row:hover::before,
+.service-row:focus-visible::before {
+  transform: scaleX(1);
+}
+.audience-card,.project-graphic,.svc-card {
+  isolation: isolate;
+}
+.audience-card::before,
+.project-graphic::before,
+.svc-card::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 2px;
+  background: var(--skol-copper);
+  transform: scaleX(.52);
+  transform-origin: left center;
+  transition: transform .35s cubic-bezier(.2,.75,.25,1);
+  pointer-events: none;
+}
+.audience-card:hover::before,
+.project-graphic:hover::before,
+.svc-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Background marks remain atmospheric; the written message remains the focal point. */
+main > section:not(.hero) > .ambient-art {
+  opacity: .27 !important;
+}
+.skol-quote {
+  opacity: .105 !important;
+  letter-spacing: -.045em;
+}
+.hero-premium::before {
+  opacity: .48;
+}
+.hero-ambient-art,.hero-orbit,.hero-geometry {
+  pointer-events: none;
+}
+.statement-mark {
+  user-select: none;
+}
+
+/* Clear focus states and restrained motion are part of the brand's finish. */
+.header .nav a:focus-visible,
+.wordmark:focus-visible,
+.header-cta:focus-visible,
+.button:focus-visible,
+.text-link:focus-visible {
+  outline: 2px solid var(--skol-copper-light);
+  outline-offset: 5px;
+}
+@media (max-width: 1100px) and (min-width: 761px) {
+  .header { gap: 20px; }
+  .header .nav { gap: clamp(12px,1.6vw,24px); font-size: 9.5px; }
+  .header .wordmark::after { font-size: 7px; letter-spacing: .13em; }
+}
+@media (max-width: 760px) {
+  .header .wordmark { padding-bottom: 3px; }
+  .header .wordmark::after {
+    top: calc(100% + 3px);
+    font-size: 6.5px;
+    letter-spacing: .14em;
+  }
+  .header .skol-symbol { width: 25px; }
+  .header .wordmark-text { font-size: 25px; }
+  .header .nav a { padding: 2px 0 7px; }
+  .header .nav a::after { bottom: 1px; }
+  .section-label { font-size: 9px; }
+  .services .service-row p { font-size: 12px; }
+  .process-step p,.project-graphic p,.audience-card p { font-size: 11.5px; }
+  .contact-form label { font-size: 9.5px; }
+  .footer-email,.footer .back-top,.footer > span { font-size: 8.5px; }
+  main > section:not(.hero) > .ambient-art { opacity: .22 !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wordmark .skol-symbol,.service-row::before,.audience-card::before,
+  .project-graphic::before,.svc-card::before,.header .nav a::after {
+    transition: none !important;
+  }
+}
