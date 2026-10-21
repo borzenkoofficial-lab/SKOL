@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#25282b">
+  <meta name="description" content="Интерактивная схема помещения от СКОЛ: отметьте поверхности и элементы, выберите тип работ и подготовьте исходные данные для обсуждения объекта в Москве и МО.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="СКОЛ">
+  <meta property="og:title" content="Интерактивная схема помещения — СКОЛ">
+  <meta property="og:description" content="Соберите предварительную схему помещения и отметьте, какие элементы требуют демонтажа или подготовки.">
+  <title>Интерактивная схема помещения — СКОЛ</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="contrast.css">
+  <link rel="stylesheet" href="room-configurator.css">
+  <script src="script.js" defer></script>
+  <script src="room-configurator.js" defer></script>
+</head>
+<body class="room-tool-page">
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <div class="loader" aria-hidden="true"><span>СКОЛ<span class="dot">.</span></span><div class="loader-line"><i></i></div></div>
+  <header class="header" id="top">
+    <a class="wordmark" href="index.html" aria-label="СКОЛ — на главную"><svg class="skol-symbol" viewBox="0 0 56 44" aria-hidden="true" focusable="false"><defs><linearGradient id="skolCopperHeader" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#edb28b"/><stop offset=".52" stop-color="#c96b45"/><stop offset="1" stop-color="#87402f"/></linearGradient></defs><path d="M8 2H48L35 15H20L8 27Z" fill="url(#skolCopperHeader)"/><path d="M20 15H48L35 28H20Z" fill="#e4a078"/><path d="M20 28H35L22 41H2Z" fill="url(#skolCopperHeader)"/><path d="M35 28H48L35 41H22Z" fill="#a95539"/><path d="M8 2H20L8 14Z" fill="#f0c19a" opacity=".85"/></svg><span class="wordmark-text">СКОЛ</span></a>
+    <nav class="nav" id="primary-nav" aria-label="Главная навигация">
+      <a href="services.html">Услуги</a><a href="room-configurator.html" aria-current="page">3D-комната</a><a href="about.html">О компании</a><a href="system.html">Система</a><a href="portfolio.html">Портфолио</a><a href="publications.html">Публикации</a>
+    </nav>
+    <a class="header-cta" href="index.html#contact">Обсудить объект <span>↗</span></a>
+    <button class="menu-toggle" aria-label="Открыть меню" aria-controls="primary-nav" aria-expanded="false"><span></span><span></span></button>
+  </header>
+
+  <main id="main" class="room-tool-main">
+    <section class="room-tool-hero">
+      <div class="room-tool-overline"><span>СКОЛ / ИНСТРУМЕНТ ПОДГОТОВКИ ОБЪЕКТА</span><span>01 — ИНТЕРАКТИВНАЯ СХЕМА</span></div>
+      <p class="eyebrow"><span class="status-dot"></span> ДО НАЧАЛА РАБОТ</p>
+      <h1>Покажите,<br><em>что предстоит сделать.</em></h1>
+      <p class="room-tool-intro">Отметьте элементы помещения, выберите тип задачи и задайте примерные размеры. Схема поможет собрать исходные данные для разговора с подрядчиком — без длинного описания с нуля.</p>
+    </section>
+
+    <section class="room-workspace" aria-label="Конструктор помещения">
+      <div class="room-view-panel">
+        <div class="room-view-top"><span><i></i> СХЕМА ПОМЕЩЕНИЯ</span><span id="view-mode-label">ОБЪЁМНЫЙ ВИД · СХЕМАТИЧНО</span></div>
+        <div class="room-scene-wrap">
+          <div class="room-scene" id="room-scene" data-floor="true" data-ceiling="true" data-left="true" data-right="true" data-partition="false" data-door="true" data-window="true" aria-label="Интерактивная схематичная модель комнаты">
+            <div class="room-shell">
+              <div class="room-wall room-wall-back"><span class="wall-tag">W-01 / ЗАДНЯЯ СТЕНА</span><div class="room-window"><i></i></div><span class="wall-dimension">ДЛИНА</span></div>
+              <div class="room-wall room-wall-left"><span class="wall-tag">W-02</span><span class="wall-dimension">ШИРИНА</span></div>
+              <div class="room-wall room-wall-right"><span class="wall-tag">W-03</span><div class="room-door"><i></i></div></div>
+              <div class="room-floor"><span>F-01 / ПОЛ</span><i></i></div>
+              <div class="room-ceiling"><span>C-01 / ПОТОЛОК</span></div>
+              <div class="room-partition"><span>ПЕРЕГОРОДКА</span></div>
+              <div class="room-grid" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="scene-compass" aria-hidden="true"><span>N</span><i></i><span>01</span></div>
+          <p class="scene-disclaimer">Условная 3D-схема, не обмерный план и не проектная документация.</p>
+        </div>
+        <div class="room-view-bottom"><span><b id="selected-count">4</b> элемента отмечено</span><button type="button" id="reset-scene" class="text-button">Сбросить схему ↺</button></div>
+      </div>
+
+      <aside class="room-controls">
+        <div class="room-controls-heading"><span class="section-label">НАСТРОЙКА / 01</span><h2>Состав работ</h2><p>Выберите элементы, которых касается задача.</p></div>
+        <fieldset class="room-control-group">
+          <legend>Поверхности и элементы</legend>
+          <label class="room-toggle"><span><i class="toggle-mark"></i><span><b>Пол</b><small>Покрытие / стяжка</small></span></span><input type="checkbox" data-element="floor" checked><span class="toggle-ui"></span></label>
+          <label class="room-toggle"><span><i class="toggle-mark"></i><span><b>Потолок</b><small>Подвесной / отделка</small></span></span><input type="checkbox" data-element="ceiling" checked><span class="toggle-ui"></span></label>
+          <label class="room-toggle"><span><i class="toggle-mark"></i><span><b>Левая стена</b><small>Слой отделки / основание</small></span></span><input type="checkbox" data-element="left" checked><span class="toggle-ui"></span></label>
+          <label class="room-toggle"><span><i class="toggle-mark"></i><span><b>Правая стена</b><small>Слой отделки / основание</small></span></span><input type="checkbox" data-element="right" checked><span class="toggle-ui"></span></label>
+          <label class="room-toggle"><span><i class="toggle-mark"></i><span><b>Перегородка</b><small>Демонтаж / устройство</small></span></span><input type="checkbox" data-element="partition"><span class="toggle-ui"></span></label>
+          <label class="room-toggle"><span><i class="toggle-mark"></i><span><b>Дверной проём</b><small>Дверь / демонтаж блока</small></span></span><input type="checkbox" data-element="door" checked><span class="toggle-ui"></span></label>
+          <label class="room-toggle"><span><i class="toggle-mark"></i><span><b>Окно</b><small>Откосы / примыкания</small></span></span><input type="checkbox" data-element="window" checked><span class="toggle-ui"></span></label>
+        </fieldset>
+        <div class="room-control-group">
+          <label class="field-label" for="room-task">Тип задачи</label>
+          <select id="room-task" class="room-select"><option value="Демонтаж">Демонтаж</option><option value="Подготовка к отделке">Подготовка к отделке</option><option value="Черновая отделка">Черновая отделка</option><option value="Комплексные работы">Комплексные работы</option></select>
+        </div>
+        <div class="room-control-group">
+          <label class="field-label" for="room-type">Тип помещения</label>
+          <select id="room-type" class="room-select"><option>Квартира</option><option>Офис</option><option>Торговое помещение</option><option>Общее / техническое помещение</option><option>Другое</option></select>
+        </div>
+        <div class="room-dimensions">
+          <div class="room-controls-heading"><span class="section-label">ПРИМЕРНЫЕ РАЗМЕРЫ / 02</span><h2>Габариты</h2></div>
+          <div class="dimension-fields">
+            <label for="room-length">Длина, м<input id="room-length" type="number" min="1" max="100" step="0.1" value="5"></label>
+            <label for="room-width">Ширина, м<input id="room-width" type="number" min="1" max="100" step="0.1" value="4"></label>
+            <label for="room-height">Высота, м<input id="room-height" type="number" min="1" max="20" step="0.1" value="2.8"></label>
+          </div>
+          <div class="room-metrics"><div><span>Площадь пола</span><b><output id="floor-area">20</output> м²</b></div><div><span>Объём помещения</span><b><output id="room-volume">56</output> м³</b></div></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="room-summary-section" aria-labelledby="room-summary-title">
+      <div class="room-summary-copy"><span class="section-label">РЕЗУЛЬТАТ / 03</span><h2 id="room-summary-title">Исходные данные<br><em>для обсуждения.</em></h2><p>Это не смета и не автоматический расчёт стоимости. Сформируйте краткое описание, чтобы передать его специалисту и уточнить условия на объекте.</p></div>
+      <div class="room-summary-card">
+        <div class="summary-card-top"><span>SK / BRIEF</span><span id="brief-status">ЧЕРНОВИК</span></div>
+        <dl id="room-brief">
+          <div><dt>Тип задачи</dt><dd id="brief-task">Демонтаж</dd></div>
+          <div><dt>Помещение</dt><dd id="brief-type">Квартира</dd></div>
+          <div><dt>Габариты</dt><dd id="brief-dimensions">5 × 4 × 2,8 м</dd></div>
+          <div><dt>Площадь пола</dt><dd id="brief-area">20 м²</dd></div>
+          <div><dt>Элементы</dt><dd id="brief-elements">Пол, потолок, левая стена, правая стена, дверной проём, окно</dd></div>
+        </dl>
+        <div class="summary-actions"><button type="button" class="button button-accent" id="copy-brief">Скопировать описание <span>↗</span></button><a class="button button-outline" id="send-brief" href="index.html#contact">Обсудить объект <span>↗</span></a></div>
+        <p class="summary-feedback" id="summary-feedback" role="status" aria-live="polite">Настройки обновляются автоматически по мере выбора.</p>
+      </div>
+    </section>
+
+    <section class="room-tool-footnote"><span>СКОЛ / МОСКВА · МОСКОВСКАЯ ОБЛАСТЬ</span><p>Точные объёмы, состояние конструкций, доступ, вынос и вывоз отходов оцениваются отдельно. Схема помогает описать задачу, но не заменяет осмотр объекта.</p><a href="index.html">← Вернуться на главную</a></section>
+  </main>
+</body>
+</html>
