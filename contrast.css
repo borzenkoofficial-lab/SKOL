@@ -1236,3 +1236,30 @@ main > section:not(.hero) > .ambient-art {
 @media (prefers-reduced-motion: reduce) {
   .service-row::after { transition: none !important; }
 }
+
+
+/* Separate meaningful service diagrams from atmospheric background geometry. */
+.demolition-page .dem-card-art {
+  opacity: .58 !important;
+}
+.demolition-page .dem-service-card[data-work="complex"] .dem-card-art {
+  opacity: .72 !important;
+}
+.demolition-page .dem-service-card:hover .dem-card-art,
+.demolition-page .dem-service-card:focus-visible .dem-card-art {
+  opacity: .76 !important;
+}
+.demolition-page .dem-service-card[data-work="complex"]:hover .dem-card-art,
+.demolition-page .dem-service-card[data-work="complex"]:focus-visible .dem-card-art {
+  opacity: .88 !important;
+}
+@media (max-width: 760px) {
+  .demolition-page .dem-card-art { opacity: .49 !important; }
+  .demolition-page .dem-service-card[data-work="complex"] .dem-card-art {
+    opacity: .61 !important;
+  }
+  .demolition-page .dem-service-card:hover .dem-card-art,
+  .demolition-page .dem-service-card:focus-visible .dem-card-art {
+    opacity: .66 !important;
+  }
+}
