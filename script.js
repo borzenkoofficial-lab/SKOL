@@ -273,6 +273,50 @@
     });
   }
 
+  // 3D portfolio carousel: explicit controls, keyboard support, and no auto-advance.
+  const portfolioCarousel = document.querySelector('#portfolio-carousel');
+  if (portfolioCarousel) {
+    const slides = [...portfolioCarousel.querySelectorAll('[data-slide]')];
+    const dots = [...portfolioCarousel.querySelectorAll('[data-carousel-go]')];
+    const currentLabel = portfolioCarousel.querySelector('[data-carousel-current]');
+    let activeSlide = 0;
+    const paintCarousel = nextIndex => {
+      activeSlide = (nextIndex + slides.length) % slides.length;
+      slides.forEach((slide, index) => {
+        const offset = (index - activeSlide + slides.length) % slides.length;
+        slide.classList.toggle('is-active', offset === 0);
+        slide.classList.toggle('is-next', offset === 1);
+        slide.classList.toggle('is-prev', offset === slides.length - 1);
+        slide.setAttribute('aria-hidden', offset === 0 ? 'false' : 'true');
+        slide.inert = offset !== 0;
+      });
+      dots.forEach((dot, index) => {
+        if (index === activeSlide) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
+      if (currentLabel) currentLabel.textContent = String(activeSlide + 1).padStart(2, '0');
+      portfolioCarousel.dataset.active = String(activeSlide);
+    };
+    portfolioCarousel.querySelector('[data-carousel-prev]')?.addEventListener('click', () => paintCarousel(activeSlide - 1));
+    portfolioCarousel.querySelector('[data-carousel-next]')?.addEventListener('click', () => paintCarousel(activeSlide + 1));
+    dots.forEach(dot => dot.addEventListener('click', () => paintCarousel(Number(dot.dataset.carouselGo))));
+    portfolioCarousel.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft') { event.preventDefault(); paintCarousel(activeSlide - 1); }
+      if (event.key === 'ArrowRight') { event.preventDefault(); paintCarousel(activeSlide + 1); }
+    });
+    let touchStartX = null;
+    portfolioCarousel.addEventListener('touchstart', event => {
+      touchStartX = event.changedTouches[0]?.clientX ?? null;
+    }, { passive: true });
+    portfolioCarousel.addEventListener('touchend', event => {
+      if (touchStartX === null) return;
+      const delta = (event.changedTouches[0]?.clientX ?? touchStartX) - touchStartX;
+      if (Math.abs(delta) > 45) paintCarousel(activeSlide + (delta < 0 ? 1 : -1));
+      touchStartX = null;
+    }, { passive: true });
+    paintCarousel(0);
+  }
+
   const year = document.querySelector('#year');
   if (year) year.textContent = String(new Date().getFullYear());
 })();
