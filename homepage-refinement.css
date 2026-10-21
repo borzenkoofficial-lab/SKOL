@@ -208,3 +208,16 @@ main>section{isolation:isolate}
  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
  .hero-orbit,.hero-geometry{transform:none!important}
 }
+
+/* Tablet navigation: collapse before the seven-link header becomes cramped. */
+@media (max-width:900px) and (min-width:761px){
+ .header{height:72px;gap:16px}
+ .header .nav{display:none;position:fixed;inset:0;background:#25282b;z-index:19;flex-direction:column;justify-content:center;align-items:center;gap:26px;font-size:15px;letter-spacing:.12em}
+ .header .nav.open{display:flex}
+ .header .header-cta{display:none}
+ .header .menu-toggle{display:flex;position:relative;z-index:21;flex-direction:column;gap:6px;padding:10px;background:transparent;border:0;color:inherit}
+ .header .menu-toggle span{display:block;width:25px;height:1px;background:currentColor;transition:transform .25s}
+ .header .menu-toggle[aria-expanded=true] span:first-child{transform:translateY(3.5px) rotate(45deg)}
+ .header .menu-toggle[aria-expanded=true] span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
+ body.menu-open{overflow:hidden}
+}
