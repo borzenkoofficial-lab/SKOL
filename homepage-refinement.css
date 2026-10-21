@@ -109,7 +109,7 @@ main>section{isolation:isolate}
 }
 @media(max-width:760px){
  .header{position:absolute}.header.is-scrolled{position:fixed}
- .hero-premium{min-height:0;padding-bottom:110px;overflow:hidden}
+ .hero-premium{height:auto;min-height:800px;padding-bottom:110px;overflow:hidden}
  .hero-premium .hero-content{top:clamp(190px,27vh,260px);left:var(--pad);right:var(--pad);width:auto;transform:none}
  .hero-brand{font-size:clamp(90px,24.5vw,178px);letter-spacing:-.11em;margin-top:clamp(25px,7vw,38px)}
  .hero-pitch{margin-top:clamp(26px,7vw,36px);gap:14px}
@@ -168,6 +168,7 @@ main>section{isolation:isolate}
 }
 @media(max-width:430px){
  :root{--pad:20px}
+ .hero-premium{min-height:820px}
  .hero-topline{top:90px;left:20px;right:20px;gap:10px;font-size:6.5px}
  .hero-premium .hero-content{top:clamp(185px,25vh,220px)}
  .hero-kicker{font-size:6.5px;letter-spacing:.09em;max-width:100%}
@@ -193,6 +194,7 @@ main>section{isolation:isolate}
 }
 @media(max-width:360px){
  :root{--pad:16px}
+ .hero-premium{min-height:850px}
  .hero-brand{font-size:clamp(78px,22.5vw,88px)}
  .hero-pitch h2{font-size:22px}
  .button{gap:18px}
