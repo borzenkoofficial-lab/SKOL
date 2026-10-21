@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check \"api/[...path].js\" && node --check admin.js && node --check portfolio.js && node --check script.js && node --check publications.js && node --check publication.js && node --check services.js && node --check service-entry.js",
+    "check": "node --check server.js && node --check \"api/[...path].js\" && node --check admin.js && node --check portfolio.js && node --check script.js && node --check publications.js && node --check publication.js && node --check services.js && node --check service-entry.js && node --check room-configurator.js",
     "test": "node --test"
   },
   "dependencies": {
