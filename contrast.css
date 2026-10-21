@@ -433,34 +433,7 @@ body:not(.admin-page) #pf-search { min-height: 48px; }
 }
 
 
-/* HOMEPAGE REFINEMENT — framed hero statement, visible service tiles, FAQ/contact cards. */
-/* Right-side headline in the hero must read as a designed panel, not floating text. */
-.hero-premium .hero-pitch {
-  position: relative;
-  width: min(100%, 760px);
-  margin-left: auto;
-  padding: clamp(24px, 3.4vw, 46px);
-  border: 1px solid rgba(230,161,132,.55);
-  border-left: 3px solid #c96b45;
-  border-radius: 3px;
-  background: linear-gradient(135deg, rgba(37,40,43,.88), rgba(47,39,38,.78));
-  box-shadow: 0 20px 60px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.045);
-  backdrop-filter: blur(5px);
-}
-.hero-premium .hero-pitch::before {
-  content: "СКОЛ / ПОДХОД";
-  display: block;
-  margin-bottom: 18px;
-  color: #dca084;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .16em;
-}
-.hero-premium .hero-pitch h2 { color: #fff9f2 !important; }
-.hero-premium .hero-pitch p { color: #e2ded7 !important; }
-@media (max-width:760px) {
-  .hero-premium .hero-pitch { margin: 24px 0 0; padding: 22px 18px; }
-}
+/* The Hero pitch intentionally stays unframed so the original typographic composition remains intact. */
 
 /* Global dark-surface typography: soft white body copy and near-white headings. */
 :where(.hero-premium,.system-bridge,.process,.statement,.audience-card.private,
@@ -632,4 +605,168 @@ body:not(.admin-page) #pf-search { min-height: 48px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .services .service-row,.contact .contact-channels a,.seo-faq .seo-faq-list details { transition: none; }
+}
+
+
+/* FINAL HOMEPAGE FINISH — restore the original Hero grid and apply one coherent light-text system
+   to the transparent dark canvas. Keep contrast intentionally dark only inside paper-colored cards. */
+
+/* Hero: remove any residual box treatment without changing the original two-column pitch grid. */
+.hero-premium .hero-pitch {
+  width: auto !important;
+  max-width: 1100px !important;
+  margin-left: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+.hero-premium .hero-pitch::before { content: none !important; display: none !important; }
+@media (max-width:760px) {
+  .hero-premium .hero-pitch { margin: 32px 0 0 !important; padding: 0 !important; }
+}
+
+/* The page canvas is dark from Intro through Contacts. Use warm white, not graphite, for foreground copy. */
+.intro,
+.services,
+.process,
+.statement,
+.audience,
+.projects,
+.seo-content,
+.seo-faq,
+.contact {
+  color: #f5f3ee;
+}
+:is(.intro,.services,.projects,.contact,.seo-content,.seo-faq,.audience) > .section-label,
+:is(.intro,.services,.projects,.contact,.seo-content,.seo-faq,.audience) .section-label {
+  color: #d7d3cc !important;
+  border-color: rgba(245,243,238,.2) !important;
+}
+.intro h2,
+.services-heading h2,
+.projects-heading h2,
+.contact h2,
+.seo-faq h2 {
+  color: #f7f3ed !important;
+}
+.intro h2 em,
+.services-heading h2 em,
+.projects-heading h2 em,
+.contact h2 em,
+.seo-faq h2 em {
+  color: #e6a184 !important;
+}
+.intro .lead { color: #f0ece5 !important; }
+.intro .intro-copy > p:not(.lead) { color: #d4d0c9 !important; }
+.intro .manifesto {
+  color: #d7d3cc !important;
+  border-color: rgba(245,243,238,.2) !important;
+}
+.intro .text-link,
+.projects .text-link { color: #f5f3ee !important; }
+.services-heading > p,
+.projects-heading > p,
+.contact-copy > p,
+.contact-meta,
+.projects .note,
+.seo-faq-heading > p {
+  color: #d7d3cc !important;
+}
+.services .service-list { border-top: 0; }
+.services .service-row { border-color: rgba(230,161,132,.32); }
+.services .service-row:hover {
+  padding: clamp(20px,2.5vw,32px);
+  transform: translateY(-3px);
+}
+.services .service-row h3 { color: #fff9f2 !important; }
+.services .service-row p { color: #d9d5ce !important; }
+.services .service-row .service-no,
+.services .service-row .service-row-cta,
+.services .service-row .service-arrow { color: #e6a184 !important; }
+
+/* Keep deliberate light/dark project cards self-contained; never bleach their internal text. */
+.projects .project-graphic.graphic-demolition { color: #25282b !important; }
+.projects .project-graphic.graphic-demolition h3 { color: #25282b !important; }
+.projects .project-graphic.graphic-demolition p { color: #403e3a !important; }
+.projects .project-graphic.graphic-finish { color: #f5f3ee !important; }
+.projects .project-graphic.graphic-finish h3 { color: #fff9f2 !important; }
+.projects .project-graphic.graphic-finish p { color: #d7d3cc !important; }
+
+/* SEO panel framing belongs on the explanatory copy, not on the Hero. Keep both columns top-aligned. */
+.seo-content .seo-content-grid { align-items: start; }
+.seo-content .seo-content-grid > div:first-child { position: static; top: auto; }
+.seo-content .seo-content-copy {
+  color: #e2ded7 !important;
+  border-color: rgba(230,161,132,.42);
+  background: linear-gradient(145deg,rgba(49,48,47,.94),rgba(35,37,39,.96));
+}
+.seo-content .seo-content-copy p { color: #e2ded7 !important; }
+.seo-content .seo-content-copy h3 { color: #fff9f2 !important; }
+
+/* FAQ header sits on the dark canvas; only the individual answer tiles use dark ink. */
+.seo-faq h2 { color: #f7f3ed !important; }
+.seo-faq .section-label { color: #d7d3cc !important; }
+.seo-faq-heading > p { color: #d7d3cc !important; }
+.seo-faq .seo-faq-list details { color: #25282b; }
+.seo-faq .seo-faq-list summary { color: #25282b !important; }
+.seo-faq .seo-faq-list details p { color: #514d47 !important; }
+
+/* Contact section: clear copy, visible labels, and one unmistakable primary action on the dark canvas. */
+.contact .contact-copy h2 { color: #f7f3ed !important; }
+.contact .contact-copy h2 em { color: #e6a184 !important; }
+.contact .contact-copy > p { color: #ded9d1 !important; }
+.contact .contact-meta { color: #d7d3cc !important; }
+.contact .contact-form label {
+  color: #e7e2da !important;
+  font-size: 11px !important;
+  line-height: 1.6;
+  letter-spacing: .08em !important;
+}
+.contact .contact-form .form-note,
+.contact .contact-form .form-status {
+  color: #c9c2b8 !important;
+  font-size: 12px !important;
+  line-height: 1.7;
+}
+.contact .contact-form .button-dark {
+  color: #17191a !important;
+  background: #c96b45 !important;
+  border: 1px solid #c96b45 !important;
+}
+.contact .contact-form .button-dark:hover {
+  background: #e6a184 !important;
+  border-color: #e6a184 !important;
+}
+
+/* Visible section labels and consistent quiet outlines across the remaining dark sections. */
+.process .section-label,
+.system-bridge .system-bridge-label,
+.statement .eyebrow,
+.audience .section-label {
+  color: #d7d3cc !important;
+}
+.process .process-heading > p,
+.process .process-step p { color: #ded9d1 !important; }
+.statement .statement-content > p { color: #e2ded7 !important; }
+.audience-card.private :is(h2,h3) { color: #fff9f2 !important; }
+.audience-card.private p { color: #ddd7cf !important; }
+
+/* Reduce ornamental noise and keep all touch targets/columns comfortable on narrow screens. */
+.skol-quote { opacity: .11 !important; }
+main > section:not(.hero) > .ambient-art { opacity: .38 !important; }
+@media (max-width:760px) {
+  .services .service-row,
+  .services .service-row:hover { padding: 20px 16px; }
+  .intro .manifesto { flex-wrap: wrap; row-gap: 10px; }
+  .contact .contact-meta { margin-top: 38px; }
+  .contact .contact-grid { gap: 42px; }
+  .contact .contact-channels { grid-template-columns: 1fr; }
+  .seo-content .seo-content-grid { grid-template-columns: 1fr; }
+  .seo-content .seo-content-copy { padding: 22px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .services .service-row { transition: none !important; }
 }
