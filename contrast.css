@@ -1,0 +1,160 @@
+/* SKOL global contrast layer — text colors follow the actual section surface. */
+:root {
+  --skol-text: #25282b;
+  --skol-muted: #5b5b57;
+  --skol-paper: #f5f3ee;
+  --skol-paper-muted: #d7d3cc;
+  --skol-copper-light: #e6a184;
+  --skol-copper-dark: #87452f;
+  --skol-line-light: rgba(245,243,238,.24);
+  --skol-line-dark: rgba(37,40,43,.2);
+}
+body { color: var(--skol-text); }
+:where(h1,h2,h3,h4,p,li,small,label,figcaption) { text-wrap: pretty; }
+:where(a,button,input,textarea,select,summary):focus-visible {
+  outline: 3px solid #c96b45;
+  outline-offset: 3px;
+}
+::placeholder { color: #625b52; opacity: 1; }
+
+/* HOME — light editorial sections */
+body:not(.about-page):not(.demolition-page):not(.services-page):not(.system-page):not(.portfolio-page):not(.publications-page):not(.publication-page):not(.service-entry-page):not(.admin-page) .intro,
+body:not(.about-page):not(.demolition-page):not(.services-page):not(.system-page):not(.portfolio-page):not(.publications-page):not(.publication-page):not(.service-entry-page):not(.admin-page) .services,
+body:not(.about-page):not(.demolition-page):not(.services-page):not(.system-page):not(.portfolio-page):not(.publications-page):not(.publication-page):not(.service-entry-page):not(.admin-page) .projects,
+body:not(.about-page):not(.demolition-page):not(.services-page):not(.system-page):not(.portfolio-page):not(.publications-page):not(.publication-page):not(.service-entry-page):not(.admin-page) .contact {
+  color: #25282b;
+}
+.intro .intro-copy > p:not(.lead), .services .services-heading > p,
+.projects .projects-heading > p, .contact .contact-copy,
+.intro .intro-copy > p:not(.lead) { color: #5b5b57; }
+.intro .manifesto { color: #514d47; }
+.services .service-row p { color: #565852; }
+.services .service-row h3 { color: #25282b; }
+.services .service-row .service-no,
+.services .service-row .service-row-cta { color: #87452f; }
+.services .service-arrow { color: #25282b; }
+.process, .system-bridge, .statement, .audience, .contact.contact-dark {
+  color: #f5f3ee;
+}
+.process p, .system-bridge p, .statement p, .audience p {
+  color: rgba(245,243,238,.82);
+}
+.process .section-label, .system-bridge .system-bridge-label,
+.statement .section-label, .audience .section-label {
+  color: rgba(245,243,238,.78);
+}
+.process .process-step p { color: #d7d3cc; }
+.process .process-index, .process h2 em,
+.system-bridge .system-bridge-link span { color: #e6a184; }
+.skol-quote { color: rgba(245,243,238,.22); }
+.intro .skol-quote, .services .skol-quote, .projects .skol-quote, .contact .skol-quote {
+  color: rgba(37,40,43,.25);
+}
+.section-label { color: #514d47; }
+.text-link span { color: #87452f; }
+.button-light { color: #25282b; background: #f5f3ee; }
+.button-dark { color: #f5f3ee; background: #25282b; }
+
+/* ABOUT — keep editorial copy dark on paper and bright on graphite/wine panels. */
+.about-page .about-intro, .about-page .about-principles,
+.about-page .about-timeline { color: #25282b; }
+.about-page .about-intro p, .about-page .about-timeline p,
+.about-page .about-principles p { color: #565752; }
+.about-page .about-intro h1, .about-page .about-intro h2,
+.about-page .about-timeline h2, .about-page .about-principles h2,
+.about-page .about-stage h3, .about-page .principle h3 { color: #25282b; }
+.about-page .about-closing, .about-page .about-hero {
+  color: #f5f3ee;
+}
+.about-page .about-closing p, .about-page .about-hero p { color: rgba(245,243,238,.84); }
+.about-page .about-closing h1, .about-page .about-closing h2,
+.about-page .about-hero h1, .about-page .about-hero h2 { color: #f5f3ee; }
+.about-page .about-closing em, .about-page .about-hero em,
+.about-page .about-stage .stage-label { color: #e6a184; }
+
+/* SERVICES catalogue */
+.services-page .svc-hero, .services-page .svc-contact { color: #f5f3ee; }
+.services-page .svc-hero p, .services-page .svc-contact p { color: rgba(245,243,238,.84); }
+.services-page .svc-hero h1, .services-page .svc-contact h2 { color: #fff8ef; }
+.services-page .svc-contact .svc-contact-link { color: #fff8ef; border-color: rgba(255,248,239,.58); }
+.services-page .svc-card, .services-page .svc-process { color: #f5f3ee; }
+.services-page .svc-card p, .services-page .svc-process p { color: #e0dbd3; }
+.services-page .svc-card h2, .services-page .svc-card h3,
+.services-page .svc-process h2, .services-page .svc-process h3 { color: #fff8ef; }
+.services-page .svc-empty { color: #25282b; }
+.services-page .svc-empty p { color: #514d47; }
+
+/* SERVICE detail pages share the same light/dark text rules. */
+.demolition-page .dem-hero, .demolition-page .dem-closing,
+.demolition-page .dem-conditions { color: #f5f3ee; }
+.demolition-page .dem-hero p, .demolition-page .dem-closing p,
+.demolition-page .dem-conditions p { color: rgba(245,243,238,.84); }
+.demolition-page .dem-hero h1, .demolition-page .dem-closing h2,
+.demolition-page .dem-conditions h2 { color: #fff8ef; }
+.demolition-page .dem-faq-list details p,
+.demolition-page .dem-work p, .demolition-page .dem-service-card p { color: #565752; }
+.demolition-page .dem-faq-list summary { color: #25282b; }
+.demolition-page .dem-hero .dem-eyebrow,
+.demolition-page .dem-closing .dem-eyebrow { color: #e6a184; }
+.sd-hero, .sd-conditions, .sd-cta { color: #f5f3ee; }
+.sd-hero p, .sd-conditions p, .sd-cta p { color: rgba(245,243,238,.84); }
+.sd-hero h1, .sd-conditions h2, .sd-cta h2 { color: #fff8ef; }
+.sd-conditions .sd-condition h3 { color: #fff8ef; }
+.sd-conditions .sd-condition p { color: #ded9d1; }
+.sd-cta .sd-text-link, .sd-cta .sd-breadcrumb { color: #f5f3ee; }
+.service-entry-body { color: #25282b; }
+.service-entry-body p, .service-entry-body li { color: #514d47; }
+
+/* SYSTEM page — readable copy on both paper and dark technical panels. */
+.system-page .system-thesis, .system-page .system-principles { color: #25282b; }
+.system-page .system-thesis p, .system-page .system-principles p { color: #565752; }
+.system-page .system-thesis h1, .system-page .system-thesis h2,
+.system-page .system-principles h2, .system-page .system-principles h3 { color: #25282b; }
+.system-page .system-hero, .system-page .system-modules,
+.system-page .system-closing { color: #f5f3ee; }
+.system-page .system-hero p, .system-page .system-modules p,
+.system-page .system-closing p { color: rgba(245,243,238,.84); }
+.system-page .system-hero h1, .system-page .system-modules h2,
+.system-page .system-modules h3, .system-page .system-closing h2 { color: #fff8ef; }
+.system-page .system-hero em, .system-page .system-closing em { color: #e6a184; }
+
+/* PORTFOLIO and publication feeds — ensure controls and metadata stay legible. */
+.portfolio-page .pf-page, .portfolio-page .pf-toolbar { color: #25282b; }
+.portfolio-page .pf-filter, .portfolio-page .pf-filter-result,
+.portfolio-page .pf-case-meta, .portfolio-page .pf-case-summary { color: #514d47; }
+.portfolio-page .pf-case, .portfolio-page .pf-case h2,
+.portfolio-page .pf-case h3 { color: #f5f3ee; }
+.portfolio-page .pf-case p, .portfolio-page .pf-case li { color: #ddd7cf; }
+.publications-page .pub-hero, .publications-page .pub-cta { color: #f5f3ee; }
+.publications-page .pub-hero p, .publications-page .pub-cta p { color: rgba(245,243,238,.84); }
+.publications-page .pub-hero h1, .publications-page .pub-cta h2 { color: #fff8ef; }
+.publications-page .pub-card { color: #25282b; }
+.publications-page .pub-card p { color: #514d47; }
+.publications-page .pub-empty { color: #25282b; }
+.publications-page .pub-empty p, .publications-page .pub-api-note { color: #5b554d; }
+.publication-page .article-hero { color: #f5f3ee; }
+.publication-page .article-hero p, .publication-page .article-hero h1 { color: #fff8ef; }
+.publication-page .article-body { color: #25282b; }
+.publication-page .article-body p, .publication-page .article-body li { color: #514d47; }
+.publication-page .article-body blockquote { color: #51463d; }
+
+/* Forms, inline notices, and status text should never rely on pale gray alone. */
+.contact-form label, .contact-form legend { color: inherit; }
+.contact-form input, .contact-form textarea, .contact-form select {
+  color: #25282b;
+  background-color: #fffaf2;
+}
+.contact-form input::placeholder, .contact-form textarea::placeholder { color: #625b52; opacity: 1; }
+@media (max-width: 760px) {
+  .intro .intro-copy > p:not(.lead), .services .services-heading > p,
+  .process .process-step p, .system-bridge p, .about-page .about-intro p,
+  .about-page .about-timeline p, .about-page .about-principles p,
+  .services-page .svc-hero p, .services-page .svc-contact p,
+  .demolition-page .dem-hero p, .demolition-page .dem-closing p,
+  .system-page .system-hero p, .system-page .system-modules p {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}
