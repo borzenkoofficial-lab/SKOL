@@ -114,3 +114,107 @@
 .pf-media-other{background:radial-gradient(ellipse at 50% 40%,rgba(201,107,69,.17),transparent 38%),linear-gradient(145deg,#353635,#222525)}
 
 .pf-demo-notice[hidden]{display:none!important}
+
+
+/* Contrast pass: portfolio descriptions and information panels */
+.portfolio-page .pf-case {
+  background: #25282b;
+  color: #f5f3ee;
+  border-color: rgba(214,161,126,.3);
+  box-shadow: 0 12px 32px rgba(25,26,26,.08);
+}
+.portfolio-page .pf-case:hover {
+  border-color: rgba(214,161,126,.8);
+  box-shadow: 0 20px 42px rgba(25,26,26,.16);
+}
+.portfolio-page .pf-case-content {
+  background: linear-gradient(145deg, #2c2f30 0%, #242627 100%);
+  color: #f5f3ee;
+}
+.portfolio-page .pf-case-meta { color: #c4beb5; }
+.portfolio-page .pf-case-state {
+  color: #efb18e;
+  border-color: rgba(214,161,126,.65);
+}
+.portfolio-page .pf-case h3 { color: #f8f5ef; }
+.portfolio-page .pf-case-summary {
+  color: #d5d0c8;
+  font-size: 12px;
+  line-height: 1.85;
+}
+.portfolio-page .pf-case-spec { border-color: rgba(245,243,238,.2); }
+.portfolio-page .pf-case-spec span { color: #e6a184; }
+.portfolio-page .pf-case-spec strong { color: #f5f3ee; font-size: 11px; }
+.portfolio-page .pf-case-details { border-color: rgba(245,243,238,.2); }
+.portfolio-page .pf-case-details summary { color: #f0ece5; }
+.portfolio-page .pf-case-details summary span { color: #e6a184; }
+.portfolio-page .pf-case-details > div { color: #d5d0c8; }
+.portfolio-page .pf-case-details p { color: #d5d0c8; font-size: 11px; line-height: 1.85; }
+.portfolio-page .pf-case-details b { color: #f0b08d; }
+.portfolio-page .pf-demo-footnote { color: #e6a184 !important; }
+.portfolio-page .pf-demo-notice {
+  border-color: rgba(214,161,126,.5);
+  background: linear-gradient(110deg, #303233, #252728);
+  color: #f5f3ee;
+  box-shadow: 0 12px 28px rgba(37,40,43,.08);
+}
+.portfolio-page .pf-demo-notice-mark {
+  color: #f0b08d;
+  border-color: rgba(214,161,126,.65);
+  background: rgba(201,107,69,.09);
+}
+.portfolio-page .pf-demo-notice p { color: #ddd7cf; font-size: 11px; }
+.portfolio-page .pf-demo-notice strong { color: #fff8ef; }
+.portfolio-page .pf-integrity {
+  border-color: rgba(214,161,126,.5);
+  background: linear-gradient(110deg, #303233, #252728);
+  color: #f5f3ee;
+}
+.portfolio-page .pf-integrity-symbol { color: #f0b08d; border-color: #d6a17e; }
+.portfolio-page .pf-integrity strong { color: #fff8ef; }
+.portfolio-page .pf-integrity p { color: #d5d0c8; font-size: 11px; }
+.portfolio-page .pf-search-wrap,
+.portfolio-page .pf-view-switch {
+  background: #e9e3d9;
+  border-color: rgba(37,40,43,.3);
+}
+.portfolio-page .pf-search-wrap:focus-within {
+  background: #fbf8f2;
+  border-color: #9f6347;
+  box-shadow: 0 0 0 3px rgba(182,138,98,.2);
+}
+.portfolio-page .pf-search-wrap input { color: #25282b; }
+.portfolio-page .pf-search-wrap input::placeholder { color: #625b52; opacity: 1; }
+.portfolio-page .pf-view-switch button { color: #514b44; }
+.portfolio-page .pf-view-switch button[aria-pressed="true"] { color: #fff8ef; }
+.portfolio-page .pf-filter { color: #4e4942; border-color: rgba(37,40,43,.3); }
+.portfolio-page .pf-filter[aria-pressed="true"] { color: #fff8ef; }
+.portfolio-page .pf-filter-result { color: #5c554d; }
+.portfolio-page .pf-empty-state {
+  background: #e9e3d9;
+  color: #25282b;
+}
+.portfolio-page .pf-empty-state p { color: #514b44; }
+.portfolio-page .pf-media-topline,
+.portfolio-page .pf-media-bottom { color: rgba(255,250,242,.82); text-shadow: 0 1px 5px rgba(0,0,0,.5); }
+.portfolio-page .pf-slot-stamp {
+  color: #ffe0ca;
+  background: rgba(25,26,26,.78);
+  border-color: rgba(230,161,132,.75);
+}
+.portfolio-page .pf-case-feed.pf-view-grid .pf-case-summary { color: #d5d0c8; }
+.portfolio-page :is(a, button, input, summary):focus-visible {
+  outline: 3px solid #b66b4b;
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  .portfolio-page .pf-case-summary { font-size: 12px; }
+  .portfolio-page .pf-case-details p { font-size: 11px; }
+  .portfolio-page .pf-demo-notice p { font-size: 11px; }
+  .portfolio-page .pf-integrity p { font-size: 11px; }
+  .portfolio-page .pf-case-content { padding: 22px 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-page .pf-case,
+  .portfolio-page .pf-case:hover { transition: none; transform: none; }
+}
