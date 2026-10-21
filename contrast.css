@@ -158,3 +158,54 @@ body:not(.about-page):not(.demolition-page):not(.services-page):not(.system-page
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; }
 }
+
+/* Hotfix: force readable foreground colors on every dark homepage surface.
+   These selectors intentionally outrank inherited/global graphite text colors. */
+.hero-premium :is(.hero-topline,.hero-kicker,.hero-pitch,.hero-pitch h2,.hero-pitch p,.hero-secondary,.hero-side-note,.hero-index),
+.process :is(h2,h3,p,a,span,.section-label,.process-heading,.process-step,.process-link),
+.system-bridge :is(h1,h2,h3,p,a,span,.system-bridge-label,.system-bridge-link),
+.statement :is(h1,h2,h3,p,a,span,.eyebrow,.section-label),
+.audience-card.private :is(h1,h2,h3,p,a,span,.eyebrow,.text-link),
+.footer :is(p,a,span,small,.copyright,.footer-email,.back-top),
+.contact.contact-dark :is(h1,h2,h3,p,a,label,span) {
+  color: #f5f3ee !important;
+}
+.hero-premium :is(.hero-pitch h2 em,.hero-pitch .hero-accent,.hero-secondary span,.hero-side-note span:first-child),
+.process :is(h2 em,.process-index,.process-step .process-index),
+.system-bridge :is(h2 em,.system-bridge-link span),
+.statement :is(h2 em,.eyebrow span),
+.footer :is(.wordmark-text,.dot) {
+  color: #e6a184 !important;
+}
+.hero-premium .hero-pitch p,
+.process .process-heading > p,
+.process .process-step p,
+.system-bridge .system-bridge-copy > p:not(.eyebrow),
+.statement .statement-content > p,
+.audience-card.private p,
+.contact.contact-dark .contact-copy,
+.footer .footer-email {
+  color: #d7d3cc !important;
+}
+.hero-premium .skol-quote,
+.process .skol-quote,
+.system-bridge .skol-quote,
+.statement .skol-quote,
+.audience-card.private .skol-quote {
+  color: rgba(245,243,238,.3) !important;
+}
+/* Keep controls legible independently of the section's text color. */
+.hero-premium .button-accent,
+.process .button-accent,
+.system-bridge .button-accent,
+.statement .button-accent,
+.contact.contact-dark .button-accent {
+  color: #17191a !important;
+}
+.hero-premium .button-light,
+.process .button-light,
+.system-bridge .button-light,
+.statement .button-light,
+.contact.contact-dark .button-light {
+  color: #25282b !important;
+}
