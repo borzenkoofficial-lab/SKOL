@@ -850,7 +850,7 @@ body:not(.admin-page) .contact .contact-form .form-row label { color: #e7e2da !i
 
 /* Consistent footer: seven items, seven desktop columns, intentional two-column mobile placement. */
 .footer {
-  grid-template-columns: auto minmax(150px,1fr) repeat(5,minmax(max-content,auto)) !important;
+  grid-template-columns: auto minmax(150px,1fr) repeat(5,auto) !important;
   align-items: center;
 }
 .footer > span:nth-child(2) {
@@ -864,11 +864,20 @@ body:not(.admin-page) .contact .contact-form .form-row label { color: #e7e2da !i
 .footer .copyright { color: rgba(245,243,238,.62) !important; }
 @media (max-width:1100px) and (min-width:761px) {
   .footer {
-    grid-template-columns: auto minmax(140px,1fr) repeat(3,minmax(max-content,auto)) !important;
-    gap: 14px;
+    grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+    grid-template-areas:
+      "brand tagline tagline tagline"
+      "about telegram email top"
+      "copyright copyright copyright copyright" !important;
+    gap: 16px 14px;
   }
-  .footer > span:nth-child(2) { grid-column: 2; }
-  .footer .copyright { grid-column: 1 / -1; justify-self: end; }
+  .footer > .wordmark { grid-area: brand !important; }
+  .footer > span:nth-child(2) { grid-area: tagline !important; }
+  .footer > a[href="about.html"] { grid-area: about !important; }
+  .footer > a[href^="https://t.me/"] { grid-area: telegram !important; }
+  .footer > a[href^="mailto:"] { grid-area: email !important; }
+  .footer > .back-top { grid-area: top !important; }
+  .footer > .copyright { grid-area: copyright !important; justify-self: end; }
 }
 @media (max-width:760px) {
   .footer {
