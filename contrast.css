@@ -832,41 +832,47 @@ body:not(.admin-page) .contact .contact-form .button-dark:hover {
 .process .process-heading > p,.process .process-step p { color:#ded9d1 !important; }
 .statement .statement-content > p { color:#e2ded7 !important; }
 
-/* Footer layout explicitly accounts for all seven items at desktop, tablet and mobile widths. */
-.footer { grid-template-columns:auto minmax(150px,1fr) repeat(5,auto) !important; align-items:center; }
-.footer > span:nth-child(2) { color:#d7d3cc !important; line-height:1.7; }
-.footer .footer-email,.footer .back-top { color:#d7d3cc !important; }
+/* Footer layout adapts to each page's real link count without empty grid slots. */
+.footer {
+  display:flex !important;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:18px 22px;
+}
+.footer > .wordmark { flex:0 0 auto; }
+.footer > span:nth-child(2) {
+  flex:1 1 220px;
+  min-width:180px;
+  color:#d7d3cc !important;
+  line-height:1.7;
+}
+.footer .footer-email,.footer .back-top {
+  flex:0 0 auto;
+  color:#d7d3cc !important;
+}
 .footer .footer-email:hover,.footer .back-top:hover { color:#e6a184 !important; }
-.footer .copyright { color:rgba(245,243,238,.62) !important; }
+.footer .copyright {
+  margin-left:auto;
+  color:rgba(245,243,238,.62) !important;
+  white-space:nowrap;
+}
 @media (max-width:1100px) and (min-width:761px) {
-  .footer {
-    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
-    grid-template-areas:"brand tagline tagline tagline" "about telegram email top" "copyright copyright copyright copyright" !important;
-    gap:16px 14px;
-  }
-  .footer > .wordmark { grid-area:brand !important; }
-  .footer > span:nth-child(2) { grid-area:tagline !important; }
-  .footer > a[href="about.html"] { grid-area:about !important; }
-  .footer > a[href^="https://t.me/"] { grid-area:telegram !important; }
-  .footer > a[href^="mailto:"] { grid-area:email !important; }
-  .footer > .back-top { grid-area:top !important; }
-  .footer > .copyright { grid-area:copyright !important; justify-self:end; }
+  .footer { gap:16px 18px; }
+  .footer > span:nth-child(2) { flex-basis:180px; }
 }
 @media (max-width:760px) {
   .footer {
-    grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
-    grid-template-areas:"brand copyright" "tagline tagline" "about telegram" "email top" !important;
-    align-items:start; column-gap:20px; row-gap:18px;
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    align-items:start;
+    column-gap:20px;
+    row-gap:18px;
   }
-  .footer > .wordmark { grid-area:brand !important; }
-  .footer > span:nth-child(2) { grid-area:tagline !important; max-width:34ch; }
-  .footer > a[href="about.html"] { grid-area:about !important; }
-  .footer > a[href^="https://t.me/"] { grid-area:telegram !important; }
-  .footer > a[href^="mailto:"] { grid-area:email !important; }
-  .footer > .back-top { grid-area:top !important; text-align:right !important; }
-  .footer > .copyright { grid-area:copyright !important; text-align:right !important; align-self:center; }
+  .footer > .wordmark { grid-column:1; }
+  .footer > span:nth-child(2) { grid-column:1 / -1; max-width:34ch; min-width:0; }
+  .footer > .back-top { justify-self:end; text-align:right; }
+  .footer > .copyright { grid-column:1 / -1; justify-self:end; margin-left:0; }
 }
-
 /* Keep decorative type in the background and interactive states clear but restrained. */
 .skol-quote { opacity:.11 !important; text-shadow:none !important; }
 main > section:not(.hero) > .ambient-art { opacity:.38 !important; }
