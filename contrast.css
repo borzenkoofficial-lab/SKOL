@@ -246,3 +246,188 @@ body:not(.about-page):not(.demolition-page):not(.services-page):not(.system-page
  .seo-faq-list details { padding:19px 0; }
  .contact-channels a strong { font-size:.92rem; }
 }
+
+
+/* GLOBAL READABILITY PASS — quiet decoration, bright text on dark surfaces, restrained form fields. */
+:root {
+  --skol-field-bg: #303234;
+  --skol-field-bg-hover: #353739;
+  --skol-field-text: #f7f3ed;
+  --skol-field-muted: #cfc6bb;
+  --skol-field-line: rgba(230,161,132,.48);
+}
+
+/* Abstract background elements should support the composition, not compete with content. */
+main > section:not(.hero) > .ambient-art { opacity: .48 !important; }
+.ambient-art .ambient-ring { opacity: .42 !important; }
+.ambient-art .ambient-cross,
+.ambient-art .ambient-orbit { opacity: .28 !important; }
+.ambient-letter { text-shadow: none !important; }
+.hero-premium .hero-ambient-art { opacity: .42 !important; }
+.hero-premium .hero-orbit { opacity: .22 !important; }
+.hero-premium .hero-geometry { opacity: .10 !important; }
+.hero-premium .hero-grain { opacity: .20 !important; }
+.hero-premium .hero-seam-letter { opacity: .24 !important; }
+.system-bridge-orbit,
+.about-page .about-orbit,
+.about-page .about-grid,
+.about-page .about-cross,
+.about-page .about-intro-art,
+.about-page .stage-art,
+.about-page .about-principles-art,
+.about-page .about-closing-ring,
+.system-page .system-orbit,
+.services-page .svc-orbit,
+.services-page .svc-art,
+.demolition-page .dem-hero-orbit,
+.demolition-page .dem-card-art,
+.portfolio-page .pf-hero-orbit,
+.portfolio-page .pf-media-art,
+.admin-page .gate-orbit {
+  opacity: .32 !important;
+}
+.audience-card .card-art { opacity: .30 !important; }
+.skol-quote { opacity: .14 !important; text-shadow: none !important; }
+
+/* Increase secondary-copy contrast only on dark surfaces. Light editorial sections keep dark ink. */
+:is(
+  .hero-premium, .system-bridge, .process, .statement, .audience, .seo-content,
+  .about-page .about-hero, .about-page .about-closing,
+  .services-page .svc-hero, .services-page .svc-contact,
+  .demolition-page .dem-hero, .demolition-page .dem-closing, .demolition-page .dem-conditions,
+  .sd-hero, .sd-conditions, .sd-cta,
+  .system-page .system-hero, .system-page .system-modules, .system-page .system-closing,
+  .publications-page .pub-hero, .publications-page .pub-cta,
+  .publication-page .article-hero, .portfolio-page .pf-case
+) :is(p, li, blockquote, small, .hero-pitch, .contact-copy) {
+  color: #e2ded7 !important;
+}
+:is(
+  .hero-premium, .system-bridge, .process, .statement, .audience, .seo-content,
+  .about-page .about-hero, .about-page .about-closing,
+  .services-page .svc-hero, .services-page .svc-contact,
+  .demolition-page .dem-hero, .demolition-page .dem-closing, .demolition-page .dem-conditions,
+  .sd-hero, .sd-conditions, .sd-cta,
+  .system-page .system-hero, .system-page .system-modules, .system-page .system-closing,
+  .publications-page .pub-hero, .publications-page .pub-cta,
+  .publication-page .article-hero, .portfolio-page .pf-case
+) :is(h1, h2, h3, h4) {
+  color: #fff9f2 !important;
+}
+:is(
+  .hero-premium, .system-bridge, .process, .statement, .audience, .seo-content,
+  .about-page .about-hero, .about-page .about-closing,
+  .services-page .svc-hero, .services-page .svc-contact,
+  .demolition-page .dem-hero, .demolition-page .dem-closing, .demolition-page .dem-conditions,
+  .sd-hero, .sd-conditions, .sd-cta,
+  .system-page .system-hero, .system-page .system-modules, .system-page .system-closing,
+  .publications-page .pub-hero, .publications-page .pub-cta,
+  .publication-page .article-hero, .portfolio-page .pf-case
+) :is(.eyebrow, .section-label, .stage-label, .process-index, .svc-eyebrow, .dem-eyebrow, .article-meta-top, .article-meta-bottom) {
+  color: #d5c9bc !important;
+}
+:is(
+  .hero-premium, .system-bridge, .process, .statement, .audience, .seo-content,
+  .about-page .about-hero, .about-page .about-closing,
+  .services-page .svc-hero, .services-page .svc-contact,
+  .demolition-page .dem-hero, .demolition-page .dem-closing, .demolition-page .dem-conditions,
+  .sd-hero, .sd-conditions, .sd-cta,
+  .system-page .system-hero, .system-page .system-modules, .system-page .system-closing,
+  .publications-page .pub-hero, .publications-page .pub-cta,
+  .publication-page .article-hero, .portfolio-page .pf-case
+) :is(h1 em, h2 em, h3 em, .accent, .stage-label) {
+  color: #e6a184 !important;
+}
+
+/* All public-site form fields use a muted graphite surface instead of bright white. */
+body:not(.admin-page) :is(
+  input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+  textarea, select
+) {
+  color: var(--skol-field-text) !important;
+  color-scheme: dark;
+  background-color: var(--skol-field-bg) !important;
+  border: 1px solid var(--skol-field-line) !important;
+  border-radius: 2px !important;
+  padding: 14px 15px !important;
+  min-height: 48px;
+  font-size: 15px !important;
+  line-height: 1.5;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+  transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+body:not(.admin-page) :is(
+  input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+  textarea, select
+):hover {
+  background-color: var(--skol-field-bg-hover) !important;
+}
+body:not(.admin-page) :is(
+  input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+  textarea, select
+):focus {
+  color: #fffaf4 !important;
+  background-color: #292b2d !important;
+  border-color: #e6a184 !important;
+  box-shadow: 0 0 0 3px rgba(201,107,69,.16), inset 0 1px 0 rgba(255,255,255,.035);
+  outline: none;
+}
+body:not(.admin-page) :is(input, textarea)::placeholder {
+  color: var(--skol-field-muted) !important;
+  opacity: 1 !important;
+}
+body:not(.admin-page) select option {
+  color: #f5f3ee;
+  background: #292b2d;
+}
+body:not(.admin-page) input[type="checkbox"],
+body:not(.admin-page) input[type="radio"] { accent-color: #c96b45; }
+body:not(.admin-page) textarea { min-height: 112px; resize: vertical; }
+body:not(.admin-page) select:invalid { color: #d8cfc4 !important; }
+body:not(.admin-page) :is(input, textarea, select):disabled {
+  opacity: .65;
+  cursor: not-allowed;
+}
+
+/* Labels, placeholders and helper copy in the application form must be readable at a glance. */
+body:not(.admin-page) .contact-form { gap: 22px; }
+body:not(.admin-page) .contact-form label {
+  color: #383430 !important;
+  font-size: 11px !important;
+  line-height: 1.55;
+  letter-spacing: .065em !important;
+  font-weight: 800;
+}
+body:not(.admin-page) .contact-form input,
+body:not(.admin-page) .contact-form textarea,
+body:not(.admin-page) .contact-form select {
+  margin-top: 7px;
+}
+body:not(.admin-page) .contact-form .form-note,
+body:not(.admin-page) .contact-form .form-status {
+  color: #514b45 !important;
+  font-size: 12px !important;
+  line-height: 1.7;
+}
+body:not(.admin-page) .dem-field > span {
+  color: #4c463f !important;
+  font-size: 12px !important;
+  line-height: 1.45;
+  letter-spacing: .02em;
+}
+body:not(.admin-page) .dem-calculator .dem-form-status {
+  color: #e2ded7 !important;
+  font-size: 11px !important;
+  line-height: 1.65;
+}
+body:not(.admin-page) .dem-calculator .dem-summary-note {
+  color: #e2ded7 !important;
+}
+body:not(.admin-page) #pf-search { min-height: 48px; }
+@media (max-width: 760px) {
+  body:not(.admin-page) .contact-form { gap: 18px; }
+  body:not(.admin-page) .contact-form label { font-size: 11.5px !important; }
+  body:not(.admin-page) :is(input, textarea, select) { font-size: 16px !important; }
+}

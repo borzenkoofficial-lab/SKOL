@@ -139,3 +139,29 @@ body.admin-page{margin:0;background:var(--a-paper);color:var(--a-ink);font-famil
 @media(prefers-reduced-motion:reduce){.admin-page *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 
 .form-state{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:99px;font-size:8px;font-weight:800;letter-spacing:.06em;white-space:nowrap}.form-state:before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}.form-state.is-enabled{background:#dcece5;color:#39765f}.form-state.is-disabled{background:#ebe7e1;color:#827b71}
+
+
+/* Admin workspace: reduce glare in editor and login fields without changing the paper UI. */
+.admin-page input:not([type=checkbox]):not([type=hidden]),
+.admin-page select,
+.admin-page textarea {
+  background: #e7e1d7 !important;
+  border-color: rgba(37,40,43,.24) !important;
+  color: #25282b !important;
+}
+.admin-page input:not([type=checkbox]):not([type=hidden]):focus,
+.admin-page select:focus,
+.admin-page textarea:focus {
+  background: #ded6ca !important;
+  border-color: #b66b4b !important;
+  box-shadow: 0 0 0 3px rgba(182,107,75,.16) !important;
+}
+.admin-page input::placeholder,
+.admin-page textarea::placeholder {
+  color: #70675c !important;
+  opacity: 1;
+}
+.admin-page select option {
+  background: #e7e1d7;
+  color: #25282b;
+}
