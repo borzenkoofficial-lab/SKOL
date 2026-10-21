@@ -209,3 +209,40 @@ body:not(.about-page):not(.demolition-page):not(.services-page):not(.system-page
 .contact.contact-dark .button-light {
   color: #25282b !important;
 }
+
+
+/* Homepage SEO content: editorial layout aligned with the graphite/copper identity. */
+.seo-content { position:relative; background:linear-gradient(145deg,#25282b 0%,#302a29 58%,#292426 100%); color:#f5f3ee; }
+.seo-content-grid { display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:clamp(32px,7vw,112px); margin-top:42px; }
+.seo-content h2,.seo-faq h2 { margin:0; font-size:clamp(2.5rem,5vw,5.8rem); line-height:.98; letter-spacing:-.055em; color:#f5f3ee; }
+.seo-content h2 em,.seo-faq h2 em { color:#e6a184; font-style:normal; }
+.seo-content-copy { max-width:780px; color:#d7d3cc; font-size:clamp(1rem,1.15vw,1.1rem); line-height:1.8; }
+.seo-content-copy p { margin:0 0 22px; }
+.seo-content-copy h3 { margin:34px 0 10px; color:#f5f3ee; font-size:1.25rem; line-height:1.35; letter-spacing:-.02em; }
+.seo-content-copy h3:first-of-type { margin-top:30px; }
+.seo-faq { background:#f1eee8; color:#25282b; }
+.seo-faq .section-label { color:#6b625c; }
+.seo-faq-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:36px; margin:40px 0 34px; }
+.seo-faq-heading p { max-width:330px; color:#5d5a56; line-height:1.7; }
+.seo-faq h2 { color:#25282b; }
+.seo-faq h2 em { color:#a95e42; }
+.seo-faq-list { border-top:1px solid rgba(37,40,43,.2); }
+.seo-faq-list details { border-bottom:1px solid rgba(37,40,43,.2); padding:23px 0; }
+.seo-faq-list summary { cursor:pointer; list-style:none; display:flex; justify-content:space-between; gap:20px; color:#25282b; font-size:clamp(1.05rem,1.5vw,1.35rem); font-weight:600; }
+.seo-faq-list summary::-webkit-details-marker { display:none; }
+.seo-faq-list summary::after { content:"+"; color:#a95e42; font-size:1.4rem; font-weight:400; }
+.seo-faq-list details[open] summary::after { content:"−"; }
+.seo-faq-list details p { max-width:850px; margin:16px 42px 0 0; color:#55514d; line-height:1.8; }
+.contact-channels { display:grid; gap:0; }
+.contact-channels a { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:5px 16px; padding:16px 0; border-bottom:1px solid rgba(230,161,132,.25); color:#f5f3ee; text-decoration:none; }
+.contact-channels a .contact-channel-label { grid-column:1 / -1; color:#d7a18a; font-size:.7rem; letter-spacing:.12em; }
+.contact-channels a strong { min-width:0; overflow-wrap:anywhere; color:#f5f3ee; font-size:1rem; font-weight:600; }
+.contact-channels a > span:last-child { color:#e6a184; }
+.contact-channels a:hover strong { color:#e6a184; }
+@media (max-width:760px) {
+ .seo-content-grid { grid-template-columns:1fr; gap:26px; margin-top:28px; }
+ .seo-faq-heading { display:block; margin:30px 0 24px; }
+ .seo-faq-heading p { margin-top:18px; }
+ .seo-faq-list details { padding:19px 0; }
+ .contact-channels a strong { font-size:.92rem; }
+}
