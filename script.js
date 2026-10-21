@@ -81,6 +81,7 @@
     fetch('/api/public/forms/main-contact', { headers: { Accept: 'application/json' }, credentials: 'same-origin', cache: 'no-store' })
       .then(getJsonResponse)
       .then(config => {
+        if (config.error) throw new Error(config.error);
         contactFormEnabled = config.enabled !== false;
         if (submitButton) submitButton.disabled = !contactFormEnabled;
         if (submitLabel && config.submitLabel) submitLabel.textContent = config.submitLabel;
@@ -90,7 +91,10 @@
         if (!contactFormEnabled && status) status.textContent = 'Форма временно недоступна. Напишите нам в Telegram или на email.';
       })
       .catch(() => {
-        if (formNote) formNote.textContent = 'Серверный приём заявок пока не подключён. При отправке откроется почтовая программа.';
+        // Keep the form usable: when the API/database is not configured, submit opens a prefilled email instead.
+        contactFormEnabled = true;
+        if (submitButton) submitButton.disabled = false;
+        if (formNote) formNote.textContent = 'Сохранение заявки на сайте временно недоступно. При отправке откроется почтовая программа с подготовленным обращением.';
       });
 
     form.addEventListener('submit', async event => {
@@ -128,8 +132,14 @@
         let result;
         try { result = await getJsonResponse(response); }
         catch (error) { throw error; }
-        if (!response.ok) {
-          if (status) status.textContent = result.error || 'Не удалось отправить обращение. Проверьте данные и попробуйте ещё раз.';
+        if (!response.ok || result?.error) {
+          const apiError = String(result?.error || '');
+          if (/база данных|DATABASE_URL|серверная форма не подключена|внутренняя ошибка сервера/i.test(apiError)) {
+            if (status) status.textContent = 'Сохранение на сайте пока недоступно. Открываем почтовую программу с подготовленным обращением.';
+            window.location.href = 'mailto:' + encodeURIComponent(contactEmail) + '?subject=' + subject + '&body=' + emailBody;
+          } else if (status) {
+            status.textContent = apiError || 'Не удалось отправить обращение. Проверьте данные и попробуйте ещё раз.';
+          }
           return;
         }
         if (status) status.textContent = (result.message || 'Заявка сохранена.') + (result.reference ? ' Номер обращения: ' + result.reference + '.' : '');
