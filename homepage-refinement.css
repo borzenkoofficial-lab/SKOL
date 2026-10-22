@@ -374,36 +374,3 @@ main>section{isolation:isolate}
   .home-menu-card,.home-menu-card::before,.home-menu-card-arrow{transition:none}
   .home-menu-card:hover{transform:none}
 }
-
-/* Expandable service catalogue: native details/summary for keyboard and touch access. */
-.service-catalog{border-top:1px solid rgba(37,40,43,.22)}
-.service-accordion{display:block;padding:0;transition:background .3s var(--ease),border-color .3s var(--ease)}
-.service-accordion:hover{padding:0}
-.service-accordion>summary{display:grid;grid-template-columns:48px minmax(0,1fr) 38px;gap:18px;align-items:start;padding:27px 0;cursor:pointer;list-style:none}
-.service-accordion>summary::-webkit-details-marker{display:none}
-.service-accordion>summary:focus-visible{outline:2px solid var(--skol-copper);outline-offset:5px}
-.service-accordion-copy h3{font-size:clamp(23px,3vw,36px);font-weight:500;letter-spacing:-.055em;margin:0 0 10px;transition:color .25s}
-.service-accordion-copy p,.service-accordion-panel>p{font-size:12px;line-height:1.8;color:#666761;margin:0;max-width:650px}
-.service-accordion .service-no{display:block;font-size:10px;color:var(--clay);padding-top:9px}
-.service-accordion .service-arrow{margin-top:2px;transition:transform .3s var(--ease),background .3s,color .3s}
-.service-accordion[open]{background:rgba(37,40,43,.025)}
-.service-accordion[open]>summary{padding-left:12px;padding-right:12px}
-.service-accordion[open] .service-accordion-copy h3,.service-accordion:hover .service-accordion-copy h3{color:#8d4934}
-.service-accordion[open] .service-arrow{transform:rotate(45deg);background:var(--ink);border-color:var(--ink);color:var(--paper)}
-.service-accordion-panel{padding:0 68px 28px;animation:service-panel-in .32s var(--ease) both}
-.service-accordion-panel>p{max-width:760px;margin-bottom:20px}
-.service-accordion-actions{display:flex;flex-wrap:wrap;gap:10px 24px}
-.service-accordion-actions a{display:inline-flex;align-items:center;gap:12px;color:#8d4934;font-size:11px;line-height:1.6;border-bottom:1px solid rgba(141,73,52,.3);padding:0 0 5px;transition:color .2s,border-color .2s}
-.service-accordion-actions a span{font-size:15px;transition:transform .2s}
-.service-accordion-actions a:hover{color:#25282b;border-color:#25282b}
-.service-accordion-actions a:hover span{transform:translate(2px,-2px)}
-@keyframes service-panel-in{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:600px){
- .service-accordion>summary{grid-template-columns:28px minmax(0,1fr) 30px;gap:10px;padding:23px 0}
- .service-accordion[open]>summary{padding-left:8px;padding-right:8px}
- .service-accordion-copy h3{font-size:clamp(21px,6vw,28px)}
- .service-accordion-copy p,.service-accordion-panel>p{font-size:11px}
- .service-accordion-panel{padding:0 16px 24px 46px}
- .service-accordion-actions{align-items:flex-start;flex-direction:column;gap:13px}
-}
-@media(prefers-reduced-motion:reduce){.service-accordion-panel{animation:none}}
