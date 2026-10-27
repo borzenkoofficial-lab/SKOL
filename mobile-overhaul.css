@@ -173,8 +173,13 @@
   .portfolio-carousel-heading h2 { font-size: clamp(42px, 11.8vw, 64px); line-height: .99; }
   .portfolio-carousel-heading > p { max-width: 100%; font-size: 13px; line-height: 1.8; }
   .portfolio-carousel, .portfolio-carousel-stage { width: 100%; min-width: 0; }
-  .portfolio-carousel-stage { min-height: 0; overflow: hidden; }
-  .portfolio-slide { width: 100%; max-width: 100%; }
+  .portfolio-carousel-stage { min-height: 0; height: auto; overflow: visible; perspective: none; transform-style: flat; }
+  .portfolio-slide, .portfolio-slide.is-prev, .portfolio-slide.is-next {
+    display: none; position: relative; top: auto; left: auto; width: 100%; max-width: 100%;
+    opacity: 1; visibility: visible; pointer-events: none; transform: none; box-shadow: none;
+  }
+  .portfolio-slide.is-active { display: block; opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
+  .portfolio-slide-art { height: clamp(230px, 65vw, 310px); }
   .portfolio-slide-art { min-height: 230px; height: clamp(230px, 65vw, 310px); }
   .portfolio-slide-info { display: flex; align-items: flex-start; gap: 15px; padding: 19px 16px; }
   .portfolio-slide-info > div { min-width: 0; }
