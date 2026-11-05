@@ -1,0 +1,212 @@
+/* SKOL — FIELD MOTION SYSTEM
+   Motion follows the logic of the work: measure, reveal, inspect, proceed.
+   No perpetual particles, glow trails, scroll hijacking, or ornamental parallax. */
+:root {
+  --skol-motion-ease: cubic-bezier(.2, .72, .22, 1);
+}
+
+.skol-motion-home .hero-premium {
+  isolation: isolate;
+}
+
+.skol-motion-home .skol-hero-calibration {
+  position: absolute;
+  z-index: 4;
+  right: var(--pad);
+  top: 152px;
+  bottom: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(242, 240, 234, .58);
+  font: 700 8px/1 Manrope, Arial, sans-serif;
+  letter-spacing: .16em;
+  pointer-events: none;
+}
+
+.skol-motion-home .skol-calibration-track {
+  position: relative;
+  display: block;
+  width: clamp(54px, 7.5vw, 108px);
+  height: 1px;
+  overflow: hidden;
+  background: rgba(242, 240, 234, .25);
+}
+
+.skol-motion-home .skol-calibration-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--clay, #d66d42);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: skol-calibration-draw 1.15s .7s var(--skol-motion-ease) forwards;
+}
+
+@keyframes skol-calibration-draw {
+  to { transform: scaleX(1); }
+}
+
+.skol-motion-home .skol-motion-section {
+  position: relative;
+}
+
+.skol-motion-home .skol-section-trace {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: var(--pad, 5vw);
+  right: var(--pad, 5vw);
+  height: 1px;
+  background: rgba(32, 36, 38, .13);
+  pointer-events: none;
+}
+
+.skol-motion-home :is(.process, .statement, .system-bridge) > .skol-section-trace {
+  background: rgba(242, 240, 234, .16);
+}
+
+.skol-motion-home :is(.process, .statement, .system-bridge) > .skol-section-trace::after {
+  background: #f0a17a;
+}
+
+.skol-motion-home .skol-section-trace::after {
+  content: "";
+  display: block;
+  width: clamp(42px, 7vw, 92px);
+  height: 1px;
+  background: var(--clay, #d66d42);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .9s var(--skol-motion-ease);
+}
+
+.skol-motion-home .skol-motion-section.is-in-view > .skol-section-trace::after {
+  transform: scaleX(1);
+}
+
+/* Native view timelines progressively draw the rule while a section enters the viewport. */
+@supports (animation-timeline: view()) {
+  .skol-motion-home .skol-section-trace::after {
+    animation: skol-section-trace-draw linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% entry 55%;
+    transition: none;
+  }
+}
+
+@keyframes skol-section-trace-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.skol-motion-home .skol-motion-art {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  --skol-focus-x: 50%;
+  --skol-focus-y: 50%;
+}
+
+.skol-motion-home .skol-motion-scan {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+  background: linear-gradient(105deg,
+    transparent 0 48.8%,
+    rgba(214, 109, 66, .12) 49.6%,
+    rgba(242, 201, 174, .42) 50%,
+    rgba(214, 109, 66, .12) 50.4%,
+    transparent 51.2%);
+  transform: translateX(-110%);
+  transition: transform 1.05s var(--skol-motion-ease);
+}
+
+.skol-motion-home .skol-motion-crosshair {
+  position: absolute;
+  z-index: 6;
+  left: var(--skol-focus-x);
+  top: var(--skol-focus-y);
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(242, 240, 234, .55);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(.72);
+  transition: opacity .22s ease, transform .28s var(--skol-motion-ease);
+}
+
+.skol-motion-home .skol-motion-crosshair::before,
+.skol-motion-home .skol-motion-crosshair::after {
+  content: "";
+  position: absolute;
+  background: rgba(242, 240, 234, .55);
+}
+
+.skol-motion-home .skol-motion-crosshair::before {
+  left: 50%;
+  top: -5px;
+  width: 1px;
+  height: 30px;
+  transform: translateX(-50%);
+}
+
+.skol-motion-home .skol-motion-crosshair::after {
+  top: 50%;
+  left: -5px;
+  width: 30px;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .skol-motion-home .skol-motion-art:hover .skol-motion-scan {
+    transform: translateX(110%);
+  }
+
+  .skol-motion-home .skol-motion-art:hover .skol-motion-crosshair {
+    opacity: .72;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@media (max-width: 760px) {
+  .skol-motion-home .skol-hero-calibration {
+    right: var(--pad);
+    top: 124px;
+    bottom: auto;
+    gap: 8px;
+    font-size: 7px;
+  }
+
+  .skol-motion-home .skol-calibration-track {
+    width: 48px;
+  }
+
+  .skol-motion-home .skol-section-trace {
+    left: var(--pad, 20px);
+    right: var(--pad, 20px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skol-motion-home .skol-calibration-fill,
+  .skol-motion-home .skol-section-trace::after,
+  .skol-motion-home .skol-motion-scan,
+  .skol-motion-home .skol-motion-crosshair {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .skol-motion-home .skol-calibration-fill,
+  .skol-motion-home .skol-section-trace::after {
+    transform: scaleX(1);
+  }
+
+  .skol-motion-home .skol-motion-crosshair {
+    display: none;
+  }
+}

@@ -15,15 +15,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
       - name: Check required files
         run: |
           test -f index.html
           test -f styles.css
           test -f script.js
+          test -f skol-motion.js
+          test -f skol-motion.css
           test -f favicon.svg
       - name: Check JavaScript syntax
-        run: node --check script.js
+        run: |
+          node --check script.js
+          node --check skol-motion.js
       - name: Check HTML structure and key content
         run: |
           grep -qi '<html lang="ru">' index.html
@@ -40,3 +44,4 @@ jobs:
           grep -q '#f5f3ee' styles.css
           grep -q '#c96b45' styles.css
           grep -q 'prefers-reduced-motion' styles.css
+          grep -q 'prefers-reduced-motion' skol-motion.css
